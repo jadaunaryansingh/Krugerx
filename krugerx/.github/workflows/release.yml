@@ -1,0 +1,53 @@
+name: Create KrugerX Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-windows-release:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter SDK
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.22.x'
+          channel: 'stable'
+
+      - name: Install Dependencies
+        run: flutter pub get
+        working-directory: ./
+
+      - name: Build Windows Executable
+        run: flutter build windows --release
+        working-directory: ./
+
+      - name: Compress Release Bundle
+        run: |
+          Compress-Archive -Path build\windows\x64\runner\Release\* -DestinationPath krugerx-windows-x64.zip
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            krugerx-windows-x64.zip
+            build/windows/x64/runner/Release/krugerx.exe
+          body: |
+            ## 🚀 KrugerX Hyperbrowser v${{ github.ref_name }}
+
+            > [!WARNING]
+            > **SECURITY WARNING**: Official release for KrugerX Hyperbrowser. Always verify you download releases directly from `github.com/jadaunaryansingh/Krugerx-Frontend`.
+
+            ### 📦 Download Binaries
+            | Platform | Architecture | Download Link |
+            |---|---|---|
+            | **Windows** | x86-64 (64-bit) | [Download krugerx.exe](https://github.com/jadaunaryansingh/Krugerx-Frontend/releases/download/${{ github.ref_name }}/krugerx.exe) \| [Download Bundle (.zip)](https://github.com/jadaunaryansingh/Krugerx-Frontend/releases/download/${{ github.ref_name }}/krugerx-windows-x64.zip) |
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

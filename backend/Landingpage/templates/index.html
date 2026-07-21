@@ -1,0 +1,419 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Live Particle Canvas -->
+<canvas id="mystical-canvas"></canvas>
+
+<!-- Parallax Background Elements -->
+<div class="parallax-bg" data-speed="0.5">
+    <div class="ambient-glow orb-1"></div>
+    <div class="ambient-glow orb-2"></div>
+</div>
+
+<div class="parallax-bg" data-speed="0.2">
+    <div class="mandala-container">
+        <div class="mandala-ring ring-outer"></div>
+        <div class="mandala-ring ring-middle"></div>
+        <div class="mandala-ring ring-inner"></div>
+    </div>
+</div>
+
+<!-- Header (Hardcoded) -->
+<header class="main-header interactive" data-cursor="hover">
+    <div class="logo">Kruger<span class="highlight">X</span></div>
+    <nav class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#ai">AI Models</a>
+        <a href="https://github.com/jadaunaryansingh/Krugerx-Backend" target="_blank" rel="noopener noreferrer" class="nav-github">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+            <span>GitHub</span>
+        </a>
+        <a href="/download" class="nav-download">Download</a>
+    </nav>
+</header>
+
+<!-- Hero Section -->
+<section class="hero-section">
+
+
+    <h1 class="hero-title">
+        <span class="reveal-text">Experience the Web,</span><br />
+        <span class="reveal-text highlight">Redefined.</span>
+    </h1>
+    <p class="hero-subtitle reveal-fade">KrugerX is a next-generation AI-powered desktop browser. Built for absolute
+        privacy, blazing speed, and seamless intelligence.</p>
+
+    <div class="hero-actions reveal-fade">
+        <div class="hero-buttons-wrapper">
+            <div class="cta-container interactive" data-cursor="portal">
+                <a href="/download/krugerx.exe" download="krugerx.exe" class="sling-ring-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" class="download-icon">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    <span class="btn-text">Download for Windows (.exe)</span>
+                    <div class="btn-glow"></div>
+                </a>
+            </div>
+
+            <a href="https://github.com/jadaunaryansingh/Krugerx-Backend" target="_blank" rel="noopener noreferrer" class="github-hero-btn interactive" data-cursor="hover">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                </svg>
+                <span>GitHub</span>
+            </a>
+        </div>
+        <p class="version-info">
+            Version 1.0.0 &nbsp;·&nbsp; Windows 64-bit &nbsp;·&nbsp; 
+            <a href="/download/krugerx-windows-x64.zip" download class="zip-link">Download .zip Bundle</a> &nbsp;·&nbsp;
+            <a href="/download" class="all-platforms-link">All Platforms</a>
+        </p>
+    </div>
+</section>
+
+<!-- Browser UI Mockup (Hardcoded) -->
+<section class="mockup-section reveal-up">
+    <div class="browser-mockup">
+        <div class="mockup-header">
+            <div class="mockup-dots">
+                <span class="dot close"></span>
+                <span class="dot min"></span>
+                <span class="dot max"></span>
+            </div>
+            <div class="mockup-url-bar">
+                <span class="lock-icon">🔒</span> https://krugerx.com/search?q=future+of+browsing
+            </div>
+            <div class="mockup-tabs">
+                <div class="tab active">KrugerX Home</div>
+                <div class="tab">AI Assistant</div>
+            </div>
+        </div>
+        <div class="mockup-body">
+            <div class="mockup-sidebar">
+                <div class="sidebar-item active" title="Home">⌂</div>
+                <div class="sidebar-item" title="Privacy">🛡</div>
+                <div class="sidebar-item" title="Extensions">⚡</div>
+                <div class="sidebar-item" title="Settings">⚙</div>
+                <div class="sidebar-ai-glow" title="AI">✦</div>
+            </div>
+            <div class="mockup-content">
+                <div class="mockup-search-results">
+                    <div class="search-result-item featured">
+                        <div class="result-badge">KrugerX AI Summary</div>
+                        <div class="result-title">The Future of Browsing: AI-Native Experiences</div>
+                        <div class="result-snippet">KrugerX redefines what a browser can do — with built-in LLM
+                            integration, zero-knowledge sync, and sub-50ms render times across all devices.</div>
+                        <div class="result-tags"><span>Privacy</span><span>Speed</span><span>AI</span></div>
+                    </div>
+                    <div class="search-result-item">
+                        <div class="result-url">krugerx.com › features</div>
+                        <div class="result-title">Absolute Privacy by Design</div>
+                        <div class="result-snippet">End-to-end encrypted sync, no telemetry, no tracking. Your data
+                            never leaves your device unencrypted.</div>
+                    </div>
+                    <div class="search-result-item">
+                        <div class="result-url">krugerx.com › speed</div>
+                        <div class="result-title">Blazing Speed — Sub-50ms Rendering</div>
+                        <div class="result-snippet">Asynchronous rendering pipeline and intelligent prefetching deliver
+                            pages before you even finish clicking.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="mockup-ai-panel">
+                <div class="ai-panel-header">✦ AI Assistant</div>
+                <div class="ai-panel-msg ai">I found 3 key insights about the future of browsing for you.</div>
+                <div class="ai-panel-msg user">Summarize privacy features</div>
+                <div class="ai-panel-msg ai">KrugerX uses zero-knowledge encryption — even we can't read your data.
+                </div>
+                <div class="ai-panel-input">
+                    <span>Ask anything...</span>
+                    <div class="ai-send-btn">↑</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Feature Grid -->
+<section class="features-section" id="features">
+    <div class="section-header reveal-up">
+        <h2>Built for <span class="highlight">Performance</span></h2>
+        <p>A browser engineered from the ground up with the rigor of a scaled backend.</p>
+    </div>
+
+    <div class="feature-grid">
+        <!-- Card 1 -->
+        <div class="premium-card feature-card interactive" data-tilt data-tilt-glare data-tilt-max-glare="0.2"
+            data-tilt-scale="1.05" data-cursor="hover">
+            <div class="card-border"></div>
+            <div class="card-content">
+                <div class="icon-wrapper privacy-icon"
+                    style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; margin-bottom: 20px; border-radius: 12px; border: 1px solid rgba(255,153,0,0.2); background: rgba(255,153,0,0.05); position: relative;">
+                    <div class="icon-glow"></div>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--eldritch-gold)"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        style="position: relative; z-index: 2;">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                </div>
+                <h3>Absolute Privacy</h3>
+                <p>Your data never leaves your control. End-to-end encrypted synchronization powered by our secure
+                    architecture.</p>
+            </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="premium-card feature-card interactive" data-tilt data-tilt-glare data-tilt-max-glare="0.2"
+            data-tilt-scale="1.05" data-cursor="hover">
+            <div class="card-border"></div>
+            <div class="card-content">
+                <div class="icon-wrapper speed-icon"
+                    style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; margin-bottom: 20px; border-radius: 12px; border: 1px solid rgba(255,153,0,0.2); background: rgba(255,153,0,0.05); position: relative;">
+                    <div class="icon-glow"></div>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--eldritch-gold)"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        style="position: relative; z-index: 2;">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    </svg>
+                </div>
+                <h3>Blazing Speed</h3>
+                <p>Lightning-fast page rendering and asynchronous backend processing to warp through the web without
+                    lag.</p>
+            </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="premium-card feature-card interactive" data-tilt data-tilt-glare data-tilt-max-glare="0.2"
+            data-tilt-scale="1.05" data-cursor="hover">
+            <div class="card-border"></div>
+            <div class="card-content">
+                <div class="icon-wrapper sync-icon"
+                    style="display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; margin-bottom: 20px; border-radius: 12px; border: 1px solid rgba(255,153,0,0.2); background: rgba(255,153,0,0.05); position: relative;">
+                    <div class="icon-glow"></div>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--eldritch-gold)"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        style="position: relative; z-index: 2;">
+                        <polyline points="23 4 23 10 17 10"></polyline>
+                        <polyline points="1 20 1 14 7 14"></polyline>
+                        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                    </svg>
+                </div>
+                <h3>Seamless Sync</h3>
+                <p>Instantly synchronize your tabs, history, and preferences across all your devices in real-time.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- AI Engine Section -->
+<section class="ai-section" id="ai">
+    <div class="section-header reveal-up">
+        <h2>Integrated <span class="highlight">AI Models</span></h2>
+        <p>Harness the power of the industry's greatest LLMs directly in your browser sidebar.</p>
+    </div>
+
+    <div class="ai-nodes-container">
+        <div class="premium-card ai-node interactive" data-tilt data-tilt-scale="1.08" data-cursor="hover"
+            style="--node-color:#10a37f">
+            <div class="card-border"
+                style="background:linear-gradient(135deg,rgba(16,163,127,0.5),rgba(16,163,127,0.05))"></div>
+            <div class="card-content">
+                <div class="node-logo" style="background:#10a37f">GPT</div>
+                <span class="node-name">OpenAI</span>
+                <span class="node-model">GPT-4o</span>
+            </div>
+            <div class="node-details">
+                <p>OpenAI's flagship model offering unparalleled general reasoning capabilities, robust code generation,
+                    and advanced multimodal vision understanding.</p>
+                <ul>
+                    <li>General Reasoning</li>
+                    <li>Complex Coding</li>
+                    <li>Multimodal Vision</li>
+                    <li>Creative Writing</li>
+                </ul>
+            </div>
+        </div>
+        <div class="premium-card ai-node interactive" data-tilt data-tilt-scale="1.08" data-cursor="hover"
+            style="--node-color:#4285f4">
+            <div class="card-border"
+                style="background:linear-gradient(135deg,rgba(66,133,244,0.5),rgba(66,133,244,0.05))"></div>
+            <div class="card-content">
+                <div class="node-logo" style="background:linear-gradient(135deg,#4285f4,#ea4335,#fbbc05,#34a853)">G
+                </div>
+                <span class="node-name">Gemini</span>
+                <span class="node-model">2.5 Pro</span>
+            </div>
+            <div class="node-details">
+                <p>Google's most advanced model featuring a massive 2M+ token context window, allowing you to feed
+                    entire codebases or hundreds of PDFs in a single prompt.</p>
+                <ul>
+                    <li>2M+ Token Context</li>
+                    <li>Deep Document Analysis</li>
+                    <li>Live Web Search</li>
+                    <li>Codebase Ingestion</li>
+                </ul>
+            </div>
+        </div>
+        <div class="premium-card ai-node interactive" data-tilt data-tilt-scale="1.08" data-cursor="hover"
+            style="--node-color:#c96442">
+            <div class="card-border"
+                style="background:linear-gradient(135deg,rgba(201,100,66,0.5),rgba(201,100,66,0.05))"></div>
+            <div class="card-content">
+                <div class="node-logo" style="background:linear-gradient(135deg,#c96442,#e8855e)">✦</div>
+                <span class="node-name">Anthropic</span>
+                <span class="node-model">Claude 4</span>
+            </div>
+            <div class="node-details">
+                <p>Anthropic's latest model excels in nuanced human-like reasoning, producing exceptional technical
+                    writing and complex UI artifact generation.</p>
+                <ul>
+                    <li>Nuanced Writing</li>
+                    <li>UI Artifact Generation</li>
+                    <li>Refactoring Code</li>
+                    <li>Strategic Planning</li>
+                </ul>
+            </div>
+        </div>
+        <div class="premium-card ai-node interactive" data-tilt data-tilt-scale="1.08" data-cursor="hover"
+            style="--node-color:#f55036">
+            <div class="card-border"
+                style="background:linear-gradient(135deg,rgba(245,80,54,0.5),rgba(245,80,54,0.05))"></div>
+            <div class="card-content">
+                <div class="node-logo" style="background:linear-gradient(135deg,#f55036,#ff7a63)">⚡</div>
+                <span class="node-name">Groq</span>
+                <span class="node-model">Llama 3.1</span>
+            </div>
+            <div class="node-details">
+                <p>Powered by Groq's custom LPU hardware, delivering open-weight models like Llama 3.1 at blazing-fast
+                    speeds exceeding 800 tokens per second.</p>
+                <ul>
+                    <li>Ultra-Low Latency</li>
+                    <li>800+ Tokens per sec</li>
+                    <li>Instant Autocomplete</li>
+                    <li>Rapid Prototyping</li>
+                </ul>
+            </div>
+        </div>
+        <div class="premium-card ai-node local-node interactive" data-tilt data-tilt-scale="1.08" data-cursor="hover"
+            style="--node-color:#00E676">
+            <div class="card-border local-border"></div>
+            <div class="card-content">
+                <div class="node-logo" style="background:linear-gradient(135deg,#00E676,#00b359)">🦙</div>
+                <span class="node-name local-text">Ollama</span>
+                <span class="node-model local-text">Local · Private</span>
+            </div>
+            <div class="node-details">
+                <p>Run AI models directly on your hardware. KrugerX integrates seamlessly with Ollama, ensuring your
+                    data never leaves your machine. 100% private, 100% offline.</p>
+                <ul>
+                    <li>Zero Telemetry</li>
+                    <li>Works Offline</li>
+                    <li>Uncensored Output</li>
+                    <li>Hardware Accelerated</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Download CTA Strip -->
+<section class="cta-strip" id="download">
+    <div class="cta-strip-inner reveal-up">
+        <h2>Ready to Browse <span class="highlight">Without Limits?</span></h2>
+        <p>Available on every platform you live on &mdash; desktop, server, and mobile.</p>
+        <div class="platform-grid">
+            <a href="/download#windows" class="platform-card interactive" data-cursor="hover">
+                <div class="platform-icon">
+                    <!-- Windows logo -->
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801" />
+                    </svg>
+                </div>
+                <span class="platform-name">Windows</span>
+                <span class="platform-sub">10 / 11 · x64 &amp; ARM</span>
+            </a>
+
+            <a href="/download#ios" class="platform-card interactive" data-cursor="hover">
+                <div class="platform-icon">
+                    <!-- iOS App Store -->
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M8.809 0c-.48.002-.96.182-1.326.548L.548 7.483A1.875 1.875 0 0 0 0 8.809v6.382c0 .48.182.96.548 1.326l6.935 6.935c.366.366.846.548 1.326.548h6.382c.48 0 .96-.182 1.326-.548l6.935-6.935c.366-.366.548-.846.548-1.326V8.809a1.875 1.875 0 0 0-.548-1.326L16.517.548A1.875 1.875 0 0 0 15.191 0zm3.196 4.5a.75.75 0 0 1 .75.75v3.75h3.75a.75.75 0 0 1 0 1.5h-3.75v3.75a.75.75 0 0 1-1.5 0V10.5H7.505a.75.75 0 0 1 0-1.5h3.75V5.25a.75.75 0 0 1 .75-.75z" />
+                    </svg>
+                </div>
+                <span class="platform-name">iOS</span>
+                <span class="platform-sub">iPhone &amp; iPad · iOS 16+</span>
+            </a>
+            <a href="/download#android" class="platform-card interactive" data-cursor="hover">
+                <div class="platform-icon">
+                    <!-- Android -->
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-.9997s.4483-.9993.9993-.9993c.5511 0 .9993.4483.9993.9993.0001.5511-.4482.9997-.9993.9997m-11.046 0c-.5511 0-.9993-.4486-.9993-.9997s.4483-.9993.9993-.9993c.5511 0 .9993.4483.9993.9993 0 .5511-.4483.9997-.9993.9997m11.4045-6.02l1.9973-3.4592a.416.416 0 0 0-.1521-.5676.416.416 0 0 0-.5676.1521l-2.0223 3.503C15.5902 8.2439 13.8533 7.8508 12 7.8508s-3.5902.3931-5.1367 1.0729L4.841 5.4207a.4161.4161 0 0 0-.5677-.1521.4157.4157 0 0 0-.1521.5676l1.9973 3.4592C2.6889 10.1867.3432 13.2754 0 17.0082h24c-.3435-3.7328-2.6892-6.8215-6.1185-8.6868" />
+                    </svg>
+                </div>
+                <span class="platform-name">Android</span>
+                <span class="platform-sub">Android 10+ · ARM64</span>
+            </a>
+        </div>
+        <p class="cta-version">Version 1.0.0 &nbsp;·&nbsp; Free Forever &nbsp;·&nbsp; No Telemetry &nbsp;·&nbsp; Open
+            Source</p>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="main-footer">
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <div class="footer-logo">Kruger<span class="highlight">X</span></div>
+            <p class="footer-tagline">A next-generation AI-powered browser built for privacy, speed, and intelligence.
+            </p>
+            <div class="footer-socials">
+                <a href="#" class="social-link" title="GitHub" aria-label="GitHub"><svg width="18" height="18"
+                        viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z" />
+                    </svg></a>
+                <a href="#" class="social-link" title="Twitter/X" aria-label="Twitter"><svg width="18" height="18"
+                        viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                    </svg></a>
+                <a href="#" class="social-link" title="Discord" aria-label="Discord"><svg width="18" height="18"
+                        viewBox="0 0 24 24" fill="currentColor">
+                        <path
+                            d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z" />
+                    </svg></a>
+            </div>
+        </div>
+        <div class="footer-links">
+            <h4>Product</h4>
+            <a href="#features">Features</a>
+            <a href="#ai">AI Models</a>
+            <a href="#download">Download</a>
+            <a href="#">Changelog</a>
+        </div>
+        <div class="footer-links">
+            <h4>Company</h4>
+            <a href="#">About</a>
+            <a href="#">Blog</a>
+            <a href="#">Careers</a>
+            <a href="#">Contact</a>
+        </div>
+        <div class="footer-links">
+            <h4>Legal</h4>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Security</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 KrugerX Browser. All rights reserved.</p>
+        <p class="footer-bottom-right">Built with ❤ for the open web.</p>
+    </div>
+</footer>
+
+{% endblock %}

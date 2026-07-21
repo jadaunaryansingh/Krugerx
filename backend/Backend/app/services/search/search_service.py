@@ -1,0 +1,222 @@
+import httpx
+from typing import List, Dict, Any, Optional
+from bs4 import BeautifulSoup
+from urllib.parse import urlparse, parse_qs, quote
+from loguru import logger
+import xml.etree.ElementTree as ET
+
+from app.core.config import settings
+from app.schemas.search import SearchResultItem
+
+
+class SearchService:
+    """
+    Unified Search service that interfaces with Google, Bing, Brave, and DuckDuckGo.
+    """
+    def __init__(self) -> None:
+        self.headers = {
+            "User-Agent": (
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
+            )
+        }
+
+    async def search(self, provider: str, query: str) -> List[SearchResultItem]:
+        """
+        Execute search across configured search engine provider.
+        """
+        provider = provider.lower()
+        if provider == "google":
+            return await self._search_google(query)
+        elif provider == "bing":
+            return await self._search_bing(query)
+        elif provider == "brave":
+            return await self._search_brave(query)
+        elif provider == "duckduckgo" or provider == "ddg":
+            return await self._search_duckduckgo(query)
+        else:
+            logger.warning(f"Unknown search provider: {provider}, falling back to DuckDuckGo.")
+            return await self._search_duckduckgo(query)
+
+    async def _search_google(self, query: str) -> List[SearchResultItem]:
+        """
+        Queries Google Custom Search JSON API.
+        """
+        if not settings.GOOGLE_SEARCH_API_KEY or not settings.GOOGLE_SEARCH_CX_ID:
+            logger.warning("Google search credentials missing, falling back to DuckDuckGo scraper.")
+            return await self._search_duckduckgo(query)
+
+        url = f"https://www.googleapis.com/customsearch/v1?q={quote(query)}&key={settings.GOOGLE_SEARCH_API_KEY}&cx={settings.GOOGLE_SEARCH_CX_ID}"
+        async with httpx.AsyncClient() as client:
+            try:
+                res = await client.get(url)
+                if res.status_code == 200:
+                    data = res.json()
+                    items = data.get("items", [])
+                    results = []
+                    for item in items:
+                        results.append(SearchResultItem(
+                            title=item.get("title", ""),
+                            url=item.get("link", ""),
+                            snippet=item.get("snippet", ""),
+                            favicon=f"https://icons.duckduckgo.com/ip3/{urlparse(item.get('link')).netloc}.ico"
+                        ))
+                    return results
+            except Exception as e:
+                logger.bind(category="errors").error(f"Google search api failed: {str(e)}")
+
+        return await self._search_duckduckgo(query)
+
+    async def _search_bing(self, query: str) -> List[SearchResultItem]:
+        """
+        Queries Bing Web Search API.
+        """
+        if not settings.BING_SEARCH_API_KEY:
+            logger.warning("Bing search API Key missing, falling back to DuckDuckGo scraper.")
+            return await self._search_duckduckgo(query)
+
+        url = f"https://api.bing.microsoft.com/v7.0/search?q={quote(query)}"
+        headers = {"Ocp-Apim-Subscription-Key": settings.BING_SEARCH_API_KEY}
+        
+        async with httpx.AsyncClient() as client:
+            try:
+                res = await client.get(url, headers=headers)
+                if res.status_code == 200:
+                    data = res.json()
+                    web_pages = data.get("webPages", {}).get("value", [])
+                    results = []
+                    for page in web_pages:
+                        results.append(SearchResultItem(
+                            title=page.get("name", ""),
+                            url=page.get("url", ""),
+                            snippet=page.get("snippet", ""),
+                            favicon=f"https://icons.duckduckgo.com/ip3/{urlparse(page.get('url')).netloc}.ico"
+                        ))
+                    return results
+            except Exception as e:
+                logger.bind(category="errors").error(f"Bing Search API failed: {str(e)}")
+        
+        return await self._search_duckduckgo(query)
+
+    async def _search_brave(self, query: str) -> List[SearchResultItem]:
+        """
+        Queries Brave Search API.
+        """
+        if not settings.BRAVE_SEARCH_API_KEY:
+            logger.warning("Brave search API Key missing, falling back to DuckDuckGo scraper.")
+            return await self._search_duckduckgo(query)
+
+        url = f"https://api.search.brave.com/res/v1/web/search?q={quote(query)}"
+        headers = {"X-Subscription-Token": settings.BRAVE_SEARCH_API_KEY}
+
+        async with httpx.AsyncClient() as client:
+            try:
+                res = await client.get(url, headers=headers)
+                if res.status_code == 200:
+                    data = res.json()
+                    results = []
+                    for page in data.get("web", {}).get("results", []):
+                        results.append(SearchResultItem(
+                            title=page.get("title", ""),
+                            url=page.get("url", ""),
+                            snippet=page.get("description", ""),
+                            favicon=f"https://icons.duckduckgo.com/ip3/{urlparse(page.get('url')).netloc}.ico"
+                        ))
+                    return results
+            except Exception as e:
+                logger.bind(category="errors").error(f"Brave Search API failed: {str(e)}")
+        
+        return await self._search_duckduckgo(query)
+
+    async def _search_duckduckgo(self, query: str) -> List[SearchResultItem]:
+        """
+        Fallback DuckDuckGo scraper that parses the public HTML search interface.
+        """
+        url = f"https://html.duckduckgo.com/html/?q={quote(query)}"
+        async with httpx.AsyncClient() as client:
+            try:
+                res = await client.get(url, headers=self.headers, timeout=10.0)
+                if res.status_code != 200:
+                    logger.warning(f"DuckDuckGo scraper returned status: {res.status_code}")
+                    return []
+                
+                soup = BeautifulSoup(res.text, "html.parser")
+                results = []
+
+                # Find result card elements
+                for div in soup.find_all("div", class_="result"):
+                    a_title = div.find("a", class_="result__a")
+                    a_snippet = div.find("a", class_="result__snippet")
+                    
+                    if a_title:
+                        title = a_title.get_text(strip=True)
+                        raw_url = a_title.get("href", "")
+                        
+                        # Clean DuckDuckGo redirect wrappers if present
+                        actual_url = raw_url
+                        if "uddg=" in raw_url:
+                            parsed_url = urlparse(raw_url)
+                            query_params = parse_qs(parsed_url.query)
+                            if "uddg" in query_params:
+                                actual_url = query_params["uddg"][0]
+
+                        snippet = a_snippet.get_text(strip=True) if a_snippet else ""
+                        favicon = f"https://icons.duckduckgo.com/ip3/{urlparse(actual_url).netloc}.ico" if actual_url else None
+                        
+                        results.append(SearchResultItem(
+                            title=title,
+                            url=actual_url,
+                            snippet=snippet,
+                            favicon=favicon
+                        ))
+                return results
+            except Exception as e:
+                logger.bind(category="errors").error(f"DuckDuckGo search scraper failed: {str(e)}")
+                return []
+
+    async def get_suggestions(self, query: str) -> List[str]:
+        """
+        Fetches Google Auto-complete queries for input suggestions.
+        """
+        url = f"https://suggestqueries.google.com/complete/search?client=chrome&q={quote(query)}"
+        async with httpx.AsyncClient() as client:
+            try:
+                res = await client.get(url, headers=self.headers)
+                if res.status_code == 200:
+                    data = res.json()
+                    # Response format: [query, [sugg1, sugg2, ...], [type1, type2, ...]]
+                    if len(data) > 1 and isinstance(data[1], list):
+                        return data[1]
+            except Exception as e:
+                logger.bind(category="errors").error(f"Failed to fetch auto-complete suggestions: {str(e)}")
+        return []
+
+    async def get_trending_searches(self) -> List[str]:
+        """
+        Fetches real-time popular daily trending search queries from Google Trends RSS.
+        """
+        url = "https://trends.google.com/trends/trendingsearches/daily/rss?geo=US"
+        async with httpx.AsyncClient() as client:
+            try:
+                res = await client.get(url, headers=self.headers)
+                if res.status_code == 200:
+                    # Parse RSS XML
+                    root = ET.fromstring(res.content)
+                    trends = []
+                    # In Google trends XML, each trend is a <title> child of an <item> node.
+                    for item in root.findall(".//item"):
+                        title_node = item.find("title")
+                        if title_node is not None and title_node.text:
+                            trends.append(title_node.text)
+                    return trends[:10]
+            except Exception as e:
+                logger.bind(category="errors").error(f"Failed to load trending RSS searches: {str(e)}")
+        
+        # Fallbacks in case RSS parsing fails or Google returns error
+        return [
+            "AI browser technologies", "FastAPI web services", "Supabase authentication",
+            "SQLAlchemy async drivers", "Celery task scheduler", "Websocket notification channels"
+        ]
+
+
+search_service = SearchService()
