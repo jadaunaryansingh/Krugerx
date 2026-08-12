@@ -22,3 +22,17 @@ subprojects {
 tasks.register<Delete>("clean") {
     delete(rootProject.layout.buildDirectory)
 }
+
+subprojects {
+    project.pluginManager.withPlugin("com.android.library") {
+        val androidExt = project.extensions.findByName("android")
+        if (androidExt != null) {
+            try {
+                val setCompileSdk = androidExt.javaClass.getMethod("setCompileSdk", Int::class.java)
+                setCompileSdk.invoke(androidExt, 36)
+            } catch (e: Exception) {
+                // Ignore
+            }
+        }
+    }
+}

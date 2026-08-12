@@ -10,8 +10,13 @@ dependencies {
 
 android {
     namespace = "com.krugerx.app"
-    compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    compileSdk = 36
+    ndkVersion = "28.2.13676358"
+
+    // Enable 16 KB page size support (required for Android 15+ devices)
+    androidResources {
+        noCompress += listOf("so")
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -24,21 +29,26 @@ android {
         targetSdk = 34
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        ndk {
+            abiFilters.add("arm64-v8a")
+        }
     }
 
     packaging {
         jniLibs {
-            useLegacyPackaging = true
             excludes += "lib/x86_64/**"
             excludes += "lib/x86/**"
+            // Keep .so files uncompressed so 16 KB page alignment is preserved
+            useLegacyPackaging = false
         }
     }
 
     buildTypes {
         release {
             signingConfig = signingConfigs.getByName("debug")
-            isMinifyEnabled = false
-            isShrinkResources = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
         debug {
             signingConfig = signingConfigs.getByName("debug")
