@@ -4,8 +4,10 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   gtk
+  irondash_engine_context
   isar_community_flutter_libs
   screen_retriever_linux
+  super_native_extensions
   url_launcher_linux
   window_manager
 )

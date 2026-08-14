@@ -29,15 +29,10 @@ android {
         targetSdk = 34
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-        ndk {
-            abiFilters.add("arm64-v8a")
-        }
     }
 
     packaging {
         jniLibs {
-            excludes += "lib/x86_64/**"
-            excludes += "lib/x86/**"
             // Keep .so files uncompressed so 16 KB page alignment is preserved
             useLegacyPackaging = false
         }

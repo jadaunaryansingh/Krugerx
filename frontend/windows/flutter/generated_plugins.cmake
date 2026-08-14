@@ -5,8 +5,11 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   app_links
   flutter_inappwebview_windows
+  irondash_engine_context
   isar_community_flutter_libs
   screen_retriever_windows
+  share_plus
+  super_native_extensions
   url_launcher_windows
   window_manager
 )
