@@ -33,8 +33,7 @@ android {
 
     packaging {
         jniLibs {
-            // Keep .so files uncompressed so 16 KB page alignment is preserved
-            useLegacyPackaging = false
+            useLegacyPackaging = true
         }
     }
 
