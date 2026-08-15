@@ -1,0 +1,374 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Enfield Companion - Dashboard</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&amp;family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface": "#131313",
+                      "outline": "#8a938b",
+                      "on-tertiary-fixed": "#2a1707",
+                      "primary-fixed": "#b4f0c7",
+                      "primary-fixed-dim": "#98d4ac",
+                      "background": "#131313",
+                      "on-tertiary-container": "#bd9c84",
+                      "secondary-container": "#484949",
+                      "on-secondary-fixed-variant": "#464747",
+                      "tertiary-fixed": "#ffdcc3",
+                      "inverse-on-surface": "#313030",
+                      "on-tertiary-fixed-variant": "#5a422e",
+                      "error-container": "#93000a",
+                      "on-primary-fixed-variant": "#165132",
+                      "on-surface-variant": "#c0c9c0",
+                      "secondary-fixed-dim": "#c6c6c6",
+                      "surface-variant": "#353535",
+                      "surface-container": "#20201f",
+                      "tertiary-fixed-dim": "#e3c0a6",
+                      "on-primary-fixed": "#002110",
+                      "on-tertiary": "#412c1a",
+                      "surface-tint": "#98d4ac",
+                      "on-secondary-container": "#b8b8b8",
+                      "tertiary-container": "#4b3422",
+                      "primary": "#98d4ac",
+                      "on-primary": "#00391f",
+                      "surface-container-low": "#1c1b1b",
+                      "on-primary-container": "#75af89",
+                      "on-background": "#e5e2e1",
+                      "inverse-primary": "#316948",
+                      "on-secondary-fixed": "#1a1c1c",
+                      "surface-dim": "#131313",
+                      "tertiary": "#e3c0a6",
+                      "on-error-container": "#ffdad6",
+                      "primary-container": "#004225",
+                      "surface-container-high": "#2a2a2a",
+                      "inverse-surface": "#e5e2e1",
+                      "secondary-fixed": "#e3e2e2",
+                      "surface-container-highest": "#353535",
+                      "surface-bright": "#393939",
+                      "on-secondary": "#2f3131",
+                      "secondary": "#c6c6c6",
+                      "on-error": "#690005",
+                      "error": "#ffb4ab",
+                      "on-surface": "#e5e2e1",
+                      "surface-container-lowest": "#0e0e0e",
+                      "outline-variant": "#404942"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "margin-mobile": "16px",
+                      "xl": "80px",
+                      "margin-desktop": "64px",
+                      "xs": "4px",
+                      "lg": "48px",
+                      "base": "8px",
+                      "sm": "12px",
+                      "md": "24px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "headline-lg": [
+                              "Archivo Narrow"
+                      ],
+                      "title-md": [
+                              "Archivo Narrow"
+                      ],
+                      "headline-lg-mobile": [
+                              "Archivo Narrow"
+                      ],
+                      "body-lg": [
+                              "Hanken Grotesk"
+                      ],
+                      "body-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "label-caps": [
+                              "JetBrains Mono"
+                      ],
+                      "display-lg": [
+                              "Archivo Narrow"
+                      ],
+                      "data-mono": [
+                              "JetBrains Mono"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "title-md": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "34px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "52px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "data-mono": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "500"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        /* Custom Knurled Background Pattern */
+        .bg-knurled {
+            background-color: #131313;
+            background-image: repeating-linear-gradient(45deg, rgba(138, 147, 139, 0.05) 0, rgba(138, 147, 139, 0.05) 2px, transparent 2px, transparent 8px), repeating-linear-gradient(-45deg, rgba(138, 147, 139, 0.05) 0, rgba(138, 147, 139, 0.05) 2px, transparent 2px, transparent 8px);
+        }
+        
+        /* Mechanical Border - Beveled Edge Simulation */
+        .border-mechanical {
+            border-top: 1px solid rgba(192, 192, 192, 0.2);
+            border-left: 1px solid rgba(192, 192, 192, 0.2);
+            border-right: 1px solid rgba(0, 0, 0, 0.6);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.6);
+        }
+
+        /* Recessed Input/Panel */
+        .recessed-panel {
+            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.8), inset -1px -1px 2px rgba(255,255,255,0.05);
+        }
+        
+        /* Button Gradient - Racing Green */
+        .btn-racing-green {
+            background: linear-gradient(180deg, #004225 0%, #00301a 100%);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md h-full w-full overflow-x-hidden pt-16 pb-24 md:pb-0">
+<!-- TOP APP BAR (Shared Component) -->
+<header class="fixed top-0 w-full z-50 bg-surface border-b border-outline-variant/30 flex justify-between items-center h-16 px-margin-mobile md:px-margin-desktop">
+<!-- Brand Logo Anchor -->
+<div class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg tracking-tighter text-on-surface uppercase font-bold">
+            ENFIELD COMPANION
+        </div>
+<!-- Desktop Nav Cluster -->
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-primary font-bold font-label-caps text-label-caps hover:bg-surface-container-high transition-colors active:scale-95 px-3 py-2 rounded-md" href="#">GARAGE</a>
+<a class="text-on-surface-variant font-label-caps text-label-caps hover:bg-surface-container-high transition-colors active:scale-95 px-3 py-2 rounded-md" href="#">JOURNEYS</a>
+<a class="text-on-surface-variant font-label-caps text-label-caps hover:bg-surface-container-high transition-colors active:scale-95 px-3 py-2 rounded-md" href="#">SERVICE</a>
+<a class="text-on-surface-variant font-label-caps text-label-caps hover:bg-surface-container-high transition-colors active:scale-95 px-3 py-2 rounded-md" href="#">COMMUNITY</a>
+</nav>
+<!-- Trailing Icons -->
+<div class="flex items-center gap-4 text-primary">
+<button aria-label="Notifications" class="hover:bg-surface-container-high transition-colors active:scale-95 p-2 rounded-full">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button aria-label="Settings" class="hover:bg-surface-container-high transition-colors active:scale-95 p-2 rounded-full">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+</header>
+<!-- MAIN CONTENT CANVAS -->
+<main class="w-full max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop pt-md pb-xl">
+<!-- HERO SECTION: The Interceptor -->
+<section class="w-full h-[400px] md:h-[500px] relative border-mechanical rounded-lg overflow-hidden mb-gutter shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="A high-fidelity, dramatic photograph of a rugged Royal Enfield Interceptor 650 motorcycle parked in a dimly lit, moody industrial workshop. The scene features deep forest green metallic surfaces contrasting with stark, cold steel tools and equipment in the background. Lighting is highly dramatic, with rim lights catching the chrome exhausts and engine block. The overall aesthetic is gritty, brutalist, and intensely premium, evoking a sense of raw mechanical power and timeless design." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC0E0sGPsp8hnoIl2mp8UEXI8SrORCUPsyZkng42-zvfoBK0mxQ3g39EQVwOtT_Mi7D60s0hby0CT_PH8Nw7raDRPl-tTJ78O8cje8IG1HlOEtS7QeuZxmWuNfW2ESY0regfDyC3McFgN2_Uwpf9oSx3fRGmQcryc1TNLXiqNx6i58d7Ge8FFJeHFJzoDhHo7Ee6vb0gfeDiZtKw9Fi6RCgH5XLHerxJA-YNgCVnCkBR1kOg2-ZWsve')"></div>
+<!-- Vignette Overlay -->
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-lg w-full">
+<h1 class="font-display-lg text-display-lg text-on-surface uppercase drop-shadow-lg">Interceptor 650</h1>
+<div class="flex items-center gap-sm mt-xs">
+<span class="px-2 py-1 bg-surface-container-highest border border-outline/50 rounded-sm font-data-mono text-data-mono text-secondary uppercase tracking-widest">CHASSIS: #RE-650-892X</span>
+<span class="px-2 py-1 bg-primary-container/20 text-primary border border-primary/30 rounded-sm font-data-mono text-data-mono uppercase tracking-widest flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span> ONLINE
+                    </span>
+</div>
+</div>
+</section>
+<!-- BENTO GRID LAYOUT -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- KEY STATS PANEL (Spans 12 cols on mobile, 4 on desktop) -->
+<section class="md:col-span-4 bg-surface-container border-mechanical rounded-lg p-md flex flex-col gap-md">
+<div class="border-b border-outline-variant/50 pb-sm mb-xs">
+<h2 class="font-title-md text-title-md uppercase text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">health_and_safety</span> Core Metrics
+                    </h2>
+</div>
+<!-- Stat: Health -->
+<div class="recessed-panel bg-surface-container-lowest p-sm rounded border border-outline-variant/30 flex justify-between items-center">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-outline uppercase">Mechanical Health</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-primary mt-1">98%</span>
+</div>
+<!-- Circular Gauge Simulation -->
+<div class="relative w-12 h-12 rounded-full border-4 border-surface-container-highest flex items-center justify-center">
+<svg class="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+<path class="text-primary-container" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="100, 100" stroke-width="4"></path>
+<path class="text-primary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="98, 100" stroke-width="4"></path>
+</svg>
+</div>
+</div>
+<!-- Stat: Range -->
+<div class="recessed-panel bg-surface-container-lowest p-sm rounded border border-outline-variant/30 flex justify-between items-center">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-outline uppercase">Fuel Range</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-tertiary mt-1">180 <span class="text-title-md font-title-md text-outline">KM</span></span>
+</div>
+<span class="material-symbols-outlined text-tertiary text-[32px]">local_gas_station</span>
+</div>
+<!-- Stat: Service -->
+<div class="recessed-panel bg-surface-container-lowest p-sm rounded border border-outline-variant/30 flex justify-between items-center">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-outline uppercase">Next Service</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-secondary mt-1">450 <span class="text-title-md font-title-md text-outline">KM</span></span>
+</div>
+<span class="material-symbols-outlined text-secondary text-[32px]">build</span>
+</div>
+<button class="mt-auto w-full btn-racing-green text-on-primary font-title-md text-title-md uppercase py-3 rounded border-mechanical hover:brightness-110 active:scale-[0.98] transition-all">
+                    Full Diagnostics
+                </button>
+</section>
+<!-- LIVE TELEMETRY (Spans 12 cols on mobile, 8 on desktop) -->
+<section class="md:col-span-8 bg-surface-container border-mechanical rounded-lg p-md bg-knurled relative overflow-hidden flex flex-col">
+<div class="absolute inset-0 bg-surface-container/80 z-0"></div> <!-- Dimmer over knurled bg -->
+<div class="relative z-10 border-b border-outline-variant/50 pb-sm mb-md flex justify-between items-end">
+<h2 class="font-title-md text-title-md uppercase text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-primary animate-pulse">sensors</span> Live Telemetry
+                    </h2>
+<span class="font-label-caps text-label-caps text-primary bg-primary-container/30 px-2 py-1 rounded">SYNCING</span>
+</div>
+<div class="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-sm flex-grow">
+<!-- Sensor Block 1 -->
+<div class="bg-surface-container-low border border-outline-variant/30 rounded p-sm flex flex-col justify-center items-center text-center">
+<span class="font-label-caps text-label-caps text-outline mb-1">OIL TEMP</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface font-data-mono">92°<span class="text-body-md text-outline">C</span></span>
+</div>
+<!-- Sensor Block 2 -->
+<div class="bg-surface-container-low border border-outline-variant/30 rounded p-sm flex flex-col justify-center items-center text-center">
+<span class="font-label-caps text-label-caps text-outline mb-1">BATT VOLTAGE</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface font-data-mono">13.8<span class="text-body-md text-outline">V</span></span>
+</div>
+<!-- Sensor Block 3 -->
+<div class="bg-surface-container-low border border-outline-variant/30 rounded p-sm flex flex-col justify-center items-center text-center">
+<span class="font-label-caps text-label-caps text-outline mb-1">TIRE P (F)</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface font-data-mono">32<span class="text-body-md text-outline">PSI</span></span>
+</div>
+<!-- Sensor Block 4 -->
+<div class="bg-surface-container-low border border-outline-variant/30 rounded p-sm flex flex-col justify-center items-center text-center">
+<span class="font-label-caps text-label-caps text-outline mb-1">TIRE P (R)</span>
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface font-data-mono">36<span class="text-body-md text-outline">PSI</span></span>
+</div>
+</div>
+</section>
+<!-- RECENT RIDE & CLIMATE (Split remaining space) -->
+<section class="md:col-span-7 bg-surface-container border-mechanical rounded-lg overflow-hidden flex flex-col relative h-[300px]">
+<div class="absolute inset-0 bg-cover bg-center opacity-40 mix-blend-luminosity" data-alt="A topographical map style rendering with stark, high-contrast contour lines on a dark charcoal background. The map route is highlighted in a vibrant, glowing primary green color, tracking a winding mountainous road. The aesthetic is purely technical, reminiscent of military GPS interfaces or advanced digital dashboards, completely devoid of natural lighting or photorealism." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCE0BfLeGq_BTOm1924SfMw2Vue0GhUSsQzO5xuJfbJMISH7qgms7yI1hfKDGyfc1INwKu_9MiFUWnBmE7NDUtg6Gn3ujMllK-HLvcQkeYi3S_U57kkVoBRz-IsH-ch15PoGrlXFPN4XKE_JP7VbKjCbXH44JWU7gjWsJYKFuy9vJB5GRZxWJzNKKu2BiH3O9zz16ueTbCKBsT3tzXYaEVLayymF2bxfMWbDSp5za7xloyu4PqyD3Ql')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container via-surface-container/80 to-transparent"></div>
+<div class="relative z-10 p-md flex flex-col h-full justify-end">
+<span class="font-label-caps text-label-caps text-outline bg-surface px-2 py-1 rounded border border-outline-variant w-fit mb-2">RECENT RIDE</span>
+<h3 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface uppercase mb-1">Highland Trail</h3>
+<div class="flex gap-4 font-data-mono text-data-mono text-secondary">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">timer</span> 2h 14m</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">route</span> 142 KM</span>
+</div>
+</div>
+</section>
+<section class="md:col-span-5 bg-surface-container border-mechanical rounded-lg p-md flex flex-col justify-between">
+<div class="border-b border-outline-variant/50 pb-sm mb-xs">
+<h2 class="font-title-md text-title-md uppercase text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined">partly_cloudy_day</span> Climate Outlook
+                    </h2>
+</div>
+<div class="flex items-center justify-between mb-4">
+<div class="flex flex-col">
+<span class="font-headline-lg text-headline-lg text-on-surface">14°C</span>
+<span class="font-body-md text-body-md text-outline">Overcast</span>
+</div>
+<span class="material-symbols-outlined text-[48px] text-outline font-light">cloud</span>
+</div>
+<div class="bg-surface-container-lowest p-sm rounded border border-outline-variant/30 font-data-mono text-data-mono text-secondary">
+                    WIND: 12 KM/H NE<br>
+                    PRECIP: 10%
+                </div>
+</section>
+</div>
+</main>
+<!-- BOTTOM NAV BAR (Shared Component - Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 bg-surface-container-lowest border-t border-outline-variant/50 shadow-[0_-4px_10px_rgba(0,0,0,0.5)] rounded-t-xl">
+<!-- Active Tab: Garage -->
+<a class="flex flex-col items-center justify-center text-primary bg-primary-container/20 rounded-xl py-1 px-3 active:translate-y-0.5 transition-all duration-100" href="#">
+<span class="material-symbols-outlined" data-icon="settings_input_component" data-weight="fill" style="font-variation-settings: 'FILL' 1;">settings_input_component</span>
+<span class="font-label-caps text-label-caps mt-1">Garage</span>
+</a>
+<!-- Inactive Tabs -->
+<a class="flex flex-col items-center justify-center text-outline p-2 hover:text-on-surface active:translate-y-0.5 transition-all duration-100" href="#">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+<span class="font-label-caps text-label-caps mt-1">Journeys</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline p-2 hover:text-on-surface active:translate-y-0.5 transition-all duration-100" href="#">
+<span class="material-symbols-outlined" data-icon="build">build</span>
+<span class="font-label-caps text-label-caps mt-1">Service</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline p-2 hover:text-on-surface active:translate-y-0.5 transition-all duration-100" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-label-caps text-label-caps mt-1">Community</span>
+</a>
+</nav>
+</body></html>

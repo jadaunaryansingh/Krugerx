@@ -1,0 +1,367 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Core System Diagnostics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&amp;family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary": "#FF0000",
+                      "primary-container": "#4a0000",
+                      "on-primary": "#ffffff",
+                      "background": "#0A0A0A",
+                      "surface": "#0A0A0A",
+                      "surface-container": "#111111",
+                      "surface-container-high": "#1a1a1a",
+                      "outline": "#333333",
+                      "outline-variant": "#222222",
+                      "on-surface": "#ffffff",
+                      "on-surface-variant": "#aaaaaa",
+                      "error": "#ff0000",
+                      "error-container": "#330000",
+                      "on-error": "#ffffff"
+              },
+              "fontFamily": {
+                      "headline": ["Archivo Narrow", "sans-serif"],
+                      "body": ["Hanken Grotesk", "sans-serif"],
+                      "mono": ["JetBrains Mono", "monospace"]
+              }
+            }
+          }
+        }
+      </script>
+<style>
+        body {
+            background-color: #0A0A0A;
+            background-image: 
+                linear-gradient(rgba(255, 0, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            color: #ffffff;
+        }
+        
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(to bottom, rgba(255,0,0,0) 0%, rgba(255,0,0,0.05) 50%, rgba(255,0,0,0) 100%);
+            animation: scan 4s linear infinite;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+
+        .terminal-panel {
+            background: rgba(10, 10, 10, 0.9);
+            border: 1px solid #333;
+            box-shadow: inset 0 0 20px rgba(255,0,0,0.05);
+            position: relative;
+        }
+
+        .terminal-panel::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 1px;
+            background: linear-gradient(90deg, transparent, #FF0000, transparent);
+            opacity: 0.3;
+        }
+
+        .glow-text {
+            text-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
+        }
+
+        .glow-border {
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.15), inset 0 0 5px rgba(255, 0, 0, 0.1);
+            border-color: rgba(255, 0, 0, 0.8);
+        }
+
+        .data-bar {
+            background: repeating-linear-gradient(
+                90deg,
+                #FF0000,
+                #FF0000 2px,
+                transparent 2px,
+                transparent 4px
+            );
+        }
+
+        .btn-override {
+            background: radial-gradient(circle at center, #8B0000 0%, #2a0000 100%);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3), inset 0 0 10px rgba(255, 255, 255, 0.1);
+            border: 1px solid #FF0000;
+            text-shadow: 0 0 3px rgba(255,255,255,0.6);
+            transition: all 0.1s;
+        }
+        .btn-override:active {
+            transform: scale(0.95);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.6), inset 0 0 15px rgba(0, 0, 0, 0.8);
+        }
+
+        .orbital-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 1px dashed rgba(255, 0, 0, 0.3);
+            pointer-events: none;
+        }
+        
+        .orbital-ring-1 { width: 220px; height: 220px; animation: spin 20s linear infinite; border: 1px solid rgba(255,0,0,0.1); }
+        .orbital-ring-2 { width: 260px; height: 260px; animation: spin-reverse 30s linear infinite; border-top: 2px solid rgba(255,0,0,0.4); border-bottom: 2px solid rgba(255,0,0,0.4); }
+        .orbital-ring-3 { width: 300px; height: 300px; animation: spin 40s linear infinite; border: 1px dotted rgba(255,0,0,0.2); }
+
+        @keyframes spin { 100% { transform: translate(-50%, -50%) rotate(360deg); } }
+        @keyframes spin-reverse { 100% { transform: translate(-50%, -50%) rotate(-360deg); } }
+
+        /* Glitch effect on terminal feed */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .cursor-blink {
+            animation: blink 1s step-end infinite;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0A0A0A;
+            border-left: 1px solid #1a1a1a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4a0000;
+            border-radius: 0;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #FF0000;
+        }
+    </style>
+</head>
+<body class="font-mono min-h-screen pt-16 selection:bg-primary selection:text-white pb-8">
+<div class="scanline"></div>
+<!-- Top Navigation -->
+<header class="fixed top-0 w-full z-50 bg-background/95 border-b border-outline backdrop-blur-sm h-16 px-6 flex justify-between items-center">
+<div class="flex items-center gap-4">
+<div class="w-2 h-2 bg-primary rounded-full animate-pulse shadow-[0_0_5px_#ff0000]"></div>
+<h1 class="font-headline text-xl font-bold tracking-widest text-primary glow-text uppercase">
+                CMD_TERM // ENFIELD
+            </h1>
+</div>
+<nav class="hidden md:flex gap-8 items-center h-full">
+<a class="text-xs text-on-surface-variant hover:text-primary transition-colors flex items-center h-full tracking-[0.2em] uppercase" href="#">sys.garage</a>
+<a class="text-xs text-on-surface-variant hover:text-primary transition-colors flex items-center h-full tracking-[0.2em] uppercase" href="#">sys.journeys</a>
+<a class="text-xs text-primary font-bold border-b border-primary flex items-center h-full tracking-[0.2em] uppercase glow-text" href="#">sys.core_diag</a>
+<a class="text-xs text-on-surface-variant hover:text-primary transition-colors flex items-center h-full tracking-[0.2em] uppercase" href="#">sys.network</a>
+</nav>
+<div class="flex items-center gap-4 text-primary">
+<span class="text-[10px] uppercase tracking-[0.2em]">Uplink: Stable</span>
+<button class="hover:bg-surface-container p-2 rounded transition-colors border border-transparent hover:border-primary/50">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 0;">terminal</span>
+</button>
+</div>
+</header>
+<main class="max-w-[1400px] mx-auto px-4 md:px-8 pt-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Header Region -->
+<div class="col-span-1 lg:col-span-12 flex flex-col md:flex-row justify-between items-start md:items-end border-b border-outline pb-4 mb-2">
+<div>
+<h2 class="text-on-surface-variant text-[10px] tracking-[0.3em] mb-1 uppercase">System Status Overview</h2>
+<h3 class="font-headline text-3xl font-bold text-white uppercase tracking-widest">Core Diagnostics</h3>
+</div>
+<div class="mt-4 md:mt-0 flex gap-4">
+<div class="terminal-panel px-3 py-1 border border-outline flex items-center gap-3">
+<span class="text-[9px] text-on-surface-variant uppercase tracking-[0.2em]">Identity</span>
+<span class="text-white text-xs font-bold tracking-widest">INT-650 // ALPHA</span>
+</div>
+<div class="terminal-panel px-3 py-1 border border-primary/50 glow-border flex items-center gap-3">
+<span class="text-[9px] text-primary uppercase tracking-[0.2em]">Conn</span>
+<span class="text-white text-xs font-bold tracking-widest">ONLINE</span>
+</div>
+</div>
+</div>
+<!-- Central Override Button Region -->
+<div class="col-span-1 lg:col-span-12 flex justify-center py-16 relative overflow-hidden">
+<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,0,0,0.05)_0%,transparent_60%)] pointer-events-none"></div>
+<div class="relative flex items-center justify-center">
+<div class="orbital-ring orbital-ring-1"></div>
+<div class="orbital-ring orbital-ring-2"></div>
+<div class="orbital-ring orbital-ring-3"></div>
+<button class="btn-override w-40 h-40 rounded-full flex flex-col items-center justify-center gap-2 relative z-10 group">
+<span class="material-symbols-outlined text-white text-4xl group-hover:scale-110 transition-transform drop-shadow-[0_0_5px_rgba(255,255,255,0.5)]" style="font-variation-settings: 'FILL' 1;">power_settings_new</span>
+<span class="font-headline text-xs font-bold text-white uppercase tracking-[0.2em] leading-tight text-center">System<br>Halt</span>
+</button>
+</div>
+</div>
+<!-- Sensor Data Grid -->
+<div class="col-span-1 lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Oil Pressure -->
+<div class="terminal-panel p-4 flex flex-col justify-between group">
+<div class="flex justify-between items-center mb-4">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+<span class="text-[10px] text-on-surface-variant tracking-[0.2em] uppercase">Sensor: Oil_Prs</span>
+</div>
+<span class="text-primary text-[9px] tracking-widest uppercase animate-pulse">Syncing</span>
+</div>
+<div class="mb-3">
+<div class="flex justify-between items-end mb-1">
+<span class="text-2xl font-bold text-white leading-none">80<span class="text-xs text-on-surface-variant ml-1">%</span></span>
+<span class="text-[9px] text-primary uppercase tracking-[0.2em]">Nominal</span>
+</div>
+<div class="h-2 w-full bg-[#111] border border-[#222]">
+<div class="h-full data-bar w-[80%]"></div>
+</div>
+</div>
+<div class="flex justify-between text-[9px] text-on-surface-variant uppercase tracking-[0.2em] border-t border-[#222] pt-2">
+<span>Min: 20%</span>
+<span>Max: 100%</span>
+</div>
+</div>
+<!-- Tire Pressure -->
+<div class="terminal-panel p-4 flex flex-col justify-between group border-l-2 border-l-primary relative overflow-hidden">
+<div class="absolute inset-0 bg-primary/5 pointer-events-none animate-pulse"></div>
+<div class="flex justify-between items-center mb-4 relative z-10">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+<span class="text-[10px] text-white tracking-[0.2em] uppercase">Sensor: Tire_Rr</span>
+</div>
+<span class="text-primary text-[9px] tracking-widest uppercase animate-pulse glow-text">Alert</span>
+</div>
+<div class="mb-3 relative z-10">
+<div class="flex justify-between items-end mb-1">
+<span class="text-2xl font-bold text-primary leading-none glow-text">32<span class="text-xs text-primary/70 ml-1">PSI</span></span>
+<span class="text-[9px] text-primary uppercase tracking-[0.2em]">Sub-Opt</span>
+</div>
+<div class="h-2 w-full bg-[#111] border border-primary/30">
+<div class="h-full bg-primary w-[85%]"></div>
+</div>
+</div>
+<div class="flex justify-between text-[9px] text-on-surface-variant uppercase tracking-[0.2em] border-t border-[#222] pt-2 relative z-10">
+<span>Target: 36 PSI</span>
+<span class="text-primary">Dev: -4 PSI</span>
+</div>
+</div>
+<!-- Chain Tension -->
+<div class="terminal-panel p-4 flex flex-col justify-between group">
+<div class="flex justify-between items-center mb-4">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 bg-primary/50 rounded-full"></span>
+<span class="text-[10px] text-on-surface-variant tracking-[0.2em] uppercase">Sensor: Chain_Ten</span>
+</div>
+<span class="text-primary/50 text-[9px] tracking-widest uppercase">Active</span>
+</div>
+<div class="mb-3">
+<div class="flex justify-between items-end mb-1">
+<span class="text-2xl font-bold text-white leading-none">25<span class="text-xs text-on-surface-variant ml-1">MM</span></span>
+<span class="text-[9px] text-on-surface-variant uppercase tracking-[0.2em]">Stable</span>
+</div>
+<div class="flex gap-[2px] h-2 w-full">
+<div class="flex-1 bg-[#222]"></div>
+<div class="flex-1 bg-[#222]"></div>
+<div class="flex-1 bg-primary/80"></div>
+<div class="flex-1 bg-[#222]"></div>
+<div class="flex-1 bg-[#222]"></div>
+</div>
+</div>
+<div class="flex justify-between text-[9px] text-on-surface-variant uppercase tracking-[0.2em] border-t border-[#222] pt-2">
+<span>Tol: 20-30MM</span>
+<span>Stat: OK</span>
+</div>
+</div>
+<!-- Power Output / Battery -->
+<div class="terminal-panel p-4 flex flex-col justify-between group">
+<div class="flex justify-between items-center mb-4">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 bg-primary/50 rounded-full"></span>
+<span class="text-[10px] text-on-surface-variant tracking-[0.2em] uppercase">Sensor: Pwr_Cell</span>
+</div>
+<span class="text-primary/50 text-[9px] tracking-widest uppercase">Active</span>
+</div>
+<div class="mb-3">
+<div class="flex justify-between items-end mb-1">
+<span class="text-2xl font-bold text-white leading-none">12.8<span class="text-xs text-on-surface-variant ml-1">V</span></span>
+<span class="text-[9px] text-on-surface-variant uppercase tracking-[0.2em]">Optimal</span>
+</div>
+<div class="h-2 w-full bg-[#111] border border-[#222] overflow-hidden relative">
+<div class="absolute top-0 left-0 h-full data-bar w-[95%] opacity-70"></div>
+</div>
+</div>
+<div class="flex justify-between text-[9px] text-on-surface-variant uppercase tracking-[0.2em] border-t border-[#222] pt-2">
+<span>Drw: 0.2A</span>
+<span>Cap: 98%</span>
+</div>
+</div>
+</div>
+<!-- Terminal Feed / Real-time Log -->
+<div class="col-span-1 lg:col-span-4 flex flex-col">
+<div class="flex justify-between items-center border-b border-[#222] pb-2 mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px] text-primary">terminal</span>
+<h3 class="text-[10px] text-white uppercase tracking-[0.2em]">System Log</h3>
+</div>
+<span class="text-[8px] bg-[#111] text-primary px-1.5 py-0.5 uppercase tracking-widest border border-[#333]">Tracking</span>
+</div>
+<div class="terminal-panel flex-grow p-3 overflow-hidden relative h-[320px] font-mono text-[10px] leading-relaxed">
+<div class="absolute inset-0 bg-gradient-to-b from-transparent to-[#0A0A0A] pointer-events-none z-10 top-[70%]"></div>
+<div class="space-y-1.5 flex flex-col justify-end min-h-full">
+<div class="text-[#555]">&gt; ENFIELD_OS KERNEL v4.1.9 BOOT SEQ</div>
+<div class="text-[#666]">&gt; LOADING MODULES [.........] OK</div>
+<div class="text-[#777]">&gt; MOUNTING FILESYSTEMS... OK</div>
+<div class="text-[#888]">&gt; INITIALIZING TELEMETRY DAEMON</div>
+<div class="text-[#999]">&gt; CONNECTING SENSOR BUS: I2C_01</div>
+<div class="text-[#aaa]">&gt; SENSOR CHECK: 14/14 RESPONDING</div>
+<div class="text-[#bbb]">&gt; ESTABLISHING SECURE UPLINK...</div>
+<div class="text-white">&gt; UPLINK ESTABLISHED. AUTH: INT-650</div>
+<div class="text-primary mt-2">&gt; [WARN] TIRE_RR: PRESSURE DROP DETECTED</div>
+<div class="text-primary">&gt; [WARN] DELTA: -4 PSI. COMPENSATING...</div>
+<div class="text-white">&gt; AWAITING COMMAND.</div>
+<div class="text-white flex items-center gap-1 mt-1">
+<span class="text-primary">&gt; root@int650:~#</span>
+<span class="w-1.5 h-3 bg-primary cursor-blink inline-block"></span>
+</div>
+</div>
+</div>
+<button class="mt-3 w-full bg-[#111] border border-[#333] text-on-surface-variant hover:text-primary hover:border-primary hover:bg-[#1a0000] transition-all py-2 flex justify-center items-center gap-2 uppercase tracking-[0.2em] text-[10px]">
+<span class="material-symbols-outlined text-[14px]">download</span>
+                Export Telemetry
+            </button>
+</div>
+</main>
+<!-- Mobile Nav (Terminal style) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-[#0A0A0A] border-t border-[#222] pb-safe pt-1 px-4">
+<div class="flex justify-between items-center h-12">
+<a class="flex flex-col items-center justify-center text-on-surface-variant w-1/4" href="#">
+<span class="material-symbols-outlined text-lg">dataset</span>
+<span class="text-[8px] uppercase tracking-widest mt-0.5">Garage</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant w-1/4" href="#">
+<span class="material-symbols-outlined text-lg">route</span>
+<span class="text-[8px] uppercase tracking-widest mt-0.5">Route</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary w-1/4 relative" href="#">
+<div class="absolute -top-3 w-8 h-[2px] bg-primary glow-border"></div>
+<span class="material-symbols-outlined text-lg">terminal</span>
+<span class="text-[8px] uppercase tracking-widest mt-0.5 glow-text">Diag</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant w-1/4" href="#">
+<span class="material-symbols-outlined text-lg">hub</span>
+<span class="text-[8px] uppercase tracking-widest mt-0.5">Net</span>
+</a>
+</div>
+</nav>
+</body></html>

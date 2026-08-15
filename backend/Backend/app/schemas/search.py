@@ -9,10 +9,18 @@ class SearchResultItem(BaseModel):
     favicon: Optional[str] = None
 
 
+class KnowledgePanel(BaseModel):
+    title: str
+    description: str
+    image_url: Optional[str] = None
+    url: Optional[str] = None
+    attributes: Optional[dict] = None
+
 class SearchResponse(BaseModel):
     provider: str
     query: str
     results: List[SearchResultItem]
+    knowledge_panel: Optional[KnowledgePanel] = None
 
 
 class SearchSuggestionResponse(BaseModel):

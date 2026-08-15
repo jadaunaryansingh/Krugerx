@@ -1,0 +1,361 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Community - Enfield Companion</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&amp;family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#131313",
+                        "outline": "#8a938b",
+                        "on-tertiary-fixed": "#2a1707",
+                        "primary-fixed": "#b4f0c7",
+                        "primary-fixed-dim": "#98d4ac",
+                        "background": "#131313",
+                        "on-tertiary-container": "#bd9c84",
+                        "secondary-container": "#484949",
+                        "on-secondary-fixed-variant": "#464747",
+                        "tertiary-fixed": "#ffdcc3",
+                        "inverse-on-surface": "#313030",
+                        "on-tertiary-fixed-variant": "#5a422e",
+                        "error-container": "#93000a",
+                        "on-primary-fixed-variant": "#165132",
+                        "on-surface-variant": "#c0c9c0",
+                        "secondary-fixed-dim": "#c6c6c6",
+                        "surface-variant": "#353535",
+                        "surface-container": "#20201f",
+                        "tertiary-fixed-dim": "#e3c0a6",
+                        "on-primary-fixed": "#002110",
+                        "on-tertiary": "#412c1a",
+                        "surface-tint": "#98d4ac",
+                        "on-secondary-container": "#b8b8b8",
+                        "tertiary-container": "#4b3422",
+                        "primary": "#98d4ac",
+                        "on-primary": "#00391f",
+                        "surface-container-low": "#1c1b1b",
+                        "on-primary-container": "#75af89",
+                        "on-background": "#e5e2e1",
+                        "inverse-primary": "#316948",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "surface-dim": "#131313",
+                        "tertiary": "#e3c0a6",
+                        "on-error-container": "#ffdad6",
+                        "primary-container": "#004225",
+                        "surface-container-high": "#2a2a2a",
+                        "inverse-surface": "#e5e2e1",
+                        "secondary-fixed": "#e3e2e2",
+                        "surface-container-highest": "#353535",
+                        "surface-bright": "#393939",
+                        "on-secondary": "#2f3131",
+                        "secondary": "#c6c6c6",
+                        "on-error": "#690005",
+                        "error": "#ffb4ab",
+                        "on-surface": "#e5e2e1",
+                        "surface-container-lowest": "#0e0e0e",
+                        "outline-variant": "#404942"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "xl": "80px",
+                        "margin-desktop": "64px",
+                        "xs": "4px",
+                        "lg": "48px",
+                        "base": "8px",
+                        "sm": "12px",
+                        "md": "24px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Archivo Narrow"],
+                        "title-md": ["Archivo Narrow"],
+                        "headline-lg-mobile": ["Archivo Narrow"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "label-caps": ["JetBrains Mono"],
+                        "display-lg": ["Archivo Narrow"],
+                        "data-mono": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "title-md": ["20px", {"lineHeight": "28px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "34px", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700"}],
+                        "display-lg": ["48px", {"lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "data-mono": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Mechanical Heritage Specific Styles */
+        .knurled-border {
+            border: 1px solid rgba(192, 192, 192, 0.3);
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(192, 192, 192, 0.1) 2px, rgba(192, 192, 192, 0.1) 4px);
+        }
+        
+        .chrome-edge {
+            box-shadow: inset 1px 1px 0px 0px rgba(192, 192, 192, 0.3), inset -1px -1px 0px 0px rgba(0, 0, 0, 0.8);
+        }
+        
+        .recessed-panel {
+            box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.8), inset -1px -1px 2px rgba(255, 255, 255, 0.05);
+        }
+        
+        .brushed-metal {
+            background: linear-gradient(135deg, #2a2a2a 0%, #1a1c1c 100%);
+        }
+
+        .masonry-grid {
+            columns: 1;
+            column-gap: 16px;
+        }
+        
+        @media (min-width: 768px) {
+            .masonry-grid {
+                columns: 2;
+                column-gap: 24px;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .masonry-grid {
+                columns: 3;
+                column-gap: 24px;
+            }
+        }
+        
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 16px;
+        }
+
+        @media (min-width: 768px) {
+            .masonry-item {
+                margin-bottom: 24px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface antialiased min-h-screen flex flex-col pb-24 md:pb-0 pt-16 selection:bg-primary-container selection:text-primary">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 border-b border-outline-variant/30 bg-surface flex justify-between items-center h-16 px-margin-mobile w-full">
+<div class="font-headline-lg-mobile text-headline-lg-mobile tracking-tighter text-on-surface uppercase md:font-headline-lg md:text-headline-lg">
+            ENFIELD COMPANION
+        </div>
+<!-- Desktop Nav Cluster -->
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-on-surface-variant font-label-caps text-label-caps hover:bg-surface-container-high transition-colors px-3 py-2 rounded-DEFAULT active:scale-95 transition-transform flex items-center gap-2" href="#">
+<span class="material-symbols-outlined" data-icon="settings_input_component">settings_input_component</span>
+                Garage
+            </a>
+<a class="text-on-surface-variant font-label-caps text-label-caps hover:bg-surface-container-high transition-colors px-3 py-2 rounded-DEFAULT active:scale-95 transition-transform flex items-center gap-2" href="#">
+<span class="material-symbols-outlined" data-icon="explore">explore</span>
+                Journeys
+            </a>
+<a class="text-on-surface-variant font-label-caps text-label-caps hover:bg-surface-container-high transition-colors px-3 py-2 rounded-DEFAULT active:scale-95 transition-transform flex items-center gap-2" href="#">
+<span class="material-symbols-outlined" data-icon="build">build</span>
+                Service
+            </a>
+<a class="text-primary font-bold font-label-caps text-label-caps hover:bg-surface-container-high transition-colors px-3 py-2 rounded-DEFAULT active:scale-95 transition-transform flex items-center gap-2" href="#">
+<span class="material-symbols-outlined" data-icon="groups" style="font-variation-settings: 'FILL' 1;">groups</span>
+                Community
+            </a>
+</nav>
+<div class="flex items-center gap-4 text-primary dark:text-primary">
+<button class="hover:bg-surface-container-high transition-colors p-2 rounded-full active:scale-95 transition-transform flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="hover:bg-surface-container-high transition-colors p-2 rounded-full active:scale-95 transition-transform flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full max-w-[1440px] mx-auto px-margin-mobile md:px-margin-desktop pt-8">
+<!-- Hero Section -->
+<section class="mb-12 relative w-full h-[409px] min-h-[300px] border border-outline-variant/30 chrome-edge overflow-hidden rounded-DEFAULT">
+<div class="absolute inset-0 bg-cover bg-center mix-blend-luminosity opacity-60" data-alt="A convoy of classic and modern Royal Enfield motorcycles riding through a rugged, dusty mountain pass at golden hour. The sunlight reflects off the chrome exhausts and polished tanks. The mood is adventurous and deeply cinematic, emphasizing the raw, mechanical beauty of the bikes against a vast, untamed landscape." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBYIYH0NBxxfQ_gKls49-PvLhZ91U48JEWw-NKY4usFsB7HDlCqtMxXYF3XjEKrVUrOZfl5wYr_MLsXni_omomJtnXsWnWywhITEFyrirxi6QNSFnKZ8IYrHUEttfp95gMu-9wKYnQRnLR0vAjlBsR6LGVSYldvgCIkTmiA4I72WLjRUjiylPk3uJ0jeQHNd3PS-eNio6z4hJlrjLuVwQXvLydNSvDkBpc2sLJmjX5op7BfgRIlUYfE')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-8 w-full">
+<div class="font-data-mono text-data-mono text-primary mb-2 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                    LIVE REGISTRATION
+                </div>
+<h1 class="font-display-lg text-display-lg text-on-surface mb-4 uppercase tracking-tighter shadow-sm">Rider Mania 2024</h1>
+<div class="flex flex-wrap gap-4 items-center">
+<button class="bg-gradient-to-b from-primary to-inverse-primary text-on-primary font-label-caps text-label-caps px-6 py-3 rounded-DEFAULT hover:opacity-90 active:scale-95 transition-all flex items-center gap-2 border border-primary/50 chrome-edge">
+<span class="material-symbols-outlined" data-icon="confirmation_number">confirmation_number</span>
+                        SECURE PASS
+                    </button>
+<div class="flex items-center gap-2 text-on-surface-variant font-data-mono text-data-mono">
+<span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
+                        NOV 22-24 | GOA, IN
+                    </div>
+</div>
+</div>
+</section>
+<!-- Masonry Grid for Photos & Events -->
+<div class="masonry-grid w-full">
+<!-- Event Card 1 -->
+<div class="masonry-item bg-surface-container border border-outline-variant/30 rounded-DEFAULT chrome-edge overflow-hidden hover:border-primary/50 transition-colors group">
+<div class="h-48 relative border-b border-outline-variant/30">
+<div class="absolute inset-0 bg-cover bg-center mix-blend-luminosity group-hover:mix-blend-normal transition-all duration-500" data-alt="A close-up shot of a steaming cup of dark coffee resting on a rugged wooden table outside a vintage cafe. In the background, slightly out of focus, a matte black Royal Enfield Continental GT 650 is parked, its mechanical details softly catching the morning light. The mood is early morning anticipation and camaraderie." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDYYXHl8fZyjiYCkan4VHrtrkfSdfPZgkASOX_fF9CmS_DWuqntoklXR4yF7qRrib5rmM63mrP5Y5eaJrAqggntZJs-AveBRGTLInHS8FdRdSfJaychibpo3SfwyhlormurSWno8hHWNAwaoW7jK4DVXT6E46YUhVKWL2VFVyB9vWB-wWdV4z2JBKTzrOzJMBg0nzzr3VUiBiqWQDiKW6kX37ED9Re3dI4nRr0Q-IsWX6kRYTKoVk9k')"></div>
+<div class="absolute top-4 right-4 bg-surface text-primary font-data-mono text-data-mono px-2 py-1 rounded-sm chrome-edge">
+                        OCT 15
+                    </div>
+</div>
+<div class="p-6">
+<h3 class="font-title-md text-title-md text-on-surface mb-2 uppercase tracking-wide">Sunday Morning Breakfast Run</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">Join the local chapter for a brisk 50km ride to the coastal diner. All models welcome.</p>
+<div class="flex items-center justify-between border-t border-outline-variant/30 pt-4 mt-auto">
+<div class="flex -space-x-2">
+<img class="w-8 h-8 rounded-full border-2 border-surface object-cover" data-alt="A black and white portrait of a rugged motorcyclist wearing a vintage open-face helmet and goggles, looking intently at the camera." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAihao8_yNKjzprAcVgVyKqdisa726IGPT_gqb3lehB7-KcF3Dtb74vrixgVtUZBRRk39c99kzKlXKesDCUU5m748MgHrXupsEHfWLqi4tn-v-VPTy8JNR1mnblz5XBKKHK8t9qj0Rsw-r185WitZGp3M20mzv5wWu-CTseyyoBm04kWiie0D0cIQ8kEQpGylVGvkOG3IATe1mFFe3SturppiuI_p2IUFm0w6dm5Mp3FcYp2yEBwUnq">
+<img class="w-8 h-8 rounded-full border-2 border-surface object-cover" data-alt="A high-contrast profile picture of a woman with a leather riding jacket, her hair windblown, captured in harsh sunlight." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBH2uAEw5wY9khhdSbAIGE6D6zA9EOtplBCU86utFbda-xEB1oHghVz6a1EvDxWJ3Xp3NK8eyTPSIYrPrvMNJjKo_RwS3iPvRg43kBAQ76oHsEbYaA-MGMbqUmUpv9zbGMspKQYMdIY9B1rqO-8lxRGZ4g1KP02cnPJ_U4rqf3lR6OxgW5sssH5ERhCVyD-s6Eelczegp9ua7kn4hqaCIjL5CX4h-KRdTsScrFNzI4zhZxrih-vPaFE">
+<div class="w-8 h-8 rounded-full border-2 border-surface bg-surface-container-high flex items-center justify-center font-data-mono text-[10px] text-on-surface-variant">
+                                +12
+                            </div>
+</div>
+<button class="text-primary hover:text-on-primary-container transition-colors p-2">
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Photo Card 1 -->
+<div class="masonry-item bg-surface-container p-2 border border-outline-variant/30 rounded-DEFAULT chrome-edge">
+<img class="w-full h-auto object-cover rounded-sm mb-2 grayscale hover:grayscale-0 transition-all duration-500" data-alt="A dramatic, low-angle photograph of a Royal Enfield Himalayan motorcycle covered in mud, parked on a rocky riverbed. The sky is dark and stormy, emphasizing the machine's rugged endurance. High-contrast, gritty, industrial aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2XWwnNS0du77gQJ6OsPJ3c5GzaLxlCgB_iTNqtC5ipA8MEow4p-aelk5oYHUCyKc4NPhnfpVz8UraKnVY7NukO0B0uYG7MuvIXempBfMniB80yeIDgi20tz3czewCmrR0UfzX6cAkPTqBaMSUQbdzgMhFOupW7XVf-TmCdmfv-oYkFOZY4QnF41_uief8jMmXYk9ubVDzh8hnns17fUyc25Go1Li7NZcHmQwpDswnblsWUC4pXVsF">
+<div class="px-2 pb-2 flex justify-between items-center mt-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-sm" data-icon="location_on">location_on</span>
+<span class="font-data-mono text-[12px] text-on-surface-variant">SPITI VALLEY</span>
+</div>
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="favorite">favorite</span>
+</button>
+</div>
+</div>
+<!-- Leaderboard Card -->
+<div class="masonry-item bg-surface-container border border-outline-variant/30 rounded-DEFAULT chrome-edge p-6 flex flex-col">
+<div class="flex items-center gap-3 mb-6 border-b border-outline-variant/30 pb-4">
+<span class="material-symbols-outlined text-primary" data-icon="military_tech">military_tech</span>
+<h2 class="font-title-md text-title-md text-on-surface uppercase tracking-widest">Global Leaderboard</h2>
+</div>
+<div class="space-y-4 flex-grow">
+<!-- Rank 1 -->
+<div class="flex items-center gap-4 bg-surface-container-low p-3 rounded-sm border border-primary/20">
+<div class="font-data-mono text-data-mono text-primary w-6 text-center">01</div>
+<div class="w-10 h-10 rounded-full border border-outline-variant/50 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A close-up portrait of a weathered motorcycle rider with a thick beard and aviator sunglasses, shot in high-contrast black and white." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqXPGXfnMPB31xpD0TElwrgCcsagFHKlfzBmkSRgplLqSNVtZ3UTdYAoeUlN-3242mocrvDS_ywxC7eqamVXywAVTQsPLAsm0AUKYheAfp3fvuPkBjXMdMBBcsvqTC5s2fJvvKZMcbkBnOe4S-fkwhVDLRa7F6iUyqMRQZt8AFoEDvfZXbPEfktsmB2EB9qj0jAFCEqC8EVVPwBeQINOBz44JRv8YmHiuAfe-Vn1T587S28ucR7NcP">
+</div>
+<div class="flex-grow">
+<div class="font-label-caps text-label-caps text-on-surface">J. THOUNAOJAM</div>
+<div class="font-data-mono text-[10px] text-on-surface-variant">INT 650</div>
+</div>
+<div class="font-data-mono text-data-mono text-primary text-right">
+                            14,205<br><span class="text-[10px] text-on-surface-variant">KM</span>
+</div>
+</div>
+<!-- Rank 2 -->
+<div class="flex items-center gap-4 p-3 border-b border-outline-variant/10">
+<div class="font-data-mono text-data-mono text-on-surface-variant w-6 text-center">02</div>
+<div class="w-10 h-10 rounded-full border border-outline-variant/50 overflow-hidden bg-surface-variant flex items-center justify-center font-label-caps text-label-caps text-on-surface">
+                            AK
+                        </div>
+<div class="flex-grow">
+<div class="font-label-caps text-label-caps text-on-surface">A. KHAN</div>
+<div class="font-data-mono text-[10px] text-on-surface-variant">HIMALAYAN</div>
+</div>
+<div class="font-data-mono text-data-mono text-on-surface text-right">
+                            12,890<br><span class="text-[10px] text-on-surface-variant">KM</span>
+</div>
+</div>
+<!-- Rank 3 -->
+<div class="flex items-center gap-4 p-3">
+<div class="font-data-mono text-data-mono text-on-surface-variant w-6 text-center">03</div>
+<div class="w-10 h-10 rounded-full border border-outline-variant/50 overflow-hidden bg-surface-variant flex items-center justify-center font-label-caps text-label-caps text-on-surface">
+                            MR
+                        </div>
+<div class="flex-grow">
+<div class="font-label-caps text-label-caps text-on-surface">M. REYNOLDS</div>
+<div class="font-data-mono text-[10px] text-on-surface-variant">CLASSIC 350</div>
+</div>
+<div class="font-data-mono text-data-mono text-on-surface text-right">
+                            11,450<br><span class="text-[10px] text-on-surface-variant">KM</span>
+</div>
+</div>
+</div>
+<button class="w-full mt-6 py-3 border border-outline-variant text-on-surface font-label-caps text-label-caps rounded-DEFAULT hover:bg-surface-variant transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]" data-icon="leaderboard">leaderboard</span>
+                    FULL RANKINGS
+                </button>
+</div>
+<!-- Directory Card -->
+<div class="masonry-item bg-surface-container border border-outline-variant/30 rounded-DEFAULT chrome-edge p-6">
+<div class="flex items-center gap-3 mb-6 border-b border-outline-variant/30 pb-4">
+<span class="material-symbols-outlined text-outline" data-icon="map">map</span>
+<h2 class="font-title-md text-title-md text-on-surface uppercase tracking-widest">Local Chapters</h2>
+</div>
+<div class="relative w-full h-48 mb-6 border border-outline-variant/30 recessed-panel bg-surface-container-lowest flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center opacity-30" data-alt="A dark, high-contrast topological map graphic with subtle neon green grid lines and waypoint markers indicating motorcycle routes. It looks like a high-tech navigation display embedded in a rugged mechanical housing." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDjGaLikhiI5VLld9hjyqPtqRBKsmFkvSLaNwgCc_2M5nmmiKg1Gk0e2i9gyRakybXWqfJYzu7fb5IE9sYMU0CQ2WWyeq0RIM9Bd3Wtq6UHxS9Qbwdum7u8zuY8RzUuwuxiDqQs1WqRS_YVpxt-aXErTc7N3ha-Q80eUp9abxgXhbrVdPw99S27VWx1-7RxjQ09OXZbtl41eISEeJaVzNxg2iJDw_qEcuLrAzKvphUqzxXbGtwutydj')"></div>
+<button class="relative z-10 bg-surface/80 backdrop-blur-sm border border-outline-variant px-4 py-2 font-data-mono text-data-mono text-on-surface rounded-sm flex items-center gap-2 hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-[16px]" data-icon="my_location">my_location</span>
+                        FIND NEAR ME
+                    </button>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 border border-outline-variant/50 rounded-full font-data-mono text-[10px] text-on-surface-variant hover:border-primary hover:text-primary transition-colors cursor-pointer">LONDON, UK</span>
+<span class="px-3 py-1 border border-primary/50 bg-primary/10 rounded-full font-data-mono text-[10px] text-primary cursor-pointer">CHENNAI, IN</span>
+<span class="px-3 py-1 border border-outline-variant/50 rounded-full font-data-mono text-[10px] text-on-surface-variant hover:border-primary hover:text-primary transition-colors cursor-pointer">MILWAUKEE, US</span>
+<span class="px-3 py-1 border border-outline-variant/50 rounded-full font-data-mono text-[10px] text-on-surface-variant hover:border-primary hover:text-primary transition-colors cursor-pointer">SYDNEY, AU</span>
+</div>
+</div>
+<!-- Photo Card 2 -->
+<div class="masonry-item bg-surface-container p-2 border border-outline-variant/30 rounded-DEFAULT chrome-edge">
+<img class="w-full h-auto object-cover rounded-sm mb-2 grayscale hover:grayscale-0 transition-all duration-500" data-alt="A close-up macro shot of a Royal Enfield engine casing, focusing on the polished metal cooling fins and the engraved brand logo. The lighting is moody and directional, emphasizing the texture and weight of the metal components." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBO8jFVINxXepxCFfKDTrbuEMzAxRC8GIq4j7F-UOxc95OfsfFNm7T3ERBYjfyZjBqwc-syrbcgD_PM6oYMY7NHz-GsxkzCFWktjvhxhfoX7w80K4dkp1zyjxgjzlOnFneIMPoaz_xeOAgW7uvisMuzyipdRzc1fAioHwx6NBpMpHYcPNQczdzbqrMusIk6pdT9DVYfRE0ZNEhSlETdBEQwGPdi4bS9jfdH6V0McxteO5p90V819iB5">
+<div class="px-2 pb-2 flex justify-between items-center mt-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-sm" data-icon="build">build</span>
+<span class="font-data-mono text-[12px] text-on-surface-variant">ENGINE ROOM</span>
+</div>
+<button class="text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="favorite">favorite</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 border-t border-outline-variant/50 bg-surface-container-lowest shadow-[0_-4px_10px_rgba(0,0,0,0.5)] rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-outline p-2 hover:text-on-surface active:translate-y-0.5 transition-all duration-100" href="#">
+<span class="material-symbols-outlined text-xl mb-1" data-icon="settings_input_component">settings_input_component</span>
+<span class="font-label-caps text-label-caps text-[10px]">Garage</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline p-2 hover:text-on-surface active:translate-y-0.5 transition-all duration-100" href="#">
+<span class="material-symbols-outlined text-xl mb-1" data-icon="explore">explore</span>
+<span class="font-label-caps text-label-caps text-[10px]">Journeys</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline p-2 hover:text-on-surface active:translate-y-0.5 transition-all duration-100" href="#">
+<span class="material-symbols-outlined text-xl mb-1" data-icon="build">build</span>
+<span class="font-label-caps text-label-caps text-[10px]">Service</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary bg-primary-container/20 rounded-xl py-1 px-3 hover:text-on-surface active:translate-y-0.5 transition-all duration-100" href="#">
+<span class="material-symbols-outlined text-xl mb-1" data-icon="groups" style="font-variation-settings: 'FILL' 1;">groups</span>
+<span class="font-label-caps text-label-caps text-[10px] font-bold">Community</span>
+</a>
+</nav>
+</body></html>

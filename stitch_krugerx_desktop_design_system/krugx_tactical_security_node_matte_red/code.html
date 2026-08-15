@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KRUGX-OS Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&amp;family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                            "on-primary-fixed": "#3f0000",
+                            "tertiary-fixed-dim": "#e3c0a6",
+                            "on-secondary-fixed": "#1a1c1c",
+                            "tertiary-fixed": "#ffdcc3",
+                            "on-tertiary-fixed": "#2a1707",
+                            "primary-fixed": "#ffb4ab",
+                            "primary-container": "#93000a",
+                            "on-background": "#e5e2e1",
+                            "secondary": "#c6c6c6",
+                            "on-tertiary-fixed-variant": "#5a422e",
+                            "on-primary-fixed-variant": "#690005",
+                            "secondary-fixed": "#e3e2e2",
+                            "inverse-surface": "#e5e2e1",
+                            "background": "#0e0e0e",
+                            "surface-container-high": "#2a2a2a",
+                            "surface-container-highest": "#353535",
+                            "on-primary": "#ffffff",
+                            "tertiary-container": "#4b3422",
+                            "surface": "#131313",
+                            "error-container": "#93000a",
+                            "surface-bright": "#393939",
+                            "on-error-container": "#ffdad6",
+                            "on-tertiary-container": "#bd9c84",
+                            "secondary-fixed-dim": "#c6c6c6",
+                            "error": "#ffb4ab",
+                            "outline": "#8a938b",
+                            "on-error": "#690005",
+                            "tertiary": "#e3c0a6",
+                            "primary-fixed-dim": "#ff897d",
+                            "inverse-on-surface": "#313030",
+                            "outline-variant": "#404942",
+                            "surface-container-low": "#1c1b1b",
+                            "on-primary-container": "#ffdad6",
+                            "on-secondary-fixed-variant": "#464747",
+                            "on-secondary": "#2f3131",
+                            "inverse-primary": "#93000a",
+                            "surface-tint": "#ff0000",
+                            "on-secondary-container": "#b8b8b8",
+                            "surface-container-lowest": "#0a0a0a",
+                            "surface-container": "#20201f",
+                            "on-surface": "#e5e2e1",
+                            "on-tertiary": "#412c1a",
+                            "surface-dim": "#131313",
+                            "surface-variant": "#353535",
+                            "on-surface-variant": "#c0c9c0",
+                            "secondary-container": "#484949",
+                            "primary": "#ff0000"
+                    },
+                    "borderRadius": {
+                            "DEFAULT": "0.125rem",
+                            "lg": "0.25rem",
+                            "xl": "0.5rem",
+                            "full": "0.75rem"
+                    },
+                    "spacing": {
+                            "sm": "12px",
+                            "lg": "48px",
+                            "margin-desktop": "64px",
+                            "xs": "4px",
+                            "md": "24px",
+                            "gutter": "24px",
+                            "base": "8px",
+                            "margin-mobile": "16px",
+                            "xl": "80px"
+                    },
+                    "fontFamily": {
+                            "body-lg": [
+                                    "Hanken Grotesk"
+                            ],
+                            "headline-lg": [
+                                    "Archivo Narrow"
+                            ],
+                            "data-mono": [
+                                    "JetBrains Mono"
+                            ],
+                            "title-md": [
+                                    "Archivo Narrow"
+                            ],
+                            "headline-lg-mobile": [
+                                    "Archivo Narrow"
+                            ],
+                            "body-md": [
+                                    "Hanken Grotesk"
+                            ],
+                            "display-lg": [
+                                    "Archivo Narrow"
+                            ],
+                            "label-caps": [
+                                    "JetBrains Mono"
+                            ]
+                    },
+                    "fontSize": {
+                            "body-lg": [
+                                    "18px",
+                                    {
+                                            "lineHeight": "28px",
+                                            "fontWeight": "400"
+                                    }
+                            ],
+                            "headline-lg": [
+                                    "32px",
+                                    {
+                                            "lineHeight": "40px",
+                                            "fontWeight": "700"
+                                    }
+                            ],
+                            "data-mono": [
+                                    "14px",
+                                    {
+                                            "lineHeight": "20px",
+                                            "letterSpacing": "0.02em",
+                                            "fontWeight": "500"
+                                    }
+                            ],
+                            "title-md": [
+                                    "20px",
+                                    {
+                                            "lineHeight": "28px",
+                                            "letterSpacing": "0.05em",
+                                            "fontWeight": "600"
+                                    }
+                            ],
+                            "headline-lg-mobile": [
+                                    "28px",
+                                    {
+                                            "lineHeight": "34px",
+                                            "fontWeight": "700"
+                                    }
+                            ],
+                            "body-md": [
+                                    "16px",
+                                    {
+                                            "lineHeight": "24px",
+                                            "fontWeight": "400"
+                                    }
+                            ],
+                            "display-lg": [
+                                    "48px",
+                                    {
+                                            "lineHeight": "52px",
+                                            "letterSpacing": "-0.02em",
+                                            "fontWeight": "700"
+                                    }
+                            ],
+                            "label-caps": [
+                                    "12px",
+                                    {
+                                            "lineHeight": "16px",
+                                            "letterSpacing": "0.1em",
+                                            "fontWeight": "700"
+                                    }
+                            ]
+                    }
+            },
+                },
+            }
+    </script>
+<style>
+        /* Mechanical/Brutalist specific utilities */
+        .mech-border {
+            border: 1px solid theme('colors.outline-variant');
+            box-shadow: inset 1px 1px 0px rgba(192, 192, 192, 0.1);
+        }
+        .mech-recessed {
+            background-color: theme('colors.surface-container-lowest');
+            box-shadow: inset 2px 2px 4px rgba(0,0,0,0.5), inset -1px -1px 2px rgba(255,255,255,0.05);
+            border: 1px solid theme('colors.surface-container-high');
+        }
+        .mech-toggle:checked + div {
+            background-image: linear-gradient(to bottom, theme('colors.primary-container'), theme('colors.on-primary-fixed'));
+            border-color: theme('colors.primary');
+        }
+        .mech-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 24px;
+            background: theme('colors.primary');
+            cursor: pointer;
+            border: 1px solid theme('colors.outline');
+            border-radius: 2px;
+            box-shadow: 1px 0px 0px rgba(255,255,255,0.3) inset;
+        }
+        .mech-slider {
+            -webkit-appearance: none;
+            height: 8px;
+            background: theme('colors.surface-container-lowest');
+            outline: none;
+            border: 1px solid theme('colors.surface-container-high');
+            box-shadow: inset 1px 1px 3px rgba(0,0,0,0.8);
+        }
+        .corner-bracket {
+            position: relative;
+        }
+        .corner-bracket::before, .corner-bracket::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-color: theme('colors.outline');
+            border-style: solid;
+        }
+        .corner-bracket-tl::before { top: 0; left: 0; border-width: 2px 0 0 2px; }
+        .corner-bracket-tr::after { top: 0; right: 0; border-width: 2px 2px 0 0; }
+        .corner-bracket-bl::before { bottom: 0; left: 0; border-width: 0 0 2px 2px; }
+        .corner-bracket-br::after { bottom: 0; right: 0; border-width: 0 2px 2px 0; }
+        
+        .knurled-bg {
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255,255,255,0.05) 2px, rgba(255,255,255,0.05) 4px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md h-screen flex flex-col overflow-hidden">
+<!-- TopAppBar -->
+<header class="bg-surface-container-lowest dark:bg-surface-container-lowest border-b border-outline-variant flex justify-between items-center px-margin-desktop h-20 w-full shrink-0 relative z-20">
+<div class="flex items-center gap-md">
+<span class="font-display-lg text-display-lg tracking-tighter text-primary dark:text-primary">KRUGX</span>
+<div class="h-6 w-[1px] bg-outline-variant mx-sm"></div>
+<span class="font-data-mono text-data-mono text-on-surface-variant uppercase">Settings</span>
+</div>
+<!-- Search Bar (Technical HUD Style) -->
+<div class="flex-1 max-w-md mx-lg relative hidden md:block">
+<div class="mech-recessed flex items-center px-sm py-xs h-10 w-full corner-bracket corner-bracket-tl corner-bracket-br">
+<span class="material-symbols-outlined text-outline text-[18px] mr-sm">search</span>
+<input class="bg-transparent border-none text-primary font-data-mono text-data-mono focus:ring-0 w-full placeholder:text-outline-variant placeholder:opacity-50 uppercase tracking-widest" placeholder="QUERY_SETTINGS..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-md text-primary dark:text-primary">
+<button class="hover:bg-surface-variant transition-colors p-sm rounded-DEFAULT flex items-center justify-center group relative">
+<span class="material-symbols-outlined group-active:opacity-80">timer</span>
+</button>
+<button class="hover:bg-surface-variant transition-colors p-sm rounded-DEFAULT flex items-center justify-center group relative">
+<span class="material-symbols-outlined group-active:opacity-80">sync</span>
+</button>
+<button class="hover:bg-surface-variant transition-colors p-sm rounded-DEFAULT flex items-center justify-center group relative">
+<span class="material-symbols-outlined group-active:opacity-80">power_settings_new</span>
+</button>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden relative z-10">
+<!-- SideNavBar -->
+<aside class="bg-surface-container-low dark:bg-surface-container-low h-full w-64 border-r border-outline-variant flex flex-col py-md shrink-0 hidden md:flex">
+<!-- Header section logic embedded in the flex col -->
+<div class="px-md mb-lg flex items-center gap-sm">
+<div class="w-10 h-10 bg-surface-container-highest border border-outline-variant rounded-DEFAULT flex items-center justify-center knurled-bg overflow-hidden relative">
+<img alt="System Admin" class="absolute inset-0 w-full h-full object-cover mix-blend-luminosity opacity-50" data-alt="A highly detailed close up of a metallic server rack with glowing green LEDs in a dark, brutalist server room. Shallow depth of field, high contrast, emphasizing cold steel textures and technological precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsTCZHmJkhaFleqywYcXIeCM8TqnqkxBk6Om6thUAipfD-kukMm8upIQprD4WOLUEMCll6uTPkKKW1OK41SG4lB_ZAw9DangHAqRY1dKNkTYaIOMTmqQOcMeD6H-2m0jHq1EBIcv7x08wm-gOcPZC5U-joJOvhL2xskCt89qvTA-u44FZ6EFJD4-78ZzkLgkmEHAUQJs66T1HlSptIlNIarjRYsj8eatQxqIKRQhGrWuQXBmdeGKo2"/>
+<span class="material-symbols-outlined text-secondary relative z-10">person</span>
+</div>
+<div>
+<div class="font-headline-lg text-headline-lg text-primary text-[20px] leading-tight">KRUGX-OS</div>
+<div class="font-data-mono text-[10px] text-on-surface-variant">v4.2.0-STABLE</div>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-xs font-label-caps text-label-caps uppercase">
+<a class="text-primary border-l-4 border-primary bg-primary-container/10 px-4 py-3 flex items-center gap-sm group" href="#">
+<span class="material-symbols-outlined text-[18px] group-active:translate-x-1 transition-transform">security</span>
+                    Security
+                </a>
+<a class="text-on-surface-variant px-4 py-3 hover:bg-surface-container-high hover:text-on-surface flex items-center gap-sm transition-colors group" href="#">
+<span class="material-symbols-outlined text-[18px] group-active:translate-x-1 transition-transform">analytics</span>
+                    Telemetry
+                </a>
+<a class="text-on-surface-variant px-4 py-3 hover:bg-surface-container-high hover:text-on-surface flex items-center gap-sm transition-colors group" href="#">
+<span class="material-symbols-outlined text-[18px] group-active:translate-x-1 transition-transform">memory</span>
+                    AI Core
+                </a>
+<a class="text-on-surface-variant px-4 py-3 hover:bg-surface-container-high hover:text-on-surface flex items-center gap-sm transition-colors group" href="#">
+<span class="material-symbols-outlined text-[18px] group-active:translate-x-1 transition-transform">hub</span>
+                    Network
+                </a>
+</nav>
+<div class="px-md mt-auto mb-md">
+<button class="w-full bg-surface-container-highest border border-primary text-primary font-label-caps text-label-caps py-sm flex items-center justify-center gap-xs transition-colors knurled-bg">
+<span class="material-symbols-outlined text-[16px]">bolt</span>
+                    INITIATE_OVERRIDE
+                </button>
+</div>
+<div class="flex flex-col gap-xs font-label-caps text-label-caps border-t border-outline-variant pt-md uppercase">
+<a class="text-on-surface-variant px-4 py-3 hover:bg-surface-container-high hover:text-on-surface flex items-center gap-sm transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">settings</span>
+                    Settings
+                </a>
+<a class="text-on-surface-variant px-4 py-3 hover:bg-surface-container-high hover:text-on-surface flex items-center gap-sm transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+                    Logs
+                </a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto p-margin-mobile md:p-margin-desktop bg-[url('placeholder')] bg-repeat relative" style="background-image: radial-gradient(theme('colors.surface-container-high') 1px, transparent 1px); background-size: 24px 24px;">
+<div class="max-w-4xl mx-auto space-y-xl">
+<!-- Header -->
+<div>
+<h1 class="font-headline-lg text-headline-lg md:text-display-lg font-bold text-on-background uppercase tracking-tight">Security Config</h1>
+<div class="font-data-mono text-data-mono text-primary mt-xs border-b border-outline-variant pb-sm inline-block">SYS_LVL_04 // ACCESS_GRANTED</div>
+</div>
+<!-- 1. SECURITY CONFIG -->
+<section class="mech-border bg-surface-container p-md relative corner-bracket corner-bracket-tl corner-bracket-br">
+<div class="flex items-center gap-sm mb-lg border-b border-outline-variant pb-sm">
+<span class="material-symbols-outlined text-primary">security</span>
+<h2 class="font-title-md text-title-md text-on-surface uppercase tracking-wider">Access Protocols</h2>
+</div>
+<div class="space-y-md">
+<!-- Toggle Item -->
+<div class="flex items-center justify-between p-sm hover:bg-surface-container-highest transition-colors">
+<div>
+<div class="font-body-lg text-body-lg text-on-surface">Biometric Uplink</div>
+<div class="font-data-mono text-label-caps text-on-surface-variant mt-xs">ID: 0xAF4 // REQ_AUTH</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer mech-toggle" type="checkbox" value=""/>
+<div class="w-14 h-7 bg-surface-container-lowest border border-outline-variant peer-focus:outline-none rounded-sm peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-secondary after:border-outline after:border after:h-6 after:w-6 after:transition-all shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)]"></div>
+</label>
+</div>
+<!-- Toggle Item -->
+<div class="flex items-center justify-between p-sm hover:bg-surface-container-highest transition-colors border-t border-outline-variant/30">
+<div>
+<div class="font-body-lg text-body-lg text-on-surface">AES-256 Encryption</div>
+<div class="font-data-mono text-label-caps text-on-surface-variant mt-xs">ID: 0xAF5 // DATA_REST</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer mech-toggle" type="checkbox" value=""/>
+<div class="w-14 h-7 bg-surface-container-lowest border border-outline-variant peer-focus:outline-none rounded-sm peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-secondary after:border-outline after:border after:h-6 after:w-6 after:transition-all shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)]"></div>
+</label>
+</div>
+<!-- Toggle Item -->
+<div class="flex items-center justify-between p-sm hover:bg-surface-container-highest transition-colors border-t border-outline-variant/30">
+<div>
+<div class="font-body-lg text-body-lg text-on-surface">Hard-Strike Protection</div>
+<div class="font-data-mono text-label-caps text-on-surface-variant mt-xs">ID: 0xAF6 // PHYS_LAYER</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer mech-toggle" type="checkbox" value=""/>
+<div class="w-14 h-7 bg-surface-container-lowest border border-outline-variant peer-focus:outline-none rounded-sm peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-secondary after:border-outline after:border after:h-6 after:w-6 after:transition-all shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)]"></div>
+</label>
+</div>
+</div>
+</section>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- 2. AI ASSISTANT PROTOCOLS -->
+<section class="mech-border bg-surface-container p-md relative corner-bracket corner-bracket-tr">
+<div class="flex items-center gap-sm mb-lg border-b border-outline-variant pb-sm">
+<span class="material-symbols-outlined text-primary">memory</span>
+<h2 class="font-title-md text-title-md text-on-surface uppercase tracking-wider">AI Protocols</h2>
+</div>
+<div class="space-y-lg">
+<div>
+<div class="flex justify-between items-end mb-sm">
+<label class="font-label-caps text-label-caps text-on-surface uppercase">Predictive Bias</label>
+<span class="font-data-mono text-data-mono text-primary">0.72</span>
+</div>
+<input class="w-full mech-slider" max="100" min="0" type="range" value="72"/>
+<div class="flex justify-between mt-xs font-data-mono text-[10px] text-on-surface-variant">
+<span>CONSERVATIVE</span>
+<span>AGGRESSIVE</span>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-end mb-sm">
+<label class="font-label-caps text-label-caps text-on-surface uppercase">Diagnostic Depth</label>
+<span class="font-data-mono text-data-mono text-primary">MAX</span>
+</div>
+<input class="w-full mech-slider" max="100" min="0" type="range" value="100"/>
+<div class="flex justify-between mt-xs font-data-mono text-[10px] text-on-surface-variant">
+<span>SURFACE</span>
+<span>CORE_DUMP</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. DATA RETENTION & 4. SYSTEM SYNC -->
+<div class="space-y-md">
+<!-- Data Retention -->
+<section class="mech-border bg-surface-container p-md relative">
+<div class="flex items-center gap-sm mb-md border-b border-outline-variant pb-sm">
+<span class="material-symbols-outlined text-primary">storage</span>
+<h2 class="font-title-md text-title-md text-on-surface uppercase tracking-wider">Buffer Retention</h2>
+</div>
+<div class="mech-recessed p-xs flex gap-xs rounded-sm">
+<button class="flex-1 py-sm text-center font-data-mono text-data-mono text-on-surface-variant hover:bg-surface-container-high transition-colors">10ms</button>
+<button class="flex-1 py-sm text-center font-data-mono text-data-mono bg-primary-container text-primary border border-primary transition-colors relative shadow-[0_0_10px_rgba(147,0,10,0.5)]">50ms</button>
+<button class="flex-1 py-sm text-center font-data-mono text-data-mono text-on-surface-variant hover:bg-surface-container-high transition-colors">100ms</button>
+</div>
+</section>
+<!-- System Sync -->
+<section class="mech-border bg-surface-container p-md relative h-[180px] overflow-hidden group">
+<div class="flex items-center justify-between mb-sm relative z-10 border-b border-outline-variant/50 pb-sm">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary text-[18px]">satellite_alt</span>
+<h2 class="font-label-caps text-label-caps text-on-surface uppercase tracking-wider">Geospatial Sync</h2>
+</div>
+<span class="font-data-mono text-[10px] text-primary animate-pulse">SYSTEM ARMED</span>
+</div>
+<!-- Grid Visualization (Placeholder for animation/graphic) -->
+<div class="absolute inset-0 top-12 opacity-40 group-hover:opacity-60 transition-opacity" style="background-image: linear-gradient(theme('colors.primary') 1px, transparent 1px), linear-gradient(90deg, theme('colors.primary') 1px, transparent 1px); background-size: 20px 20px; background-position: center; mask-image: radial-gradient(circle at center, black 40%, transparent 80%); -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 80%);">
+<div class="absolute inset-0 bg-primary/10"></div>
+<div class="absolute top-1/2 left-1/2 w-2 h-2 bg-primary rounded-full transform -translate-x-1/2 -translate-y-1/2 shadow-[0_0_15px_theme('colors.primary')]"></div>
+<div class="absolute top-[30%] left-[60%] w-1 h-1 bg-secondary rounded-full animate-ping"></div>
+<div class="absolute top-[70%] left-[20%] w-1 h-1 bg-secondary rounded-full animate-ping" style="animation-delay: 0.5s;"></div>
+</div>
+</section>
+</div>
+</div>
+<div class="pt-lg flex justify-end gap-md">
+<button class="bg-surface-container-highest border border-outline hover:border-on-surface text-on-surface font-label-caps text-label-caps py-sm px-lg transition-colors mech-border">
+                        REVERT_CHANGES
+                    </button>
+<button class="bg-primary-container border border-primary hover:bg-primary hover:text-on-primary-fixed text-primary font-label-caps text-label-caps py-sm px-lg transition-colors shadow-[0_0_15px_rgba(147,0,10,0.3)]">
+                        COMMIT_CONFIG
+                    </button>
+</div>
+</div>
+</main>
+</div>
+</body></html>

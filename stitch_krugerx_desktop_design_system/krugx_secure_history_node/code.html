@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KRUGX - Uplink History</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;600;700&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@100..900&family=Hanken+Grotesk:wght@100..900&family=JetBrains+Mono:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-container": "#004225",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "on-primary-fixed-variant": "#165132",
+                        "inverse-surface": "#e5e2e1",
+                        "secondary-fixed": "#e3e2e2",
+                        "surface-container-low": "#1c1b1b",
+                        "surface-container": "#20201f",
+                        "on-background": "#e5e2e1",
+                        "tertiary": "#e3c0a6",
+                        "tertiary-fixed-dim": "#e3c0a6",
+                        "outline": "#8a938b",
+                        "on-primary": "#00391f",
+                        "surface-tint": "#98d4ac",
+                        "on-secondary": "#2f3131",
+                        "on-error-container": "#ffdad6",
+                        "inverse-on-surface": "#313030",
+                        "background": "#131313",
+                        "on-surface-variant": "#c0c9c0",
+                        "surface-container-highest": "#353535",
+                        "on-tertiary": "#412c1a",
+                        "surface-container-high": "#2a2a2a",
+                        "outline-variant": "#404942",
+                        "on-surface": "#e5e2e1",
+                        "on-tertiary-fixed": "#2a1707",
+                        "primary": "#98d4ac",
+                        "inverse-primary": "#316948",
+                        "on-primary-container": "#75af89",
+                        "surface": "#131313",
+                        "primary-fixed-dim": "#98d4ac",
+                        "on-primary-fixed": "#002110",
+                        "secondary": "#c6c6c6",
+                        "on-tertiary-fixed-variant": "#5a422e",
+                        "tertiary-fixed": "#ffdcc3",
+                        "surface-bright": "#393939",
+                        "on-secondary-container": "#b8b8b8",
+                        "on-secondary-fixed-variant": "#464747",
+                        "tertiary-container": "#4b3422",
+                        "error-container": "#93000a",
+                        "primary-fixed": "#b4f0c7",
+                        "secondary-container": "#484949",
+                        "on-tertiary-container": "#bd9c84",
+                        "secondary-fixed-dim": "#c6c6c6",
+                        "surface-variant": "#353535",
+                        "on-error": "#690005",
+                        "surface-dim": "#131313",
+                        "error": "#ffb4ab",
+                        "surface-container-lowest": "#0e0e0e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "lg": "48px",
+                        "base": "8px",
+                        "xs": "4px",
+                        "sm": "12px",
+                        "md": "24px",
+                        "margin-desktop": "64px",
+                        "margin-mobile": "16px",
+                        "xl": "80px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Archivo Narrow"],
+                        "headline-lg-mobile": ["Archivo Narrow"],
+                        "body-md": ["Hanken Grotesk"],
+                        "label-caps": ["JetBrains Mono"],
+                        "title-md": ["Archivo Narrow"],
+                        "data-mono": ["JetBrains Mono"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "headline-lg": ["Archivo Narrow"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "34px", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700" }],
+                        "title-md": ["20px", { "lineHeight": "28px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .grid-overlay {
+            background-image: radial-gradient(rgba(142, 142, 142, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .bracket-corners {
+            position: relative;
+        }
+        .bracket-corners::before,
+        .bracket-corners::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border: 1px solid #c0c0c0;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        .bracket-corners::before {
+            top: 0; left: 0; border-right: none; border-bottom: none;
+        }
+        .bracket-corners::after {
+            bottom: 0; right: 0; border-left: none; border-top: none;
+        }
+        /* Custom scrollbar for technical feel */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #131313; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #404942; 
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen grid-overlay font-body-md overflow-x-hidden selection:bg-error selection:text-on-error">
+<!-- Top Navigation -->
+<header class="bg-surface-container-lowest dark:bg-surface-container-lowest border-b border-outline-variant flex justify-between items-center px-margin-mobile md:px-margin-desktop h-20 w-full fixed top-0 z-50">
+<div class="flex items-center gap-4">
+<span class="font-display-lg text-display-lg tracking-tighter text-primary dark:text-primary">KRUGX</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant hidden md:inline-block border-l border-outline-variant pl-4 ml-4">UPLINK_HISTORY_LOG // SYS.O4</span>
+</div>
+<div class="flex-1 max-w-2xl px-8 hidden md:block">
+<div class="relative bracket-corners">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" style="font-variation-settings: 'FILL' 0;">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant text-on-surface font-data-mono text-data-mono py-2 pl-10 pr-4 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary rounded-none placeholder:text-on-surface-variant/50" placeholder="QUERY_HISTORY..." type="text"/>
+<span class="absolute right-3 top-1/2 -translate-y-1/2 font-data-mono text-xs text-on-surface-variant/50">⌘K</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">timer</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">sync</span>
+</button>
+<button class="text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">power_settings_new</span>
+</button>
+</div>
+</header>
+<div class="flex h-screen pt-20">
+<!-- SideNav (Web) -->
+<nav class="hidden md:flex flex-col h-full py-md bg-surface-container-low dark:bg-surface-container-low border-r border-outline-variant w-64 shrink-0 overflow-y-auto">
+<div class="px-4 mb-8">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-surface-variant rounded-full flex items-center justify-center overflow-hidden border border-outline-variant">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">terminal</span>
+</div>
+<div>
+<h2 class="font-label-caps text-label-caps text-on-surface">KRUGX-OS</h2>
+<p class="font-data-mono text-xs text-on-surface-variant">v4.2.0-STABLE</p>
+</div>
+</div>
+</div>
+<div class="flex-1 space-y-2">
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">security</span>
+                    Security
+                </a>
+<a class="flex items-center gap-3 text-primary border-l-4 border-primary bg-primary-container/10 px-4 py-3 translate-x-1 transition-transform font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">analytics</span>
+                    Telemetry
+                </a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">memory</span>
+                    AI Core
+                </a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">hub</span>
+                    Network
+                </a>
+</div>
+<div class="px-4 mt-8 space-y-4">
+<button class="w-full bg-surface-container border border-error text-error font-label-caps text-label-caps py-2 hover:bg-error/10 transition-colors uppercase relative bracket-corners">
+                    INITIATE_OVERRIDE
+                </button>
+</div>
+<div class="mt-8 border-t border-outline-variant pt-4 space-y-2">
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+                    Settings
+                </a>
+<a class="flex items-center gap-3 text-on-surface-variant px-4 py-3 hover:bg-surface-container-high hover:text-on-surface transition-colors font-label-caps text-label-caps" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">terminal</span>
+                    Logs
+                </a>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto p-margin-mobile md:p-margin-desktop">
+<div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Timeline -->
+<div class="lg:col-span-8 space-y-8">
+<div class="flex items-baseline justify-between border-b border-outline-variant pb-4">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface uppercase tracking-tight">Active Uplinks</h1>
+<span class="font-data-mono text-data-mono text-on-surface-variant">[LOCAL_NODE_SYNC]</span>
+</div>
+<!-- Session Block -->
+<div class="relative pl-8">
+<!-- Timeline Line -->
+<div class="absolute top-0 bottom-0 left-3 w-px bg-outline-variant"></div>
+<div class="mb-4">
+<span class="inline-block bg-surface-variant text-on-surface font-label-caps text-label-caps px-2 py-1 relative z-10 border border-outline-variant">UPLINK_SESSION // 08:00 - 12:45</span>
+</div>
+<div class="space-y-4 relative z-10">
+<!-- Entry 1 -->
+<div class="bg-surface-container-low border border-outline-variant p-4 bracket-corners hover:border-primary/50 transition-colors group">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 bg-error rounded-full animate-pulse"></div>
+<h3 class="font-title-md text-title-md text-on-surface group-hover:text-primary transition-colors">Neural Sync Protocol</h3>
+</div>
+<span class="font-data-mono text-data-mono text-on-surface-variant">12:42:01</span>
+</div>
+<div class="font-data-mono text-data-mono text-on-surface-variant mb-3 break-all">
+                                    cmd.krugx.io/sys/neural/sync?id=8842&force=true
+                                </div>
+<div class="flex gap-2">
+<span class="px-2 py-0.5 bg-error/10 border border-error/30 text-error font-label-caps text-[10px] uppercase">SEC_LEVEL: OMEGA</span>
+<span class="px-2 py-0.5 bg-surface-variant border border-outline-variant text-on-surface-variant font-label-caps text-[10px] uppercase">PKT_SIZE: 1.4TB</span>
+</div>
+</div>
+<!-- Entry 2 -->
+<div class="bg-surface-container-low border border-outline-variant p-4 bracket-corners hover:border-primary/50 transition-colors group">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 bg-primary rounded-full"></div>
+<h3 class="font-title-md text-title-md text-on-surface group-hover:text-primary transition-colors">Global Node Map</h3>
+</div>
+<span class="font-data-mono text-data-mono text-on-surface-variant">11:15:33</span>
+</div>
+<div class="font-data-mono text-data-mono text-on-surface-variant mb-3 break-all">
+                                    map.krugx.io/nodes/active?region=eu-west
+                                </div>
+<div class="flex gap-2">
+<span class="px-2 py-0.5 bg-primary/10 border border-primary/30 text-primary font-label-caps text-[10px] uppercase">SEC_LEVEL: ALPHA</span>
+<span class="px-2 py-0.5 bg-surface-variant border border-outline-variant text-on-surface-variant font-label-caps text-[10px] uppercase">CACHE_HIT</span>
+</div>
+</div>
+<!-- Entry 3 -->
+<div class="bg-surface-container-low border border-outline-variant p-4 bracket-corners hover:border-primary/50 transition-colors group">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 bg-primary/50 rounded-full"></div>
+<h3 class="font-title-md text-title-md text-on-surface group-hover:text-primary transition-colors">Telemetry Dashboard</h3>
+</div>
+<span class="font-data-mono text-data-mono text-on-surface-variant">08:05:12</span>
+</div>
+<div class="font-data-mono text-data-mono text-on-surface-variant mb-3 break-all">
+                                    dash.krugx.io/telemetry/overview
+                                </div>
+<div class="flex gap-2">
+<span class="px-2 py-0.5 bg-primary/10 border border-primary/30 text-primary font-label-caps text-[10px] uppercase">SEC_LEVEL: BETA</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Session Block 2 -->
+<div class="relative pl-8 opacity-70">
+<div class="absolute top-0 bottom-0 left-3 w-px bg-outline-variant/50"></div>
+<div class="mb-4">
+<span class="inline-block bg-surface-variant/50 text-on-surface-variant font-label-caps text-label-caps px-2 py-1 relative z-10 border border-outline-variant/50">UPLINK_SESSION // 02:15 - 04:30</span>
+</div>
+<div class="space-y-4 relative z-10">
+<!-- Entry 4 -->
+<div class="bg-surface-container-lowest border border-outline-variant/50 p-4 bracket-corners">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 bg-on-surface-variant rounded-full"></div>
+<h3 class="font-title-md text-title-md text-on-surface-variant">Encrypted Comms Channel</h3>
+</div>
+<span class="font-data-mono text-data-mono text-on-surface-variant/50">04:29:55</span>
+</div>
+<div class="font-data-mono text-data-mono text-on-surface-variant/50 break-all">
+                                    comm.krugx.io/secure/chan/99x-alpha
+                                </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Analytics & Filters -->
+<div class="lg:col-span-4 space-y-6">
+<!-- Activity Matrix -->
+<div class="bg-surface-container-low border border-outline-variant p-4 bracket-corners">
+<h4 class="font-label-caps text-label-caps text-on-surface mb-4 border-b border-outline-variant pb-2">NODE_ACTIVITY [24H]</h4>
+<div class="grid grid-cols-12 gap-1 mb-2">
+<!-- Generating random opacity blocks for heatmap effect -->
+<script>
+                                for(let i=0; i<84; i++) {
+                                    const opacity = Math.random();
+                                    let colorClass = 'bg-primary';
+                                    if(opacity > 0.8) colorClass = 'bg-error';
+                                    else if(opacity < 0.2) colorClass = 'bg-surface-variant';
+                                    
+                                    document.write(`<div class="aspect-square ${colorClass} opacity-${Math.floor(opacity*100)}" style="opacity: ${Math.max(0.2, opacity)}"></div>`);
+                                }
+                            </script>
+</div>
+<div class="flex justify-between font-data-mono text-[10px] text-on-surface-variant uppercase">
+<span>T-24H</span>
+<span>NOW</span>
+</div>
+</div>
+<!-- AI Filters -->
+<div class="bg-surface-container-low border border-outline-variant p-4 bracket-corners">
+<h4 class="font-label-caps text-label-caps text-on-surface mb-4 border-b border-outline-variant pb-2">FILTER_MATRIX</h4>
+<div class="space-y-2">
+<label class="flex items-center justify-between p-2 hover:bg-surface-variant cursor-pointer border border-transparent hover:border-outline-variant transition-colors group">
+<div class="flex items-center gap-3">
+<input checked="" class="form-checkbox bg-surface border-outline-variant text-primary focus:ring-primary focus:ring-offset-surface" type="checkbox"/>
+<span class="font-data-mono text-sm text-on-surface group-hover:text-primary transition-colors">SYSTEM_DIAG</span>
+</div>
+<span class="font-data-mono text-xs text-on-surface-variant">142</span>
+</label>
+<label class="flex items-center justify-between p-2 hover:bg-surface-variant cursor-pointer border border-transparent hover:border-outline-variant transition-colors group">
+<div class="flex items-center gap-3">
+<input checked="" class="form-checkbox bg-surface border-outline-variant text-primary focus:ring-primary focus:ring-offset-surface" type="checkbox"/>
+<span class="font-data-mono text-sm text-on-surface group-hover:text-primary transition-colors">NEURAL_INPUTS</span>
+</div>
+<span class="font-data-mono text-xs text-on-surface-variant">89</span>
+</label>
+<label class="flex items-center justify-between p-2 hover:bg-surface-variant cursor-pointer border border-transparent hover:border-outline-variant transition-colors group">
+<div class="flex items-center gap-3">
+<input class="form-checkbox bg-surface border-outline-variant text-primary focus:ring-primary focus:ring-offset-surface" type="checkbox"/>
+<span class="font-data-mono text-sm text-on-surface group-hover:text-primary transition-colors">ENCRYPTED_COMMS</span>
+</div>
+<span class="font-data-mono text-xs text-on-surface-variant">12</span>
+</label>
+<label class="flex items-center justify-between p-2 hover:bg-surface-variant cursor-pointer border border-transparent hover:border-outline-variant transition-colors group">
+<div class="flex items-center gap-3">
+<input class="form-checkbox bg-surface border-outline-variant text-primary focus:ring-primary focus:ring-offset-surface" type="checkbox"/>
+<span class="font-data-mono text-sm text-on-surface group-hover:text-primary transition-colors">EXTERNAL_UPLINKS</span>
+</div>
+<span class="font-data-mono text-xs text-on-surface-variant">4</span>
+</label>
+</div>
+</div>
+<!-- System Status Mini -->
+<div class="bg-surface-container-low border border-outline-variant p-4 bracket-corners flex flex-col gap-2">
+<div class="flex justify-between items-center">
+<span class="font-label-caps text-[10px] text-on-surface-variant">CORE_TEMP</span>
+<span class="font-data-mono text-sm text-error">84°C</span>
+</div>
+<div class="w-full bg-surface h-1">
+<div class="bg-error h-full" style="width: 84%"></div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

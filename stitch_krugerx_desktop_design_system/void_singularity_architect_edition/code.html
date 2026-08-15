@@ -1,0 +1,229 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>VOID_SINGULARITY // 0x00</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    obsidian: "#020202",
+                    slate: "#0f1115",
+                    crimson: "#ff2a2a",
+                    amber: "#ffb000",
+                    void: "#050608",
+                },
+                fontFamily: {
+                    mono: ["Fira Code", "monospace"],
+                }
+            }
+        }
+    }
+</script>
+<style>
+    body { 
+        background-color: #000; 
+        color: #ff2a2a; 
+        font-family: 'Fira Code', monospace;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+    .phosphor-crimson {
+        text-shadow: 0 0 4px #ff2a2a, 0 0 8px #ff2a2a88;
+    }
+    .phosphor-amber {
+        text-shadow: 0 0 4px #ffb000, 0 0 8px #ffb00088;
+    }
+    .scanlines {
+        position: fixed;
+        top: 0; left: 0; width: 100vw; height: 100vh;
+        background: linear-gradient(to bottom, rgba(255,255,255,0) 50%, rgba(0,0,0,0.3) 50%);
+        background-size: 100% 4px;
+        pointer-events: none;
+        z-index: 9999;
+    }
+    .crt-flicker {
+        animation: flicker 0.15s infinite;
+    }
+    @keyframes flicker {
+        0% { opacity: 0.95; }
+        50% { opacity: 1; }
+        100% { opacity: 0.98; }
+    }
+    .holo-core {
+        background: radial-gradient(circle at center, transparent 10%, rgba(255,42,42,0.1) 40%, rgba(255,176,0,0.05) 70%, transparent 100%);
+        background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,42,42,0.1) 2px, rgba(255,42,42,0.1) 4px),
+                          repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,176,0,0.1) 2px, rgba(255,176,0,0.1) 4px);
+        animation: pulse-3d 4s ease-in-out infinite alternate;
+        perspective: 1000px;
+        transform-style: preserve-3d;
+    }
+    @keyframes pulse-3d {
+        0% { transform: scale(1) rotateX(20deg) rotateY(10deg); filter: hue-rotate(-10deg) brightness(1.2); }
+        100% { transform: scale(1.05) rotateX(-10deg) rotateY(-20deg); filter: hue-rotate(10deg) brightness(1.5); }
+    }
+    .matrix-border {
+        border: 1px solid transparent;
+        border-image: linear-gradient(to bottom right, #ff2a2a44, #ffb00022) 1;
+    }
+    .scroll-log {
+        animation: scrollUp 20s linear infinite;
+    }
+    @keyframes scrollUp {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-50%); }
+    }
+    ::-webkit-scrollbar { display: none; }
+</style>
+</head>
+<body class="crt-flicker flex flex-col h-screen w-screen bg-obsidian">
+<div class="scanlines"></div>
+<!-- TopNavBar -->
+<header class="bg-slate border-b matrix-border h-12 w-full flex items-center px-4 justify-between z-50 shrink-0">
+<div class="text-amber font-bold text-sm uppercase phosphor-amber flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">architecture</span>
+        ARCH_NODE_SURVEILLANCE
+    </div>
+<div class="flex items-center gap-4 text-xs text-crimson phosphor-crimson">
+<span class="animate-pulse">INTEGRITY_WARNING</span>
+<span>|</span>
+<span>NODE: 0xALPHA_7</span>
+</div>
+</header>
+<div class="flex flex-1 h-[calc(100vh-48px)] w-full overflow-hidden">
+<!-- SideNavBar (Encrypted Packet Log) -->
+<nav class="w-72 bg-void border-r matrix-border h-full flex flex-col overflow-hidden relative shrink-0">
+<div class="bg-slate border-b matrix-border p-2 text-xs text-amber uppercase text-center font-bold tracking-widest">
+            NODE_STREAM //
+        </div>
+<div class="flex-1 overflow-hidden relative text-xs leading-tight opacity-75 p-2 font-mono break-all text-crimson">
+<div class="scroll-log absolute top-0 left-0 w-full flex flex-col gap-1 p-2">
+<!-- Duplicated for infinite scroll effect -->
+<div>0x0F 0x4A 0x9B 0x22 0x1C 0x99 0xFF</div>
+<div class="text-amber">0xAA [STRUCT_FAIL] 0x00 0x01</div>
+<div>0xBB 0xCC 0xDD 0xEE 0xFF 0x11 0x22</div>
+<div>0x33 0x44 0x55 0x66 0x77 0x88 0x99</div>
+<div class="text-amber text-opacity-70">LOAD_IMBALANCE at 0xFA99B</div>
+<div>0x1A 0x2B 0x3C 0x4D 0x5E 0x6F 0x70</div>
+<div>0x81 0x92 0xA3 0xB4 0xC5 0xD6 0xE7</div>
+<div>0xF8 0x09 0x1A 0x2B 0x3C 0x4D 0x5E</div>
+<div class="text-amber">0xAA [STRUCT_FAIL] 0x00 0x01</div>
+<div>0x6F 0x70 0x81 0x92 0xA3 0xB4 0xC5</div>
+<div>0x0F 0x4A 0x9B 0x22 0x1C 0x99 0xFF</div>
+<div class="text-amber">0xAA [STRUCT_FAIL] 0x00 0x01</div>
+<div>0xBB 0xCC 0xDD 0xEE 0xFF 0x11 0x22</div>
+<div>0x33 0x44 0x55 0x66 0x77 0x88 0x99</div>
+<div class="text-amber text-opacity-70">LOAD_IMBALANCE at 0xFA99B</div>
+<div>0x1A 0x2B 0x3C 0x4D 0x5E 0x6F 0x70</div>
+<div>0x81 0x92 0xA3 0xB4 0xC5 0xD6 0xE7</div>
+<div>0xF8 0x09 0x1A 0x2B 0x3C 0x4D 0x5E</div>
+<div class="text-amber">0xAA [STRUCT_FAIL] 0x00 0x01</div>
+<div>0x6F 0x70 0x81 0x92 0xA3 0xB4 0xC5</div>
+</div>
+</div>
+</nav>
+<!-- Main Content (Zero Margin Grid) -->
+<main class="flex-1 h-full flex flex-col lg:flex-row bg-obsidian">
+<!-- Center Pulse Monitor -->
+<div class="flex-1 border-r matrix-border flex flex-col h-full relative">
+<div class="bg-slate border-b matrix-border p-2 text-xs text-amber uppercase font-bold tracking-widest flex justify-between">
+<span>0xCORE_ARCHITECTURE</span>
+<span>STATUS: COMPROMISED</span>
+</div>
+<div class="flex-1 relative flex items-center justify-center overflow-hidden bg-void">
+<!-- Holographic Core -->
+<div class="relative w-[400px] h-[400px] flex items-center justify-center">
+<div class="absolute inset-0 holo-core rounded-full"></div>
+<div class="absolute inset-12 border border-crimson/40 rounded-full rotate-45 transform-gpu"></div>
+<div class="absolute inset-16 border border-amber/30 rounded-full -rotate-12 transform-gpu"></div>
+<div class="absolute inset-8 border border-crimson/20 rounded-full rotate-90 transform-gpu opacity-50 border-dashed animate-[spin_10s_linear_infinite]"></div>
+<div class="w-32 h-32 bg-slate/90 rounded-sm z-10 flex flex-col items-center justify-center border border-crimson shadow-[0_0_30px_rgba(255,42,42,0.4)] backdrop-blur-sm transform rotate-45">
+<div class="-rotate-45 flex flex-col items-center">
+<span class="text-crimson phosphor-crimson text-lg font-bold">NODE_ERR</span>
+<span class="text-[10px] text-amber mt-1">FRACTURED</span>
+</div>
+</div>
+</div>
+</div>
+<div class="h-28 border-t matrix-border flex bg-slate">
+<div class="flex-1 border-r matrix-border p-3 flex flex-col justify-end">
+<div class="text-[10px] text-amber mb-1">0xSTRUCTURAL_LOAD</div>
+<div class="text-sm text-crimson phosphor-crimson">142.5 PHz</div>
+</div>
+<div class="flex-1 border-r matrix-border p-3 flex flex-col justify-end">
+<div class="text-[10px] text-amber mb-1">0xDATA_INTEGRITY</div>
+<div class="text-sm text-crimson phosphor-crimson animate-pulse">41.2%</div>
+</div>
+<div class="flex-1 p-3 flex flex-col justify-end">
+<div class="text-[10px] text-amber mb-1">0xNODE_STABILITY</div>
+<div class="text-sm text-crimson phosphor-crimson">CRITICAL</div>
+</div>
+</div>
+</div>
+<!-- Right Column -->
+<div class="w-full lg:w-[420px] flex flex-col h-full bg-void">
+<!-- Active Orchestrations -->
+<div class="h-[45%] border-b matrix-border flex flex-col bg-slate">
+<div class="bg-slate border-b matrix-border p-2 text-xs text-amber uppercase font-bold tracking-widest flex justify-between">
+<span>0xSURVEILLANCE_MATRIX</span>
+<span class="text-crimson bg-crimson/10 px-1 border border-crimson/30">2 THREATS</span>
+</div>
+<div class="flex-1 p-3 flex flex-col gap-3 overflow-y-auto bg-void">
+<div class="border-l-2 border-crimson p-2 bg-slate relative overflow-hidden group shadow-[inset_0_0_10px_rgba(255,42,42,0.1)]">
+<div class="absolute inset-0 bg-crimson/5 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-1000"></div>
+<div class="flex justify-between text-xs mb-2">
+<span class="text-crimson">0x_CONTAINMENT_FIELD</span>
+<span class="text-amber animate-spin">[*]</span>
+</div>
+<div class="w-full h-1.5 bg-black border border-crimson/30">
+<div class="h-full bg-crimson w-[12%] animate-pulse"></div>
+</div>
+</div>
+<div class="border-l-2 border-amber p-2 bg-slate relative overflow-hidden group">
+<div class="flex justify-between text-xs mb-2">
+<span class="text-amber">0x_DATA_REROUTE</span>
+<span class="text-crimson">!!!</span>
+</div>
+<div class="w-full h-1.5 bg-black border border-amber/30">
+<div class="h-full bg-amber w-[68%]"></div>
+</div>
+</div>
+<div class="border-l-2 border-slate-600 p-2 bg-slate relative overflow-hidden group opacity-60">
+<div class="flex justify-between text-xs mb-2">
+<span class="text-gray-400">0x_BACKUP_NODE</span>
+<span class="text-gray-400">[STABLE]</span>
+</div>
+<div class="w-full h-1.5 bg-black border border-gray-700">
+<div class="h-full bg-gray-500 w-full"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- System Feed Terminal -->
+<div class="flex-1 flex flex-col relative bg-slate">
+<div class="bg-slate border-b matrix-border p-2 text-xs text-amber uppercase font-bold tracking-widest flex justify-between">
+<span>0x00_ARCHITECT_LOG</span>
+<span class="flex gap-1"><span class="w-2 h-2 bg-crimson rounded-none animate-pulse"></span></span>
+</div>
+<div class="flex-1 p-3 text-xs leading-tight font-mono text-crimson flex flex-col gap-2 overflow-hidden relative bg-void">
+<div class="absolute inset-0 bg-[linear-gradient(rgba(255,42,42,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,42,42,0.03)_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none"></div>
+<div><span class="text-amber">&gt;</span> INITIATING_ARCHITECTURAL_SCAN...</div>
+<div><span class="text-amber">&gt;</span> ANALYZING_NODE_TOPOLOGY_01</div>
+<div class="text-amber">ALERT: STRUCTURAL FRACTURE AT SECTOR 9-DELTA</div>
+<div class="break-all opacity-60 text-xs mt-1 mb-1">01010111 01100001 01110010 01101110 01101001 01101110 01100111 00100000 01010011 01110100 01110010 01110101 01100011 01110100 01110101 01110010 01100101</div>
+<div><span class="text-amber">&gt;</span> DEPLOYING_REINFORCEMENT_AGENTS...</div>
+<div class="text-crimson animate-pulse phosphor-crimson font-bold mt-2">FATAL_ERROR: ARCHITECTURE_COLLAPSE_IMMINENT</div>
+<div class="mt-auto animate-pulse flex">
+<span class="text-amber">&gt;</span> <span class="bg-crimson w-2 h-4 ml-1"></span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

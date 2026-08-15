@@ -37,7 +37,9 @@ async def search_query(
         provider = setting.search_engine if setting else "google"
 
     # Execute search
-    results = await search_service.search(provider=provider, query=q)
+    search_data = await search_service.search(provider=provider, query=q)
+    results = search_data.get("results", [])
+    knowledge_panel = search_data.get("knowledge_panel")
 
     # Save to history query list
     history_item = SearchHistory(
@@ -54,7 +56,8 @@ async def search_query(
         data=SearchResponse(
             provider=provider,
             query=q,
-            results=results
+            results=results,
+            knowledge_panel=knowledge_panel
         )
     )
 

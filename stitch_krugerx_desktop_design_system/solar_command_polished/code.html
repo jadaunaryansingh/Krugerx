@@ -1,0 +1,303 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Orchestration Hub - Solar Transcendence</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Epilogue:wght@900&amp;family=Inter:wght@400;500;600;700;900&amp;family=JetBrains+Mono:wght@500;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#005226",
+                        "primary-container": "#ffc107",
+                        "surface-container": "#f8f9fa",
+                        "primary-fixed-dim": "#ffb86f",
+                        "surface-container-high": "#e9ecef",
+                        "on-secondary-fixed": "#00210b",
+                        "primary": "#ffc107",
+                        "secondary": "#ff9800",
+                        "inverse-surface": "#212529",
+                        "inverse-primary": "#fff3cd",
+                        "secondary-fixed": "#62ff96",
+                        "error-container": "#93000a",
+                        "on-surface": "#000000",
+                        "error": "#dc3545",
+                        "on-surface-variant": "#495057",
+                        "surface-bright": "#ffffff",
+                        "on-tertiary-container": "#552c91",
+                        "secondary-fixed-dim": "#00e475",
+                        "on-primary-fixed-variant": "#693c00",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#ffdad6",
+                        "surface-variant": "#dee2e6",
+                        "on-primary": "#000000",
+                        "on-background": "#000000",
+                        "tertiary": "#dbc2ff",
+                        "surface": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f8f9fa",
+                        "on-secondary-container": "#00622e",
+                        "on-tertiary-fixed-variant": "#582f94",
+                        "surface-tint": "#ffb86f",
+                        "on-tertiary-fixed": "#280057",
+                        "tertiary-fixed-dim": "#d6baff",
+                        "on-primary-container": "#000000",
+                        "tertiary-container": "#c5a0ff",
+                        "on-tertiary": "#40127c",
+                        "surface-dim": "#f8f9fa",
+                        "tertiary-fixed": "#ecdcff",
+                        "inverse-on-surface": "#f8f9fa",
+                        "primary-fixed": "#ffdcbd",
+                        "on-secondary": "#003918",
+                        "background": "#ffffff",
+                        "on-primary-fixed": "#2c1600",
+                        "secondary-container": "#ff9800",
+                        "outline": "#ced4da",
+                        "surface-container-highest": "#dee2e6",
+                        "outline-variant": "#adb5bd",
+                        "solar-flare": "#FFD700",
+                        "solar-core": "#FFD700"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0",
+                        "lg": "0",
+                        "xl": "0",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sidebar-rail": "0px",
+                        "sidebar-expanded": "0px",
+                        "min-target": "40px",
+                        "xl": "32px",
+                        "unit": "4px",
+                        "sm": "16px",
+                        "titlebar-height": "48px",
+                        "md": "24px",
+                        "copilot-panel": "280px",
+                        "lg": "32px",
+                        "xs": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Epilogue"],
+                        "title-lg": ["Epilogue"],
+                        "body-medium": ["Inter"],
+                        "status-sm": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "headline-xl": ["Epilogue"],
+                        "body-base": ["Inter"],
+                        "code-mono": ["JetBrains Mono"],
+                        "display-lg": ["Epilogue"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "900" }],
+                        "title-lg": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "900" }],
+                        "body-medium": ["14px", { "lineHeight": "20px", "letterSpacing": "0", "fontWeight": "600" }],
+                        "status-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700" }],
+                        "label-caps": ["11px", { "lineHeight": "14px", "letterSpacing": "0.15em", "fontWeight": "800" }],
+                        "headline-xl": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "900" }],
+                        "body-base": ["15px", { "lineHeight": "22px", "letterSpacing": "0", "fontWeight": "500" }],
+                        "code-mono": ["13px", { "lineHeight": "20px", "letterSpacing": "-0.01em", "fontWeight": "500" }],
+                        "display-lg": ["56px", { "lineHeight": "56px", "letterSpacing": "-0.03em", "fontWeight": "900" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #f4f4f4; color: #000000; overflow: hidden; 
+            background-image: radial-gradient(#d4d4d4 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .glass-panel {
+            background: #ffffff;
+            border: 4px solid #000000;
+            box-shadow: 8px 8px 0px rgba(0, 0, 0, 1);
+        }
+        .sun-flare {
+            animation: sun-flare 4s ease-in-out infinite alternate;
+        }
+        @keyframes sun-flare {
+            0% { box-shadow: 0 0 80px rgba(255, 215, 0, 0.4); transform: scale(1); }
+            100% { box-shadow: 0 0 150px rgba(255, 215, 0, 0.6); transform: scale(1.02); }
+        }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+        .brutal-border {
+            border: 3px solid #000000;
+        }
+        .halftone-bg {
+            background-image: radial-gradient(#000 1px, transparent 1px);
+            background-size: 12px 12px;
+            background-color: #FFD700;
+        }
+    </style>
+</head>
+<body class="font-body-base overflow-hidden flex flex-col h-screen relative">
+<!-- Floating Command Sphere -->
+<div class="fixed bottom-lg left-lg z-50 group">
+<div class="w-20 h-20 bg-solar-core rounded-full brutal-border shadow-[6px_6px_0px_rgba(0,0,0,1)] flex items-center justify-center cursor-pointer hover:scale-105 transition-transform active:scale-95 sun-flare">
+<span class="material-symbols-outlined text-black text-4xl font-bold">bolt</span>
+</div>
+<div class="absolute bottom-24 left-0 bg-white brutal-border shadow-[6px_6px_0px_rgba(0,0,0,1)] p-sm hidden group-hover:flex flex-col gap-2 min-w-[220px]">
+<button class="w-full py-3 bg-black text-white font-headline-md text-xl hover:bg-solar-core hover:text-black transition-colors uppercase tracking-tight">Deploy Ops</button>
+<button class="w-full py-2 border-b-2 border-black text-black font-label-caps hover:bg-surface-container-high transition-colors uppercase text-left tracking-widest">Orchestration</button>
+<button class="w-full py-2 border-b-2 border-black text-black font-label-caps hover:bg-surface-container-high transition-colors uppercase text-left tracking-widest">Resources</button>
+<button class="w-full py-2 text-black font-label-caps hover:bg-surface-container-high transition-colors uppercase text-left tracking-widest">System Flow</button>
+</div>
+</div>
+<!-- TopNavBar -->
+<header class="bg-white font-headline-md text-headline-md fixed top-0 w-full h-titlebar-height z-50 brutal-border border-b-4 border-l-0 border-r-0 border-t-0">
+<div class="flex justify-between items-center px-lg h-titlebar-height w-full">
+<div class="font-display-lg text-display-lg uppercase text-black flex items-center gap-3">
+<span class="material-symbols-outlined text-[40px]" style="font-variation-settings: 'FILL' 1;">wb_sunny</span>
+                SOLAR_COMMAND
+            </div>
+<div class="flex items-center gap-md">
+<div class="relative hidden md:flex items-center bg-white h-10 px-3 brutal-border shadow-[3px_3px_0px_rgba(0,0,0,1)]">
+<span class="material-symbols-outlined text-black mr-2 text-xl">search</span>
+<input class="bg-transparent border-none text-body-medium focus:ring-0 text-black w-48 p-0 h-full placeholder-black/50 font-bold uppercase" placeholder="LOCATE..." type="text">
+</div>
+<div class="w-10 h-10 overflow-hidden brutal-border ml-2 bg-solar-core flex items-center justify-center">
+<span class="material-symbols-outlined text-black text-2xl">person</span>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 pt-titlebar-height p-lg overflow-y-auto w-full relative z-10 h-full">
+<div class="flex flex-col lg:flex-row gap-lg h-full">
+<!-- Left Column (Secondary Info) -->
+<div class="w-full lg:w-1/3 flex flex-col gap-lg order-2 lg:order-1">
+<!-- Resource Overview -->
+<div class="glass-panel p-md h-auto flex flex-col">
+<h2 class="font-title-lg text-title-lg text-black flex items-center gap-2 mb-md uppercase tracking-tight border-b-4 border-black pb-2">
+<span class="material-symbols-outlined text-solar-core text-[28px]">dns</span>
+                            Maximum Output
+                        </h2>
+<div class="flex-1 flex gap-md h-40">
+<div class="flex-1 flex flex-col justify-end relative group">
+<div class="text-xs text-black font-label-caps mb-2 pb-1 border-b-2 border-black tracking-widest text-center">CPU</div>
+<div class="h-full bg-white brutal-border overflow-hidden flex flex-col justify-end">
+<div class="bg-solar-core h-[95%] w-full relative border-t-2 border-black halftone-bg"></div>
+</div>
+<div class="text-center font-headline-md text-xl text-black mt-1">95%</div>
+</div>
+<div class="flex-1 flex flex-col justify-end relative group">
+<div class="text-xs text-black font-label-caps mb-2 pb-1 border-b-2 border-black tracking-widest text-center">MEM</div>
+<div class="h-full bg-white brutal-border overflow-hidden flex flex-col justify-end">
+<div class="bg-black h-[80%] w-full relative"></div>
+</div>
+<div class="text-center font-headline-md text-xl text-black mt-1">80%</div>
+</div>
+<div class="flex-1 flex flex-col justify-end relative group">
+<div class="text-xs text-black font-label-caps mb-2 pb-1 border-b-2 border-black tracking-widest text-center">NET</div>
+<div class="h-full bg-white brutal-border overflow-hidden flex flex-col justify-end">
+<div class="bg-solar-core h-[99%] w-full relative border-t-2 border-black halftone-bg"></div>
+</div>
+<div class="text-center font-headline-md text-xl text-black mt-1">99%</div>
+</div>
+</div>
+</div>
+<!-- Active Orchestrations -->
+<div class="glass-panel p-md flex flex-col flex-1">
+<div class="flex justify-between items-center mb-md border-b-4 border-black pb-2">
+<h2 class="font-title-lg text-title-lg text-black flex items-center gap-2 uppercase tracking-tight">
+<span class="material-symbols-outlined text-solar-core text-[28px]">account_tree</span>
+                                Dominate Flow
+                            </h2>
+<span class="bg-black text-white px-3 py-1 font-label-caps text-[11px] brutal-border tracking-widest">3 ACTIVE</span>
+</div>
+<div class="flex-1 overflow-y-auto scrollbar-hide flex flex-col gap-sm">
+<div class="bg-white p-sm brutal-border shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:shadow-[6px_6px_0px_rgba(0,0,0,1)] transition-all cursor-pointer">
+<div class="flex justify-between items-center mb-3">
+<div class="font-body-medium text-body-medium text-black uppercase font-bold tracking-wide">Data Ingestion Alpha</div>
+<span class="material-symbols-outlined text-black text-lg animate-spin" style="animation-duration: 4s;">sync</span>
+</div>
+<div class="w-full bg-surface-container-high h-2.5 brutal-border overflow-hidden p-0.5">
+<div class="bg-solar-core h-full w-[85%] border-r-2 border-black halftone-bg"></div>
+</div>
+</div>
+<div class="bg-white p-sm brutal-border shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:shadow-[6px_6px_0px_rgba(0,0,0,1)] transition-all cursor-pointer">
+<div class="flex justify-between items-center mb-3">
+<div class="font-body-medium text-body-medium text-black uppercase font-bold tracking-wide">Model Weights Sync</div>
+<span class="material-symbols-outlined text-black text-lg animate-pulse">download</span>
+</div>
+<div class="w-full bg-surface-container-high h-2.5 brutal-border overflow-hidden p-0.5">
+<div class="bg-black h-full w-[42%] border-r-2 border-white"></div>
+</div>
+</div>
+<div class="bg-solar-core p-sm brutal-border shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:-translate-y-1 hover:shadow-[6px_6px_0px_rgba(0,0,0,1)] transition-all cursor-pointer halftone-bg relative z-0">
+<div class="absolute inset-0 bg-solar-core opacity-90 z-[-1]"></div>
+<div class="flex justify-between items-center mb-3 relative z-10">
+<div class="font-body-medium text-body-medium text-black uppercase font-bold tracking-wide">Cache Invalidaton</div>
+<span class="material-symbols-outlined text-black text-lg">check_circle</span>
+</div>
+<div class="w-full bg-black h-2.5 brutal-border overflow-hidden p-0.5 relative z-10">
+<div class="bg-white h-full w-full"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column (The Monolith) -->
+<div class="w-full lg:w-2/3 flex flex-col gap-lg order-1 lg:order-2 h-[60vh] lg:h-auto">
+<div class="glass-panel p-lg flex-1 flex flex-col relative overflow-hidden bg-solar-core !border-4 halftone-bg">
+<div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMiIgZmlsbD0icmdiYSgwLDAsMCwwLjEpIi8+PC9zdmc+')] pointer-events-none opacity-40 mix-blend-overlay"></div>
+<h2 class="font-display-lg text-display-lg text-black mb-md z-10 uppercase drop-shadow-[2px_2px_0px_rgba(255,255,255,1)] leading-[0.9] tracking-tighter bg-white inline-block w-max px-2 py-1 brutal-border shadow-[4px_4px_0px_rgba(0,0,0,1)]">
+                            SOLAR<br>MONOLITH
+                        </h2>
+<div class="flex-1 flex items-center justify-end relative pr-16 mt-8">
+<!-- Massive Right-Aligned Monolith Visual -->
+<div class="relative w-80 h-80 flex items-center justify-center">
+<div class="absolute inset-0 bg-white brutal-border rotate-45 sun-flare shadow-[16px_16px_0px_rgba(0,0,0,1)] z-0"></div>
+<div class="absolute inset-4 bg-black brutal-border rotate-45 z-10 flex items-center justify-center">
+<div class="rotate-[-45deg] flex flex-col items-center justify-center">
+<span class="font-display-lg text-[88px] leading-[0.8] text-solar-core drop-shadow-[3px_3px_0px_rgba(255,255,255,0.2)] mb-3 tracking-tighter">99.9%</span>
+<span class="font-headline-md text-2xl text-white uppercase tracking-widest bg-black px-5 py-2 brutal-border border-white">UPTIME</span>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-0 mt-auto z-10 bg-white brutal-border shadow-[6px_6px_0px_rgba(0,0,0,1)]">
+<div class="border-r-4 border-black p-4 flex flex-col justify-center">
+<div class="text-black font-label-caps text-label-caps mb-1 uppercase font-bold tracking-widest">Throughput</div>
+<div class="font-headline-md text-[28px] leading-none text-black tracking-tighter">1.24 GB/s</div>
+</div>
+<div class="border-r-4 border-black p-4 flex flex-col justify-center bg-surface-container">
+<div class="text-black font-label-caps text-label-caps mb-1 uppercase font-bold tracking-widest">Latency</div>
+<div class="font-headline-md text-[28px] leading-none text-solar-core drop-shadow-[1px_1px_0px_rgba(0,0,0,1)] tracking-tighter">14ms</div>
+</div>
+<div class="p-4 flex flex-col justify-center">
+<div class="text-black font-label-caps text-label-caps mb-1 uppercase font-bold tracking-widest">Error Rate</div>
+<div class="font-headline-md text-[28px] leading-none text-black tracking-tighter">0.02%</div>
+</div>
+</div>
+</div>
+<!-- System Feed Terminal -->
+<div class="glass-panel p-0 h-64 flex flex-col overflow-hidden relative bg-black text-white !border-4">
+<div class="flex justify-between items-center p-sm border-b-4 border-white bg-black z-10">
+<h2 class="font-title-lg text-title-lg text-solar-core flex items-center gap-2 uppercase tracking-tight">
+<span class="material-symbols-outlined text-white text-[24px]">terminal</span>
+                                RAW FEED
+                            </h2>
+<div class="flex gap-2">
+<div class="w-3 h-3 bg-white brutal-border border-white"></div>
+<div class="w-3 h-3 bg-solar-core brutal-border border-white"></div>
+</div>
+</div>
+<div class="flex-1 font-code-mono text-code-mono text-gray-300 overflow-y-auto scrollbar-hide text-[13px] leading-relaxed flex flex-col gap-1.5 p-sm pt-4">
+<div class="flex"><span class="text-solar-core w-24 shrink-0 font-bold">[10:42:01]</span> <span class="text-white">INIT: Starting secure handshake...</span></div>
+<div class="flex"><span class="text-solar-core w-24 shrink-0 font-bold">[10:42:03]</span> <span class="text-white">SUCCESS: Node 01 verified.</span></div>
+<div class="flex bg-white text-black p-1.5 brutal-border my-1"><span class="text-black w-24 shrink-0 font-extrabold">[10:42:15]</span> <span class="font-bold">WARN: Latency spike detected on eu-west.</span></div>
+<div class="flex"><span class="text-solar-core w-24 shrink-0 font-bold">[10:42:16]</span> <span class="text-white">REROUTING: Traffic shifting to eu-central.</span></div>
+<div class="text-gray-500 py-1">...</div>
+<div class="flex"><span class="text-solar-core w-24 shrink-0 font-bold">[10:43:00]</span> <span class="text-white">SYNC: Block hash verified.</span></div>
+<div class="mt-auto pt-2 text-solar-core text-2xl animate-pulse font-black">_</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

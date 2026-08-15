@@ -1,0 +1,394 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Enfield Companion - Service</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&amp;family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&amp;family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface": "#131313",
+                      "outline": "#8a938b",
+                      "on-tertiary-fixed": "#2a1707",
+                      "primary-fixed": "#b4f0c7",
+                      "primary-fixed-dim": "#98d4ac",
+                      "background": "#131313",
+                      "on-tertiary-container": "#bd9c84",
+                      "secondary-container": "#484949",
+                      "on-secondary-fixed-variant": "#464747",
+                      "tertiary-fixed": "#ffdcc3",
+                      "inverse-on-surface": "#313030",
+                      "on-tertiary-fixed-variant": "#5a422e",
+                      "error-container": "#93000a",
+                      "on-primary-fixed-variant": "#165132",
+                      "on-surface-variant": "#c0c9c0",
+                      "secondary-fixed-dim": "#c6c6c6",
+                      "surface-variant": "#353535",
+                      "surface-container": "#20201f",
+                      "tertiary-fixed-dim": "#e3c0a6",
+                      "on-primary-fixed": "#002110",
+                      "on-tertiary": "#412c1a",
+                      "surface-tint": "#98d4ac",
+                      "on-secondary-container": "#b8b8b8",
+                      "tertiary-container": "#4b3422",
+                      "primary": "#98d4ac",
+                      "on-primary": "#00391f",
+                      "surface-container-low": "#1c1b1b",
+                      "on-primary-container": "#75af89",
+                      "on-background": "#e5e2e1",
+                      "inverse-primary": "#316948",
+                      "on-secondary-fixed": "#1a1c1c",
+                      "surface-dim": "#131313",
+                      "tertiary": "#e3c0a6",
+                      "on-error-container": "#ffdad6",
+                      "primary-container": "#004225",
+                      "surface-container-high": "#2a2a2a",
+                      "inverse-surface": "#e5e2e1",
+                      "secondary-fixed": "#e3e2e2",
+                      "surface-container-highest": "#353535",
+                      "surface-bright": "#393939",
+                      "on-secondary": "#2f3131",
+                      "secondary": "#c6c6c6",
+                      "on-error": "#690005",
+                      "error": "#ffb4ab",
+                      "on-surface": "#e5e2e1",
+                      "surface-container-lowest": "#0e0e0e",
+                      "outline-variant": "#404942"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "margin-mobile": "16px",
+                      "xl": "80px",
+                      "margin-desktop": "64px",
+                      "xs": "4px",
+                      "lg": "48px",
+                      "base": "8px",
+                      "sm": "12px",
+                      "md": "24px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "headline-lg": [
+                              "Archivo Narrow"
+                      ],
+                      "title-md": [
+                              "Archivo Narrow"
+                      ],
+                      "headline-lg-mobile": [
+                              "Archivo Narrow"
+                      ],
+                      "body-lg": [
+                              "Hanken Grotesk"
+                      ],
+                      "body-md": [
+                              "Hanken Grotesk"
+                      ],
+                      "label-caps": [
+                              "JetBrains Mono"
+                      ],
+                      "display-lg": [
+                              "Archivo Narrow"
+                      ],
+                      "data-mono": [
+                              "JetBrains Mono"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "title-md": [
+                              "20px",
+                              {
+                                      "lineHeight": "28px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "34px",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.1em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "52px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "data-mono": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.02em",
+                                      "fontWeight": "500"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        .knurled-border {
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(138, 147, 139, 0.2) 2px, rgba(138, 147, 139, 0.2) 4px);
+            border: 1px solid rgba(192, 192, 192, 0.2);
+        }
+        .mechanical-panel {
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5), 0 1px 0 rgba(192, 192, 192, 0.1);
+        }
+        .gauge-bg {
+            background: conic-gradient(from 180deg at 50% 50%, var(--tw-colors-surface-container-lowest) 0deg, var(--tw-colors-surface-container) 180deg, var(--tw-colors-surface-container-lowest) 360deg);
+        }
+        .stamped-text {
+            text-shadow: 0 1px 0 rgba(255,255,255,0.1), 0 -1px 0 rgba(0,0,0,0.8);
+        }
+        
+        /* Hide scrollbar for clean horizontal scrolling */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen pb-[90px] md:pb-0 pt-16 selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar (Web & Mobile Hybrid Setup) -->
+<header class="fixed top-0 w-full z-50 bg-surface border-b border-outline-variant/30 flex justify-between items-center h-16 px-margin-mobile">
+<div class="flex items-center gap-4">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg tracking-tighter text-on-surface uppercase stamped-text">
+                ENFIELD COMPANION
+            </h1>
+</div>
+<!-- Web Navigation (Hidden on Mobile) -->
+<nav class="hidden md:flex gap-8 items-center h-full">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors flex flex-col justify-center h-full border-b-2 border-transparent hover:border-outline-variant" href="#">Garage</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors flex flex-col justify-center h-full border-b-2 border-transparent hover:border-outline-variant" href="#">Journeys</a>
+<a class="font-label-caps text-label-caps text-primary font-bold border-b-2 border-primary flex flex-col justify-center h-full" href="#">Service</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors flex flex-col justify-center h-full border-b-2 border-transparent hover:border-outline-variant" href="#">Community</a>
+</nav>
+<div class="flex items-center gap-4">
+<button aria-label="Notifications" class="text-primary hover:bg-surface-container-high transition-colors p-2 rounded active:scale-95 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+<button aria-label="Settings" class="text-primary hover:bg-surface-container-high transition-colors p-2 rounded active:scale-95 transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+</button>
+</div>
+</header>
+<main class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop py-lg grid grid-cols-1 md:grid-cols-12 gap-md md:gap-gutter pt-[80px]">
+<!-- Page Header / Hero Area -->
+<div class="col-span-1 md:col-span-12 mb-sm">
+<div class="flex justify-between items-end border-b border-outline-variant pb-xs">
+<div>
+<h2 class="font-label-caps text-label-caps text-primary mb-xs">WORKSHOP BAY</h2>
+<h3 class="font-display-lg text-display-lg text-on-surface uppercase tracking-tight">System Checks</h3>
+</div>
+<div class="hidden md:block">
+<span class="font-data-mono text-data-mono text-on-surface-variant px-sm py-xs bg-surface-container-high border border-outline-variant/30 rounded">INT-650 / STATUS: ONLINE</span>
+</div>
+</div>
+</div>
+<!-- System Checks Gauges (Bento Grid) -->
+<div class="col-span-1 md:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-sm">
+<!-- Engine Oil -->
+<div class="bg-surface-container border-t border-l border-white/10 rounded-lg p-sm flex flex-col items-center justify-between mechanical-panel relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="w-full flex justify-between items-start mb-md z-10">
+<span class="font-label-caps text-label-caps text-on-surface-variant">OIL</span>
+<span class="material-symbols-outlined text-outline" style="font-variation-settings: 'FILL' 0; font-size: 16px;">oil_barrel</span>
+</div>
+<div class="relative w-20 h-20 md:w-24 md:h-24 rounded-full gauge-bg flex items-center justify-center border-4 border-surface-container-highest shadow-inner z-10">
+<svg class="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="45" stroke="var(--tw-colors-surface-container-low)" stroke-width="8"></circle>
+<circle class="transition-all duration-1000" cx="50" cy="50" fill="none" r="45" stroke="var(--tw-colors-primary)" stroke-dasharray="282.7" stroke-dashoffset="56.54" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="flex flex-col items-center">
+<span class="font-data-mono text-[20px] text-on-surface leading-none font-bold">80</span>
+<span class="font-data-mono text-[10px] text-on-surface-variant">%</span>
+</div>
+</div>
+<div class="mt-sm w-full text-center z-10 border-t border-outline-variant/30 pt-xs">
+<span class="font-data-mono text-[11px] text-primary uppercase">Optimal</span>
+</div>
+</div>
+<!-- Tire Pressure -->
+<div class="bg-surface-container border-t border-l border-white/10 rounded-lg p-sm flex flex-col items-center justify-between mechanical-panel relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="w-full flex justify-between items-start mb-md z-10">
+<span class="font-label-caps text-label-caps text-on-surface-variant">TIRES</span>
+<span class="material-symbols-outlined text-outline" style="font-variation-settings: 'FILL' 0; font-size: 16px;">tire_repair</span>
+</div>
+<div class="relative w-20 h-20 md:w-24 md:h-24 rounded-full gauge-bg flex items-center justify-center border-4 border-surface-container-highest shadow-inner z-10">
+<svg class="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="45" stroke="var(--tw-colors-surface-container-low)" stroke-width="8"></circle>
+<circle class="transition-all duration-1000" cx="50" cy="50" fill="none" r="45" stroke="var(--tw-colors-tertiary)" stroke-dasharray="282.7" stroke-dashoffset="113.08" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="flex flex-col items-center">
+<span class="font-data-mono text-[20px] text-on-surface leading-none font-bold">32</span>
+<span class="font-data-mono text-[10px] text-on-surface-variant">PSI</span>
+</div>
+</div>
+<div class="mt-sm w-full text-center z-10 border-t border-outline-variant/30 pt-xs">
+<span class="font-data-mono text-[11px] text-tertiary uppercase">Check Rear</span>
+</div>
+</div>
+<!-- Chain Tension -->
+<div class="bg-surface-container border-t border-l border-white/10 rounded-lg p-sm flex flex-col items-center justify-between mechanical-panel relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="w-full flex justify-between items-start mb-md z-10">
+<span class="font-label-caps text-label-caps text-on-surface-variant">CHAIN</span>
+<span class="material-symbols-outlined text-outline" style="font-variation-settings: 'FILL' 0; font-size: 16px;">link</span>
+</div>
+<div class="relative w-20 h-20 md:w-24 md:h-24 rounded-full gauge-bg flex items-center justify-center border-4 border-surface-container-highest shadow-inner z-10">
+<svg class="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="45" stroke="var(--tw-colors-surface-container-low)" stroke-width="8"></circle>
+<circle class="transition-all duration-1000" cx="50" cy="50" fill="none" r="45" stroke="var(--tw-colors-primary)" stroke-dasharray="282.7" stroke-dashoffset="28.27" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="flex flex-col items-center">
+<span class="font-data-mono text-[20px] text-on-surface leading-none font-bold">25</span>
+<span class="font-data-mono text-[10px] text-on-surface-variant">MM</span>
+</div>
+</div>
+<div class="mt-sm w-full text-center z-10 border-t border-outline-variant/30 pt-xs">
+<span class="font-data-mono text-[11px] text-primary uppercase">In Spec</span>
+</div>
+</div>
+<!-- Battery Health -->
+<div class="bg-surface-container border-t border-l border-white/10 rounded-lg p-sm flex flex-col items-center justify-between mechanical-panel relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="w-full flex justify-between items-start mb-md z-10">
+<span class="font-label-caps text-label-caps text-on-surface-variant">BATTERY</span>
+<span class="material-symbols-outlined text-outline" style="font-variation-settings: 'FILL' 0; font-size: 16px;">battery_charging_full</span>
+</div>
+<div class="relative w-20 h-20 md:w-24 md:h-24 rounded-full gauge-bg flex items-center justify-center border-4 border-surface-container-highest shadow-inner z-10">
+<svg class="absolute inset-0 w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="45" stroke="var(--tw-colors-surface-container-low)" stroke-width="8"></circle>
+<circle class="transition-all duration-1000" cx="50" cy="50" fill="none" r="45" stroke="var(--tw-colors-primary)" stroke-dasharray="282.7" stroke-dashoffset="14.135" stroke-linecap="round" stroke-width="8"></circle>
+</svg>
+<div class="flex flex-col items-center">
+<span class="font-data-mono text-[20px] text-on-surface leading-none font-bold">12.8</span>
+<span class="font-data-mono text-[10px] text-on-surface-variant">V</span>
+</div>
+</div>
+<div class="mt-sm w-full text-center z-10 border-t border-outline-variant/30 pt-xs">
+<span class="font-data-mono text-[11px] text-primary uppercase">Healthy</span>
+</div>
+</div>
+<!-- Book Maintenance CTA spanning full width of its container -->
+<div class="col-span-2 md:col-span-4 mt-sm">
+<button class="w-full bg-primary-container text-primary font-title-md py-sm px-md rounded-lg flex items-center justify-center gap-sm hover:bg-inverse-primary hover:text-surface transition-colors active:scale-[0.98] border-t border-l border-white/20 shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">build_circle</span>
+                    BOOK MAINTENANCE
+                </button>
+</div>
+</div>
+<!-- Service History Sidebar -->
+<div class="col-span-1 md:col-span-4 flex flex-col gap-sm">
+<h3 class="font-title-md text-title-md text-on-surface uppercase border-b border-outline-variant/30 pb-xs">Logbook</h3>
+<div class="bg-surface-container-low border border-outline-variant/20 rounded-lg p-md h-full flex flex-col">
+<div class="relative pl-6 border-l-2 border-surface-variant flex-grow space-y-6">
+<!-- Timeline Item 1 -->
+<div class="relative">
+<div class="absolute -left-[29px] top-1 w-4 h-4 rounded-full bg-surface border-2 border-primary"></div>
+<div class="mb-1 flex items-center gap-2">
+<span class="font-data-mono text-data-mono text-primary">OCT 12, 2023</span>
+<span class="text-[10px] bg-surface-variant text-on-surface-variant px-1 py-0.5 rounded font-data-mono uppercase">Dealer</span>
+</div>
+<h4 class="font-title-md text-[16px] leading-tight text-on-surface mb-1">10,000km Major Service</h4>
+<p class="font-body-md text-[14px] text-on-surface-variant">Oil change, valve clearance check, brake fluid flush.</p>
+</div>
+<!-- Timeline Item 2 -->
+<div class="relative">
+<div class="absolute -left-[29px] top-1 w-4 h-4 rounded-full bg-surface border-2 border-outline-variant"></div>
+<div class="mb-1 flex items-center gap-2">
+<span class="font-data-mono text-data-mono text-on-surface-variant">JUL 04, 2023</span>
+<span class="text-[10px] bg-surface-variant text-on-surface-variant px-1 py-0.5 rounded font-data-mono uppercase">DIY</span>
+</div>
+<h4 class="font-title-md text-[16px] leading-tight text-on-surface mb-1">Chain Maintenance</h4>
+<p class="font-body-md text-[14px] text-on-surface-variant">Cleaned, lubed, and adjusted tension to 25mm.</p>
+</div>
+<!-- Timeline Item 3 -->
+<div class="relative">
+<div class="absolute -left-[29px] top-1 w-4 h-4 rounded-full bg-surface border-2 border-outline-variant"></div>
+<div class="mb-1 flex items-center gap-2">
+<span class="font-data-mono text-data-mono text-on-surface-variant">MAR 18, 2023</span>
+<span class="text-[10px] bg-surface-variant text-on-surface-variant px-1 py-0.5 rounded font-data-mono uppercase">Dealer</span>
+</div>
+<h4 class="font-title-md text-[16px] leading-tight text-on-surface mb-1">5,000km Minor Service</h4>
+<p class="font-body-md text-[14px] text-on-surface-variant">Oil filter replaced, general inspection.</p>
+</div>
+</div>
+<button class="mt-md w-full knurled-border text-on-surface-variant font-label-caps py-2 rounded flex justify-center items-center gap-2 hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined" style="font-size: 18px;">history</span>
+                    VIEW FULL LOG
+                </button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 rounded-t-xl border-t border-outline-variant/50 bg-surface-container-lowest shadow-[0_-4px_10px_rgba(0,0,0,0.5)]">
+<div class="flex justify-around items-center px-4 py-2">
+<a class="flex flex-col items-center justify-center text-outline p-2 hover:text-on-surface active:translate-y-0.5 transition-all duration-100" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings_input_component</span>
+<span class="font-label-caps text-[10px] mt-1">Garage</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline p-2 hover:text-on-surface active:translate-y-0.5 transition-all duration-100" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">explore</span>
+<span class="font-label-caps text-[10px] mt-1">Journeys</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary bg-primary-container/20 rounded-xl py-1 px-3 active:translate-y-0.5 transition-all duration-100" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">build</span>
+<span class="font-label-caps text-[10px] mt-1">Service</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline p-2 hover:text-on-surface active:translate-y-0.5 transition-all duration-100" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">groups</span>
+<span class="font-label-caps text-[10px] mt-1">Community</span>
+</a>
+</div>
+</nav>
+</body></html>

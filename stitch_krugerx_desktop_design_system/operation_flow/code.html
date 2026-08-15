@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Operation Flow - Tactile Sovereign Shell</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Epilogue:wght@900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary-fixed-variant": "#005226",
+                    "primary-container": "#ff9900",
+                    "surface-container": "#231d2b",
+                    "primary-fixed-dim": "#ffb86f",
+                    "surface-container-high": "#2e2735",
+                    "on-secondary-fixed": "#00210b",
+                    "primary": "#ffc082",
+                    "secondary": "#7dffa2",
+                    "inverse-surface": "#eadef2",
+                    "inverse-primary": "#8a5100",
+                    "secondary-fixed": "#62ff96",
+                    "error-container": "#93000a",
+                    "on-surface": "#eadef2",
+                    "error": "#ffb4ab",
+                    "on-surface-variant": "#dbc2ad",
+                    "surface-bright": "#3e3645",
+                    "on-tertiary-container": "#552c91",
+                    "secondary-fixed-dim": "#00e475",
+                    "on-primary-fixed-variant": "#693c00",
+                    "on-error": "#690005",
+                    "on-error-container": "#ffdad6",
+                    "surface-variant": "#393241",
+                    "on-primary": "#4a2800",
+                    "on-background": "#eadef2",
+                    "tertiary": "#dbc2ff",
+                    "surface": "#17111e",
+                    "surface-container-lowest": "#110c18",
+                    "surface-container-low": "#1f1926",
+                    "on-secondary-container": "#00622e",
+                    "on-tertiary-fixed-variant": "#582f94",
+                    "surface-tint": "#ffb86f",
+                    "on-tertiary-fixed": "#280057",
+                    "tertiary-fixed-dim": "#d6baff",
+                    "on-primary-container": "#653a00",
+                    "tertiary-container": "#c5a0ff",
+                    "on-tertiary": "#40127c",
+                    "surface-dim": "#17111e",
+                    "tertiary-fixed": "#ecdcff",
+                    "inverse-on-surface": "#352e3c",
+                    "primary-fixed": "#ffdcbd",
+                    "on-secondary": "#003918",
+                    "background": "#17111e",
+                    "on-primary-fixed": "#2c1600",
+                    "secondary-container": "#05e777",
+                    "outline": "#a38d7a",
+                    "surface-container-highest": "#393241",
+                    "outline-variant": "#554434"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sidebar-rail": "60px",
+                    "sidebar-expanded": "240px",
+                    "min-target": "40px",
+                    "xl": "32px",
+                    "unit": "4px",
+                    "sm": "12px",
+                    "titlebar-height": "44px",
+                    "md": "16px",
+                    "copilot-panel": "280px",
+                    "lg": "24px",
+                    "xs": "8px"
+            },
+            "fontFamily": {
+                    "headline-md": [
+                            "Inter"
+                    ],
+                    "title-lg": [
+                            "Inter"
+                    ],
+                    "body-medium": [
+                            "Inter"
+                    ],
+                    "status-sm": [
+                            "Inter"
+                    ],
+                    "label-caps": [
+                            "Inter"
+                    ],
+                    "headline-xl": [
+                            "Inter"
+                    ],
+                    "body-base": [
+                            "Inter"
+                    ],
+                    "code-mono": [
+                            "JetBrains Mono"
+                    ],
+                    "display-lg": [
+                            "Epilogue"
+                    ]
+            },
+            "fontSize": {
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "title-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "24px",
+                                    "letterSpacing": "0",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-medium": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "letterSpacing": "0",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "status-sm": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "label-caps": [
+                            "11px",
+                            {
+                                    "lineHeight": "14px",
+                                    "letterSpacing": "0.12em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "headline-xl": [
+                            "32px",
+                            {
+                                    "lineHeight": "40px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-base": [
+                            "15px",
+                            {
+                                    "lineHeight": "22px",
+                                    "letterSpacing": "0",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "code-mono": [
+                            "13px",
+                            {
+                                    "lineHeight": "18px",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "display-lg": [
+                            "48px",
+                            {
+                                    "lineHeight": "56px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "900"
+                            }
+                    ]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body { background-color: theme('colors.background'); color: theme('colors.on-background'); }
+        .glass-panel {
+            background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid theme('colors.outline-variant');
+        }
+        .connection-line {
+            stroke: theme('colors.outline-variant');
+            stroke-width: 2;
+            fill: none;
+            stroke-dasharray: 4;
+            animation: dash 20s linear infinite;
+        }
+        .connection-line.active {
+            stroke: theme('colors.primary');
+            stroke-width: 2;
+        }
+        @keyframes dash {
+            to { stroke-dashoffset: -1000; }
+        }
+        .node-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px -5px theme('colors.primary');
+            border-color: theme('colors.primary');
+        }
+        
+        /* Custom scrollbar for dark theme */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: theme('colors.surface-variant'); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: theme('colors.outline-variant'); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col overflow-hidden bg-background font-body-base antialiased selection:bg-primary-container/30 selection:text-primary">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full h-titlebar-height z-50 shadow-sm border-b border-outline-variant bg-surface-dim/80 backdrop-blur-xl transition-transform duration-100 active:scale-95">
+<div class="flex justify-between items-center px-lg h-titlebar-height max-w-[1400px] mx-auto">
+<!-- Brand / Logo -->
+<div class="font-display-lg text-display-lg font-black tracking-tighter text-primary dark:text-primary-container flex items-center gap-2">
+                AETHER_COMMAND
+            </div>
+<!-- Unified Omnibar (Search) -->
+<div class="flex-1 max-w-md mx-md relative hidden md:block">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">search</span>
+</div>
+<input class="w-full h-[36px] bg-surface-container border border-outline-variant rounded pl-10 pr-10 text-on-surface font-code-mono text-code-mono focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary placeholder-on-surface-variant/50" placeholder="Search commands, nodes, resources..." type="text"/>
+<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-on-surface-variant text-xs font-code-mono">
+                    ⌘K
+                </div>
+</div>
+<!-- Actions & Profile -->
+<div class="flex items-center gap-xs">
+<button aria-label="notifications" class="w-min-target h-min-target flex items-center justify-center rounded hover:bg-surface-bright/20 transition-all duration-300 text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button aria-label="shield_with_heart" class="w-min-target h-min-target flex items-center justify-center rounded hover:bg-surface-bright/20 transition-all duration-300 text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined text-[20px]">shield_with_heart</span>
+</button>
+<button aria-label="help" class="w-min-target h-min-target flex items-center justify-center rounded hover:bg-surface-bright/20 transition-all duration-300 text-on-surface-variant hover:text-primary">
+<span class="material-symbols-outlined text-[20px]">help</span>
+</button>
+<div class="w-8 h-8 rounded-full border border-outline-variant overflow-hidden ml-sm cursor-pointer hover:border-primary transition-colors">
+<img alt="Commander Profile Avatar" class="w-full h-full object-cover" data-alt="A detailed digital painting of an abstract geometric user avatar, featuring dark cosmic tones with glowing golden accents in a mystical iron industrial style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAT75-2EMS0VbC_wbJkZXldWgzSfW0s8lKRurzYOjLH7YLrVSve_pFjYb9bH15YgI4KM3ydZcDp8kVoJ2zZ6yq8yye85qXuzPjar8M6_AN8m-04-yYZH3anZxEVpuLkWQZDF8eNe4oaCpKrwO7uHGCGby0ElG7wsION5LN6pdvvYiZ7vrkVXZtYDwv0vMydMOCjOPXz_EX7y0l-5eoX8lggPZPTqD3z2tqqhoiV5et15sjrm3o8gpZ-"/>
+</div>
+</div>
+</div>
+</header>
+<div class="flex flex-1 pt-titlebar-height">
+<!-- SideNavBar -->
+<nav class="fixed left-0 top-titlebar-height h-[calc(100vh-44px)] w-sidebar-rail hover:w-sidebar-expanded transition-all duration-300 z-40 bg-surface-container-lowest dark:bg-surface-container-lowest border-r border-outline-variant group">
+<div class="flex flex-col h-full py-md overflow-hidden whitespace-nowrap">
+<!-- Sidebar Header -->
+<div class="px-sm mb-lg flex items-center gap-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<div class="w-10 h-10 rounded bg-surface-container-high border border-outline-variant flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary">router</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-md text-title-lg text-primary font-bold">NODE_01</span>
+<span class="font-status-sm text-status-sm text-secondary uppercase">OPERATIONAL</span>
+</div>
+</div>
+<!-- Main Nav Links -->
+<div class="flex flex-col gap-1 flex-1">
+<a class="flex items-center gap-xs text-on-surface-variant px-sm py-sm hover:bg-surface-container-high hover:text-primary transition-colors duration-200 group-hover:translate-x-1" href="#">
+<div class="w-10 h-10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">hub</span>
+</div>
+<span class="font-label-caps text-label-caps uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">Orchestration</span>
+</a>
+<a class="flex items-center gap-xs text-on-surface-variant px-sm py-sm hover:bg-surface-container-high hover:text-primary transition-colors duration-200 group-hover:translate-x-1" href="#">
+<div class="w-10 h-10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">grid_view</span>
+</div>
+<span class="font-label-caps text-label-caps uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">Resources</span>
+</a>
+<!-- Active State for Flow -->
+<a class="flex items-center gap-xs bg-primary-container/10 text-primary border-l-4 border-primary px-sm py-sm group-hover:translate-x-1 duration-300" href="#">
+<div class="w-10 h-10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_tree</span>
+</div>
+<span class="font-label-caps text-label-caps uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-bold">Flow</span>
+</a>
+<a class="flex items-center gap-xs text-on-surface-variant px-sm py-sm hover:bg-surface-container-high hover:text-primary transition-colors duration-200 group-hover:translate-x-1" href="#">
+<div class="w-10 h-10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">terminal</span>
+</div>
+<span class="font-label-caps text-label-caps uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">Terminal</span>
+</a>
+</div>
+<!-- Deploy CTA -->
+<div class="px-sm my-md opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+<button class="w-full bg-gradient-to-br from-primary-container to-inverse-primary text-on-primary font-label-caps text-label-caps tracking-widest uppercase py-2 rounded shadow-[0_0_15px_rgba(255,153,0,0.3)] hover:shadow-[0_0_25px_rgba(255,153,0,0.5)] hover:-translate-y-0.5 transition-all duration-300 font-bold border border-primary/50">
+                        DEPLOY OPS
+                    </button>
+</div>
+<!-- Footer Nav Links -->
+<div class="flex flex-col gap-1 border-t border-outline-variant pt-xs mt-auto">
+<a class="flex items-center gap-xs text-on-surface-variant px-sm py-sm hover:bg-surface-container-high hover:text-primary transition-colors duration-200 group-hover:translate-x-1" href="#">
+<div class="w-10 h-10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">settings</span>
+</div>
+<span class="font-label-caps text-label-caps uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">Settings</span>
+</a>
+<a class="flex items-center gap-xs text-on-surface-variant px-sm py-sm hover:bg-surface-container-high hover:text-primary transition-colors duration-200 group-hover:translate-x-1" href="#">
+<div class="w-10 h-10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined">contact_support</span>
+</div>
+<span class="font-label-caps text-label-caps uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">Support</span>
+</a>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 ml-sidebar-rail transition-all duration-300 p-md md:p-lg flex flex-col h-[calc(100vh-44px)] overflow-hidden max-w-[1400px]">
+<!-- Context Header -->
+<div class="flex justify-between items-end mb-lg shrink-0">
+<div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface mb-unit">Sequence Orchestrator</h1>
+<p class="font-body-medium text-body-medium text-on-surface-variant">Design, monitor, and execute operational flows.</p>
+</div>
+<div class="flex gap-sm">
+<button class="px-md py-sm rounded border border-outline-variant text-on-surface-variant font-label-caps text-label-caps hover:bg-surface-container-high hover:text-primary transition-colors flex items-center gap-2 bg-[rgba(255,255,255,0.04)]">
+<span class="material-symbols-outlined text-[18px]">history</span>
+                        VERSION HISTORY
+                    </button>
+<button class="px-md py-sm rounded border border-primary/30 text-primary font-label-caps text-label-caps hover:bg-primary-container/10 transition-colors flex items-center gap-2 bg-[rgba(255,255,255,0.04)]">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                        NEW NODE
+                    </button>
+</div>
+</div>
+<!-- Workspace Layout -->
+<div class="flex flex-1 gap-md overflow-hidden">
+<!-- Graph Area (Left/Main) -->
+<div class="flex-[3] relative glass-panel rounded-lg overflow-hidden flex flex-col">
+<!-- Graph Controls -->
+<div class="absolute top-sm right-sm z-10 flex gap-unit bg-surface/80 backdrop-blur rounded p-unit border border-outline-variant">
+<button class="w-8 h-8 flex items-center justify-center text-on-surface-variant hover:text-primary rounded hover:bg-surface-container"><span class="material-symbols-outlined text-[20px]">zoom_in</span></button>
+<button class="w-8 h-8 flex items-center justify-center text-on-surface-variant hover:text-primary rounded hover:bg-surface-container"><span class="material-symbols-outlined text-[20px]">zoom_out</span></button>
+<button class="w-8 h-8 flex items-center justify-center text-on-surface-variant hover:text-primary rounded hover:bg-surface-container"><span class="material-symbols-outlined text-[20px]">fit_screen</span></button>
+</div>
+<!-- Flow Canvas -->
+<div class="flex-1 relative overflow-auto p-xl" id="flow-canvas">
+<!-- SVG for connection lines -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none" style="min-width: 800px; min-height: 600px;">
+<!-- Data Ingestion to Processing -->
+<path class="connection-line active" d="M 250 150 L 450 250"></path>
+<!-- Processing to Analysis -->
+<path class="connection-line" d="M 650 250 L 850 150"></path>
+<!-- Processing to Storage -->
+<path class="connection-line" d="M 650 250 L 850 350"></path>
+</svg>
+<!-- Node 1: Data Ingestion -->
+<div class="absolute top-[100px] left-[50px] w-[200px] bg-surface-container-low border border-outline-variant rounded-lg p-sm node-hover cursor-move transition-all duration-300">
+<div class="flex items-center gap-2 mb-xs border-b border-outline-variant/50 pb-xs">
+<span class="material-symbols-outlined text-secondary text-[16px]">cloud_download</span>
+<span class="font-label-caps text-label-caps text-on-surface">Data Ingest</span>
+</div>
+<div class="font-code-mono text-code-mono text-on-surface-variant text-[11px] mb-2">Source: API_GATE_01</div>
+<div class="flex justify-between items-center mt-sm">
+<div class="w-2 h-2 rounded-full bg-secondary animate-pulse shadow-[0_0_8px_theme('colors.secondary')]"></div>
+<span class="font-status-sm text-status-sm text-secondary">ACTIVE</span>
+</div>
+<!-- Output Port -->
+<div class="absolute right-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 rounded-full border-2 border-primary bg-surface z-10 cursor-crosshair hover:scale-125 transition-transform"></div>
+</div>
+<!-- Node 2: Processing (Active Selection) -->
+<div class="absolute top-[200px] left-[450px] w-[200px] bg-surface-container border border-primary rounded-lg p-sm node-hover cursor-move shadow-[0_0_15px_rgba(255,192,130,0.15)] transition-all duration-300 transform -translate-y-1">
+<!-- Input Port -->
+<div class="absolute left-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 rounded-full border-2 border-primary bg-primary z-10"></div>
+<div class="flex items-center gap-2 mb-xs border-b border-primary/30 pb-xs">
+<span class="material-symbols-outlined text-primary text-[16px]">memory</span>
+<span class="font-label-caps text-label-caps text-primary font-bold">Tensor Proc</span>
+</div>
+<div class="font-code-mono text-code-mono text-on-surface-variant text-[11px] mb-2">Model: GPT_NEXUS</div>
+<div class="w-full bg-surface-dim h-1 rounded overflow-hidden mt-sm">
+<div class="bg-primary h-full w-[45%]"></div>
+</div>
+<div class="text-right font-code-mono text-[10px] text-primary mt-1">45%</div>
+<!-- Output Ports -->
+<div class="absolute right-[-6px] top-1/3 -translate-y-1/2 w-3 h-3 rounded-full border-2 border-outline-variant bg-surface z-10 hover:border-primary transition-colors cursor-crosshair"></div>
+<div class="absolute right-[-6px] top-2/3 -translate-y-1/2 w-3 h-3 rounded-full border-2 border-outline-variant bg-surface z-10 hover:border-primary transition-colors cursor-crosshair"></div>
+</div>
+<!-- Node 3: Analysis -->
+<div class="absolute top-[100px] left-[850px] w-[200px] bg-surface-container-low border border-outline-variant rounded-lg p-sm node-hover cursor-move transition-all duration-300 opacity-70">
+<!-- Input Port -->
+<div class="absolute left-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 rounded-full border-2 border-outline-variant bg-surface z-10"></div>
+<div class="flex items-center gap-2 mb-xs border-b border-outline-variant/50 pb-xs">
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]">analytics</span>
+<span class="font-label-caps text-label-caps text-on-surface">Insight Gen</span>
+</div>
+<div class="font-code-mono text-code-mono text-on-surface-variant text-[11px] mb-2">Wait for: Tensor Proc</div>
+<div class="flex justify-between items-center mt-sm">
+<div class="w-2 h-2 rounded-full border border-outline-variant"></div>
+<span class="font-status-sm text-status-sm text-on-surface-variant">PENDING</span>
+</div>
+</div>
+<!-- Node 4: Storage -->
+<div class="absolute top-[300px] left-[850px] w-[200px] bg-surface-container-low border border-outline-variant rounded-lg p-sm node-hover cursor-move transition-all duration-300 opacity-70">
+<!-- Input Port -->
+<div class="absolute left-[-6px] top-1/2 -translate-y-1/2 w-3 h-3 rounded-full border-2 border-outline-variant bg-surface z-10"></div>
+<div class="flex items-center gap-2 mb-xs border-b border-outline-variant/50 pb-xs">
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]">database</span>
+<span class="font-label-caps text-label-caps text-on-surface">Cold Store</span>
+</div>
+<div class="font-code-mono text-code-mono text-on-surface-variant text-[11px] mb-2">Dest: S3_ARCHIVE</div>
+<div class="flex justify-between items-center mt-sm">
+<div class="w-2 h-2 rounded-full border border-outline-variant"></div>
+<span class="font-status-sm text-status-sm text-on-surface-variant">PENDING</span>
+</div>
+</div>
+</div>
+<!-- Bottom Status Bar for Graph -->
+<div class="h-8 bg-surface-container-highest border-t border-outline-variant flex items-center px-sm gap-md font-code-mono text-[10px] text-on-surface-variant shrink-0">
+<span class="flex items-center gap-1"><div class="w-2 h-2 rounded-full bg-secondary"></div> System Normal</span>
+<span>Nodes: 4</span>
+<span>Connections: 3</span>
+<span class="ml-auto">Drag nodes to reposition. Connect ports to create dependencies.</span>
+</div>
+</div>
+<!-- Detail Panel (Right Side) -->
+<div class="w-[320px] glass-panel rounded-lg flex flex-col hidden lg:flex overflow-hidden border-t-2 border-t-primary">
+<!-- Panel Header -->
+<div class="p-md border-b border-outline-variant bg-surface-container-high/50 flex justify-between items-center shrink-0">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">memory</span>
+<h2 class="font-title-lg text-title-lg text-on-surface">Tensor Proc</h2>
+</div>
+<button class="text-on-surface-variant hover:text-primary"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
+</div>
+<!-- Panel Content -->
+<div class="flex-1 overflow-y-auto p-md flex flex-col gap-lg">
+<!-- Status Block -->
+<div class="bg-surface-container p-sm rounded border border-outline-variant/50">
+<div class="flex justify-between items-center mb-xs">
+<span class="font-label-caps text-label-caps text-on-surface-variant">CURRENT STATUS</span>
+<span class="font-status-sm text-status-sm text-primary animate-pulse">PROCESSING</span>
+</div>
+<div class="font-code-mono text-[12px] text-on-surface">Uptime: 00:04:23</div>
+<div class="font-code-mono text-[12px] text-on-surface">Throughput: 1.2GB/s</div>
+</div>
+<!-- Configuration Form -->
+<div class="flex flex-col gap-md">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest border-b border-outline-variant pb-1">Configuration</h3>
+<div class="flex flex-col gap-1">
+<label class="font-body-medium text-[12px] text-on-surface-variant">Model Selection</label>
+<select class="bg-surface-container border border-outline-variant rounded p-2 text-on-surface font-code-mono text-code-mono focus:border-primary focus:ring-1 focus:ring-primary outline-none">
+<option>GPT_NEXUS (Active)</option>
+<option>CLAUDE_OPUS</option>
+<option>CUSTOM_TENSOR_V2</option>
+</select>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-body-medium text-[12px] text-on-surface-variant">Batch Size</label>
+<div class="flex items-center gap-2">
+<input class="flex-1 accent-primary" max="100" min="1" type="range" value="64"/>
+<span class="font-code-mono text-code-mono text-on-surface w-8 text-right">64</span>
+</div>
+</div>
+<div class="flex items-center gap-2 mt-2">
+<input class="rounded border-outline-variant bg-surface-container text-primary focus:ring-primary focus:ring-offset-surface" id="strict" type="checkbox"/>
+<label class="font-body-medium text-[13px] text-on-surface" for="strict">Enforce Strict Ordering</label>
+</div>
+</div>
+<!-- Logs Snippet -->
+<div class="flex flex-col gap-1 mt-auto">
+<div class="flex justify-between items-end mb-1">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Recent Logs</h3>
+<button class="text-primary text-[10px] font-label-caps hover:underline">VIEW ALL</button>
+</div>
+<div class="bg-surface-container-lowest p-xs rounded border border-outline-variant font-code-mono text-[10px] text-on-surface-variant h-24 overflow-y-auto">
+<div class="mb-1"><span class="text-primary-fixed-dim">[14:02:11]</span> INIT Tensor_Proc</div>
+<div class="mb-1"><span class="text-primary-fixed-dim">[14:02:15]</span> Receiving buffer...</div>
+<div class="mb-1"><span class="text-secondary">[14:02:16]</span> Buffer steady at 98%</div>
+<div class="mb-1"><span class="text-primary-fixed-dim">[14:02:18]</span> Executing weights shift</div>
+<div class="mb-1"><span class="text-primary-fixed-dim">[14:02:22]</span> Processing batch 104</div>
+</div>
+</div>
+</div>
+<!-- Panel Actions -->
+<div class="p-md border-t border-outline-variant bg-surface-container-highest flex gap-sm shrink-0">
+<button class="flex-1 py-2 rounded border border-outline-variant text-on-surface-variant font-label-caps text-label-caps hover:bg-surface hover:text-error transition-colors bg-[rgba(255,255,255,0.04)]">
+                            HALT NODE
+                        </button>
+<button class="flex-1 py-2 rounded bg-gradient-to-r from-primary-container to-primary text-on-primary font-label-caps text-label-caps font-bold hover:shadow-[0_0_15px_rgba(255,153,0,0.4)] transition-shadow">
+                            SAVE REGS
+                        </button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

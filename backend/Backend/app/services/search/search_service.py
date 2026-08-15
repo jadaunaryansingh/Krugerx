@@ -6,7 +6,7 @@ from loguru import logger
 import xml.etree.ElementTree as ET
 
 from app.core.config import settings
-from app.schemas.search import SearchResultItem
+from app.schemas.search import SearchResultItem, KnowledgePanel
 
 
 class SearchService:
@@ -21,22 +21,74 @@ class SearchService:
             )
         }
 
-    async def search(self, provider: str, query: str) -> List[SearchResultItem]:
+    async def search(self, provider: str, query: str) -> dict:
         """
         Execute search across configured search engine provider.
+        Returns a dict containing 'results' and optionally 'knowledge_panel'.
         """
         provider = provider.lower()
+        results = []
         if provider == "google":
-            return await self._search_google(query)
+            results = await self._search_google(query)
         elif provider == "bing":
-            return await self._search_bing(query)
+            results = await self._search_bing(query)
         elif provider == "brave":
-            return await self._search_brave(query)
+            results = await self._search_brave(query)
         elif provider == "duckduckgo" or provider == "ddg":
-            return await self._search_duckduckgo(query)
+            results = await self._search_duckduckgo(query)
         else:
             logger.warning(f"Unknown search provider: {provider}, falling back to DuckDuckGo.")
-            return await self._search_duckduckgo(query)
+            results = await self._search_duckduckgo(query)
+
+        knowledge_panel = await self._fetch_knowledge_panel(query)
+        
+        return {
+            "results": results,
+            "knowledge_panel": knowledge_panel
+        }
+
+    async def _fetch_knowledge_panel(self, query: str) -> Optional[KnowledgePanel]:
+        """
+        Queries Wikipedia API to fetch a brief summary and image for entities.
+        """
+        url = f"https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts|pageimages&exintro=1&explaintext=1&piprop=original&titles={quote(query)}&redirects=1"
+        async with httpx.AsyncClient() as client:
+            try:
+                res = await client.get(url, headers=self.headers, timeout=5.0)
+                if res.status_code == 200:
+                    data = res.json()
+                    pages = data.get("query", {}).get("pages", {})
+                    for page_id, page_data in pages.items():
+                        if page_id == "-1":
+                            continue
+                        
+                        title = page_data.get("title", "")
+                        extract = page_data.get("extract", "")
+                        if not extract or "may refer to:" in extract:
+                            continue
+                            
+                        # Limit extract length for the panel
+                        if len(extract) > 400:
+                            extract = extract[:397] + "..."
+                            
+                        image_url = None
+                        original = page_data.get("original")
+                        if original:
+                            image_url = original.get("source")
+                            
+                        page_url = f"https://en.wikipedia.org/wiki/{quote(title.replace(' ', '_'))}"
+                        
+                        return KnowledgePanel(
+                            title=title,
+                            description=extract,
+                            image_url=image_url,
+                            url=page_url,
+                            attributes={"Source": "Wikipedia"}
+                        )
+            except Exception as e:
+                logger.bind(category="errors").error(f"Knowledge panel fetch failed: {str(e)}")
+                
+        return None
 
     async def _search_google(self, query: str) -> List[SearchResultItem]:
         """

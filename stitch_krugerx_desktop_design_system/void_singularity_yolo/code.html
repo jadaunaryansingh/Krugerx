@@ -1,0 +1,224 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>VOID_SINGULARITY // 0x00</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    obsidian: "#020202",
+                    acid: "#39ff14",
+                    violet: "#b026ff",
+                    void: "#0a0510",
+                },
+                fontFamily: {
+                    mono: ["JetBrains Mono", "monospace"],
+                }
+            }
+        }
+    }
+</script>
+<style>
+    body { 
+        background-color: #000; 
+        color: #39ff14; 
+        font-family: 'JetBrains Mono', monospace;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+    .phosphor-green {
+        text-shadow: 0 0 4px #39ff14, 0 0 8px #39ff1488;
+    }
+    .phosphor-violet {
+        text-shadow: 0 0 4px #b026ff, 0 0 8px #b026ff88;
+    }
+    .scanlines {
+        position: fixed;
+        top: 0; left: 0; width: 100vw; height: 100vh;
+        background: linear-gradient(to bottom, rgba(255,255,255,0) 50%, rgba(0,0,0,0.3) 50%);
+        background-size: 100% 4px;
+        pointer-events: none;
+        z-index: 9999;
+    }
+    .crt-flicker {
+        animation: flicker 0.15s infinite;
+    }
+    @keyframes flicker {
+        0% { opacity: 0.95; }
+        50% { opacity: 1; }
+        100% { opacity: 0.98; }
+    }
+    .black-hole {
+        background: radial-gradient(circle at center, #000 20%, #b026ff 40%, #39ff14 70%, #000 100%);
+        filter: contrast(200%) brightness(150%) hue-rotate(90deg);
+        animation: swirl 8s linear infinite;
+        mix-blend-mode: screen;
+    }
+    @keyframes swirl {
+        0% { transform: rotate(0deg) scale(1) skew(0deg); filter: hue-rotate(0deg); }
+        33% { transform: rotate(120deg) scale(1.1) skew(10deg); filter: hue-rotate(90deg); }
+        66% { transform: rotate(240deg) scale(0.9) skew(-10deg); filter: hue-rotate(180deg); }
+        100% { transform: rotate(360deg) scale(1) skew(0deg); filter: hue-rotate(360deg); }
+    }
+    .matrix-border {
+        border: 1px solid #b026ff44;
+    }
+    .scroll-log {
+        animation: scrollUp 20s linear infinite;
+    }
+    @keyframes scrollUp {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-50%); }
+    }
+    ::-webkit-scrollbar { display: none; }
+</style>
+</head>
+<body class="crt-flicker flex flex-col h-screen w-screen">
+<div class="scanlines"></div>
+<!-- TopNavBar -->
+<header class="bg-obsidian border-b matrix-border h-10 w-full flex items-center px-2 justify-between z-50 shrink-0">
+<div class="text-violet font-bold text-sm uppercase phosphor-violet flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">terminal</span>
+        SYS.CORE_0x00A
+    </div>
+<div class="flex items-center gap-4 text-xs text-acid phosphor-green">
+<span class="animate-pulse">MEM_LEAK: DETECTED</span>
+<span>|</span>
+<span>SEED: 0x9F4B2</span>
+</div>
+</header>
+<div class="flex flex-1 h-[calc(100vh-40px)] w-full overflow-hidden">
+<!-- SideNavBar (Encrypted Packet Log) -->
+<nav class="w-64 bg-void border-r matrix-border h-full flex flex-col overflow-hidden relative shrink-0">
+<div class="bg-obsidian border-b matrix-border p-1 text-[10px] text-violet uppercase text-center font-bold tracking-widest">
+            ENCRYPTED_STREAM //
+        </div>
+<div class="flex-1 overflow-hidden relative text-[10px] leading-tight opacity-70 p-1 font-mono break-all text-acid">
+<div class="scroll-log absolute top-0 left-0 w-full flex flex-col gap-1 p-1">
+<!-- Duplicated for infinite scroll effect -->
+<div>0x0F 0x4A 0x9B 0x22 0x1C 0x99 0xFF</div>
+<div class="text-violet">0xAA [SIG_TRUNC] 0x00 0x01</div>
+<div>0xBB 0xCC 0xDD 0xEE 0xFF 0x11 0x22</div>
+<div>0x33 0x44 0x55 0x66 0x77 0x88 0x99</div>
+<div class="text-violet text-opacity-50">NULL_PTR_EXCEPTION at 0xFA99B</div>
+<div>0x1A 0x2B 0x3C 0x4D 0x5E 0x6F 0x70</div>
+<div>0x81 0x92 0xA3 0xB4 0xC5 0xD6 0xE7</div>
+<div>0xF8 0x09 0x1A 0x2B 0x3C 0x4D 0x5E</div>
+<div class="text-violet">0xAA [SIG_TRUNC] 0x00 0x01</div>
+<div>0x6F 0x70 0x81 0x92 0xA3 0xB4 0xC5</div>
+<div>0x0F 0x4A 0x9B 0x22 0x1C 0x99 0xFF</div>
+<div class="text-violet">0xAA [SIG_TRUNC] 0x00 0x01</div>
+<div>0xBB 0xCC 0xDD 0xEE 0xFF 0x11 0x22</div>
+<div>0x33 0x44 0x55 0x66 0x77 0x88 0x99</div>
+<div class="text-violet text-opacity-50">NULL_PTR_EXCEPTION at 0xFA99B</div>
+<div>0x1A 0x2B 0x3C 0x4D 0x5E 0x6F 0x70</div>
+<div>0x81 0x92 0xA3 0xB4 0xC5 0xD6 0xE7</div>
+<div>0xF8 0x09 0x1A 0x2B 0x3C 0x4D 0x5E</div>
+<div class="text-violet">0xAA [SIG_TRUNC] 0x00 0x01</div>
+<div>0x6F 0x70 0x81 0x92 0xA3 0xB4 0xC5</div>
+</div>
+</div>
+</nav>
+<!-- Main Content (Zero Margin Grid) -->
+<main class="flex-1 h-full flex flex-col md:flex-row bg-obsidian">
+<!-- Center Pulse Monitor -->
+<div class="flex-1 border-r matrix-border flex flex-col h-full relative">
+<div class="bg-obsidian border-b matrix-border p-1 text-[10px] text-violet uppercase font-bold tracking-widest flex justify-between">
+<span>0x0F_SINGULARITY_CORE</span>
+<span>STATE: UNSTABLE</span>
+</div>
+<div class="flex-1 relative flex items-center justify-center overflow-hidden bg-void">
+<!-- Kaleidoscopic Black Hole -->
+<div class="relative w-[300px] h-[300px] flex items-center justify-center">
+<div class="absolute inset-0 black-hole rounded-full blur-xl opacity-80"></div>
+<div class="absolute inset-4 border-2 border-violet border-dashed rounded-full animate-[spin_4s_linear_infinite_reverse] opacity-50"></div>
+<div class="absolute inset-10 border border-acid rounded-full animate-[spin_2s_linear_infinite] opacity-30"></div>
+<div class="w-24 h-24 bg-black rounded-full z-10 flex flex-col items-center justify-center border-2 border-violet shadow-[0_0_50px_#b026ff]">
+<span class="text-acid phosphor-green text-sm font-bold">ERR_00</span>
+<span class="text-[8px] text-violet">CRITICAL</span>
+</div>
+</div>
+</div>
+<div class="h-24 border-t matrix-border flex bg-obsidian">
+<div class="flex-1 border-r matrix-border p-2 flex flex-col justify-end">
+<div class="text-[9px] text-violet mb-1">0xT_THROUGHPUT</div>
+<div class="text-xs text-acid phosphor-green">9.99 TB/s</div>
+</div>
+<div class="flex-1 border-r matrix-border p-2 flex flex-col justify-end">
+<div class="text-[9px] text-violet mb-1">0xL_LATENCY</div>
+<div class="text-xs text-acid phosphor-green animate-pulse">0.1ms</div>
+</div>
+<div class="flex-1 p-2 flex flex-col justify-end">
+<div class="text-[9px] text-violet mb-1">0xE_DECAY_RATE</div>
+<div class="text-xs text-acid phosphor-green">88.4%</div>
+</div>
+</div>
+</div>
+<!-- Right Column -->
+<div class="w-full md:w-96 flex flex-col h-full bg-void">
+<!-- Active Orchestrations -->
+<div class="h-1/2 border-b matrix-border flex flex-col">
+<div class="bg-obsidian border-b matrix-border p-1 text-[10px] text-violet uppercase font-bold tracking-widest flex justify-between">
+<span>0xFA_EXECUTION_MATRIX</span>
+<span class="text-acid bg-acid/20 px-1">0x03 ACTIVE</span>
+</div>
+<div class="flex-1 p-2 flex flex-col gap-2 overflow-y-auto">
+<div class="border border-violet/30 p-2 bg-obsidian relative overflow-hidden group">
+<div class="absolute inset-0 bg-violet/10 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-1000"></div>
+<div class="flex justify-between text-[10px] mb-1">
+<span class="text-acid">0x_VOID_TEAR_INIT</span>
+<span class="text-violet animate-spin">[*]</span>
+</div>
+<div class="w-full h-1 bg-black border border-violet/30">
+<div class="h-full bg-acid w-[92%]"></div>
+</div>
+</div>
+<div class="border border-violet/30 p-2 bg-obsidian relative overflow-hidden group">
+<div class="flex justify-between text-[10px] mb-1">
+<span class="text-acid">0x_NEURAL_BLEED</span>
+<span class="text-violet">!!!</span>
+</div>
+<div class="w-full h-1 bg-black border border-violet/30">
+<div class="h-full bg-violet w-[14%] animate-pulse"></div>
+</div>
+</div>
+<div class="border border-violet/30 p-2 bg-obsidian relative overflow-hidden group">
+<div class="flex justify-between text-[10px] mb-1">
+<span class="text-violet/50">0x_MEM_CORRUPT</span>
+<span class="text-violet/50">[OK]</span>
+</div>
+<div class="w-full h-1 bg-black border border-violet/30">
+<div class="h-full bg-acid/30 w-full"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- System Feed Terminal -->
+<div class="flex-1 flex flex-col relative bg-obsidian">
+<div class="bg-obsidian border-b matrix-border p-1 text-[10px] text-violet uppercase font-bold tracking-widest flex justify-between">
+<span>0x00_RAW_DUMP</span>
+<span class="flex gap-1"><span class="w-1.5 h-1.5 bg-acid rounded-full animate-pulse"></span></span>
+</div>
+<div class="flex-1 p-2 text-[10px] leading-tight font-mono text-acid flex flex-col gap-1 overflow-hidden relative">
+<div class="absolute inset-0 bg-[linear-gradient(rgba(57,255,20,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(57,255,20,0.05)_1px,transparent_1px)] bg-[size:10px_10px] pointer-events-none"></div>
+<div><span class="text-violet">&gt;</span> OVERRIDE_PROTOCOL_INIT...</div>
+<div><span class="text-violet">&gt;</span> BYPASSING_SECURITY_NODE_01</div>
+<div class="text-violet">WARN: CONTAINMENT BREACH AT SECTOR 7G</div>
+<div class="break-all opacity-50">01010111 01100001 01110010 01101110 01101001 01101110 01100111</div>
+<div><span class="text-violet">&gt;</span> INJECTING_PAYLOAD_0xAA...</div>
+<div class="text-violet animate-pulse">FATAL_ERROR: VOID_SINGULARITY_IMMINENT</div>
+<div class="mt-auto animate-pulse flex">
+<span class="text-violet">&gt;</span> <span class="bg-acid w-2 h-3 ml-1"></span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

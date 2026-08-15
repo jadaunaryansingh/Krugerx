@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AUTH_STATION // KRUGX</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;600;700&amp;family=Hanken+Grotesk:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#000000",
+                        "on-primary-container": "#75af89",
+                        "surface-container-lowest": "#050505",
+                        "primary-fixed-dim": "#98d4ac",
+                        "secondary-fixed": "#e3e2e2",
+                        "tertiary-fixed-dim": "#e3c0a6",
+                        "surface-container": "#111111",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "on-tertiary-fixed-variant": "#5a422e",
+                        "inverse-on-surface": "#313030",
+                        "surface": "#000000",
+                        "on-secondary": "#2f3131",
+                        "tertiary-fixed": "#ffdcc3",
+                        "on-surface-variant": "#777777",
+                        "on-tertiary": "#412c1a",
+                        "on-secondary-container": "#b8b8b8",
+                        "primary-container": "#220000",
+                        "on-background": "#e5e2e1",
+                        "outline": "#333333",
+                        "secondary-container": "#484949",
+                        "surface-container-highest": "#1a1a1a",
+                        "on-primary-fixed": "#002110",
+                        "error": "#ff0000",
+                        "secondary-fixed-dim": "#c6c6c6",
+                        "tertiary-container": "#4b3422",
+                        "surface-bright": "#393939",
+                        "surface-container-high": "#222222",
+                        "surface-tint": "#ff0000",
+                        "error-container": "#93000a",
+                        "surface-variant": "#222222",
+                        "primary": "#ff0000",
+                        "primary-dim": "#550000",
+                        "secondary": "#c6c6c6",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#e5e2e1",
+                        "on-primary-fixed-variant": "#165132",
+                        "primary-fixed": "#ff0000",
+                        "on-tertiary-fixed": "#2a1707",
+                        "on-tertiary-container": "#bd9c84",
+                        "outline-variant": "#222222",
+                        "surface-dim": "#000000",
+                        "tertiary": "#e3c0a6",
+                        "inverse-primary": "#316948",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#464747",
+                        "on-error-container": "#ffdad6",
+                        "on-surface": "#e5e2e1",
+                        "surface-container-low": "#0a0a0a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "lg": "48px",
+                        "margin-mobile": "16px",
+                        "md": "24px",
+                        "sm": "12px",
+                        "gutter": "24px",
+                        "xl": "80px",
+                        "margin-desktop": "64px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["Archivo Narrow"],
+                        "data-mono": ["JetBrains Mono"],
+                        "label-caps": ["JetBrains Mono"],
+                        "title-md": ["Archivo Narrow"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "display-lg": ["Archivo Narrow"],
+                        "headline-lg": ["Archivo Narrow"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "34px", "fontWeight": "700" }],
+                        "data-mono": ["14px", { "lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "700" }],
+                        "title-md": ["20px", { "lineHeight": "28px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "52px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .dot-matrix {
+            background-image: radial-gradient(circle at 2px 2px, rgba(255, 255, 255, 0.03) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+        .knurled-border {
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255, 0, 0, 0.2) 2px, rgba(255, 0, 0, 0.2) 4px);
+        }
+        .scan-line {
+            animation: scan 1.5s linear infinite;
+        }
+        @keyframes scan {
+            0% { transform: translateY(-50px); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(50px); opacity: 0; }
+        }
+        .text-glow {
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+        }
+        .text-glow-error {
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+        }
+        .bracket-corners {
+            position: relative;
+        }
+        .bracket-corners::before, .bracket-corners::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-color: rgba(255, 0, 0, 0.7);
+            border-style: solid;
+        }
+        .bracket-corners::before {
+            top: -1px;
+            left: -1px;
+            border-width: 2px 0 0 2px;
+        }
+        .bracket-corners::after {
+            bottom: -1px;
+            right: -1px;
+            border-width: 0 2px 2px 0;
+        }
+        .svg-pulse path {
+            animation: dash 2s linear infinite;
+        }
+        @keyframes dash {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface h-screen w-screen overflow-hidden flex flex-col font-data-mono dot-matrix">
+<!-- TopAppBar -->
+<header class="bg-background font-data-mono flex justify-between items-end w-full px-margin-mobile md:px-margin-desktop py-md border-b border-outline/30 flex-shrink-0 z-50">
+<div class="flex flex-col gap-xs">
+<span class="font-display-lg text-display-lg text-primary text-glow tracking-tighter uppercase leading-none">AUTH_STATION // KRUGX</span>
+<span class="text-[12px] text-primary-dim tracking-widest">SYS.NODE_0x7A // SECURE_UPLINK</span>
+</div>
+<div class="flex items-center gap-md">
+<div class="text-primary text-glow hidden md:flex items-center gap-sm bg-surface-container-highest px-sm py-xs border border-primary/30">
+<span class="material-symbols-outlined text-sm" data-icon="timer">timer</span>
+<span id="utc-clock">UTC 00:00:00</span>
+</div>
+<div class="flex gap-sm">
+<span class="material-symbols-outlined text-primary hover:bg-surface-container-highest transition-colors cursor-pointer p-1 rounded" data-icon="security">security</span>
+<span class="material-symbols-outlined text-primary hover:bg-surface-container-highest transition-colors cursor-pointer p-1 rounded" data-icon="sensors">sensors</span>
+<span class="material-symbols-outlined text-primary hover:bg-surface-container-highest transition-colors cursor-pointer p-1 rounded" data-icon="settings">settings</span>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 flex relative p-margin-mobile md:p-margin-desktop gap-md overflow-hidden">
+<!-- Crosshairs (Decorative) -->
+<div class="absolute top-md left-md w-8 h-8 border-t border-l border-outline/50 flex items-start justify-start p-1 text-[10px] text-outline">0x00</div>
+<div class="absolute top-md right-md w-8 h-8 border-t border-r border-outline/50 flex items-start justify-end p-1 text-[10px] text-outline">0xFF</div>
+<div class="absolute bottom-md left-md w-8 h-8 border-b border-l border-outline/50 flex items-end justify-start p-1 text-[10px] text-outline">0x01</div>
+<div class="absolute bottom-md right-md w-8 h-8 border-b border-r border-outline/50 flex items-end justify-end p-1 text-[10px] text-outline">0xF0</div>
+<!-- Left Sidebar: Logs & Telemetry -->
+<div class="hidden md:flex flex-col gap-md w-1/4 h-full shrink-0">
+<div class="border border-outline/30 bg-surface-container-lowest/80 p-md backdrop-blur-sm relative bracket-corners flex-1 flex flex-col">
+<h3 class="text-[12px] text-primary-dim mb-sm border-b border-primary-dim pb-xs flex justify-between tracking-widest"><span>TERMINAL_LOG</span> <span class="text-primary">[OK]</span></h3>
+<div class="text-on-surface-variant text-[10px] space-y-1 overflow-hidden opacity-80 flex-1 flex flex-col justify-end">
+<p>&gt; [SYS] 0x7A_SH_INIT</p>
+<p>&gt; [NET] TCP_ACK_RCVD</p>
+<p>&gt; [SEC] KEY_EXCHANGE_REQ</p>
+<p>&gt; [ENC] ENTROPY_CHECK_PASS</p>
+<p>&gt; [SYS] AWAIT_BIOMETRIC...</p>
+<p class="text-primary animate-pulse text-glow">&gt; [REQ] INPUT_REQUIRED</p>
+</div>
+</div>
+<div class="border border-outline/30 bg-surface-container-lowest/80 p-sm backdrop-blur-sm relative flex flex-col gap-xs">
+<div class="flex justify-between items-center border-b border-outline/30 pb-1">
+<span class="text-[10px] text-primary-dim">RX_DATA</span>
+<span class="text-[10px] text-primary" id="rx-rate">1.4 MB/s</span>
+</div>
+<div class="flex justify-between items-center border-b border-outline/30 pb-1">
+<span class="text-[10px] text-primary-dim">ENTROPY</span>
+<span class="text-[10px] text-primary">0.9998</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-[10px] text-primary-dim">LATENCY</span>
+<span class="text-[10px] text-primary animate-pulse" id="ping-rate">12ms</span>
+</div>
+</div>
+</div>
+<!-- Central HUD: Authentication -->
+<div class="flex-1 flex flex-col items-center justify-center relative z-10 px-md">
+<div class="w-full max-w-lg relative bracket-corners p-lg">
+<!-- Telemetry Markers -->
+<div class="absolute -top-3 left-4 bg-background px-1 text-[10px] text-primary-dim">[AUTH_MODULE]</div>
+<div class="absolute -bottom-3 right-4 bg-background px-1 text-[10px] text-primary-dim">[NODE_0x7A]</div>
+<div class="flex flex-col items-center gap-lg w-full">
+<!-- Handshake Pulse Visualizer -->
+<div class="relative w-48 h-48 flex items-center justify-center overflow-visible">
+<svg class="absolute inset-0 w-full h-full svg-pulse" viewbox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="45" stroke="rgba(255,0,0,0.2)" stroke-width="1"></circle>
+<circle cx="50" cy="50" fill="none" r="35" stroke="rgba(255,0,0,0.4)" stroke-dasharray="4 4" stroke-width="2"></circle>
+<path d="M 10 50 Q 25 20, 50 50 T 90 50" fill="none" stroke="#ff0000" stroke-dasharray="200" stroke-dashoffset="200" stroke-width="2" style="filter: drop-shadow(0 0 4px #ff0000);"></path>
+<path d="M 10 50 Q 25 80, 50 50 T 90 50" fill="none" stroke="#ff0000" stroke-dasharray="200" stroke-dashoffset="200" stroke-width="1" style="filter: drop-shadow(0 0 2px #ff0000); animation-delay: 0.5s;"></path>
+</svg>
+<div class="absolute w-2 h-2 bg-primary rounded-full text-glow animate-ping"></div>
+</div>
+<div class="text-center w-full mb-md">
+<h2 class="font-headline-lg text-headline-lg text-primary text-glow mb-xs tracking-wider uppercase">AUTHENTICATION_REQ</h2>
+<p class="text-[12px] text-primary-dim">SECURE_BIOMETRIC_//_KEY_NODE</p>
+</div>
+<form class="w-full flex flex-col gap-md px-md">
+<div class="flex flex-col gap-xs">
+<label class="text-[10px] text-primary-dim uppercase tracking-widest" for="operator_id">&gt; OPERATOR_ID</label>
+<input class="bg-transparent border-0 border-b-2 border-primary/30 text-primary p-sm focus:border-primary focus:ring-0 focus:outline-none transition-colors w-full placeholder:text-outline-variant text-[14px]" id="operator_id" placeholder="[INPUT_ID]" type="text"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="text-[10px] text-primary-dim uppercase tracking-widest" for="encryption_key">&gt; ENCRYPTION_KEY</label>
+<input class="bg-transparent border-0 border-b-2 border-primary/30 text-primary p-sm focus:border-primary focus:ring-0 focus:outline-none transition-colors w-full placeholder:text-outline-variant text-[14px] tracking-[0.3em]" id="encryption_key" placeholder="••••••••" type="password"/>
+</div>
+<button class="mt-md bg-primary/10 hover:bg-primary/30 text-primary text-[14px] py-md px-md border border-primary transition-colors uppercase tracking-widest flex items-center justify-center gap-sm relative overflow-hidden group text-glow" type="button">
+<div class="absolute inset-0 knurled-border opacity-20 group-hover:opacity-40 transition-opacity"></div>
+<span class="relative z-10 material-symbols-outlined text-md" data-icon="terminal">terminal</span>
+<span class="relative z-10 font-bold">EXECUTE_AUTH</span>
+</button>
+</form>
+</div>
+</div>
+</div>
+<!-- Right Sidebar: Node Status Bar -->
+<div class="hidden md:flex flex-col justify-between w-16 h-full shrink-0 border-l border-outline/30 pl-sm items-end pb-xl pt-lg relative">
+<div class="absolute right-0 top-0 bottom-0 w-2 flex flex-col gap-[2px] opacity-80" id="status-bar">
+<!-- Generates bars via JS -->
+</div>
+<div class="flex flex-col items-end gap-sm w-full pr-md">
+<div class="w-3 h-3 rounded-full bg-primary animate-pulse text-glow"></div>
+<span class="text-primary text-[10px] origin-bottom-right -rotate-90 whitespace-nowrap mt-24 tracking-widest">AWAITING_CREDENTIALS</span>
+</div>
+<div class="flex flex-col items-end gap-sm w-full pr-md mt-auto">
+<span class="text-[10px] text-primary-dim writing-vertical-rl rotate-180 tracking-widest">NODE_ACTIVE</span>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="bg-background font-label-caps text-label-caps flex justify-around items-center px-4 pb-4 md:hidden border-t border-outline/50 w-full z-50 fixed bottom-0 left-0">
+<div class="flex flex-col items-center justify-center text-primary bg-primary-container/20 rounded-xl p-2 mt-2 w-16">
+<span class="material-symbols-outlined mb-1" data-icon="qr_code_scanner">qr_code_scanner</span>
+<span class="text-[10px]">AUTH</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant/60 p-2 mt-2 w-16 hover:text-primary transition-opacity">
+<span class="material-symbols-outlined mb-1" data-icon="radar">radar</span>
+<span class="text-[10px]">STATUS</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant/60 p-2 mt-2 w-16 hover:text-primary transition-opacity">
+<span class="material-symbols-outlined mb-1" data-icon="terminal">terminal</span>
+<span class="text-[10px]">CMD</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant/60 p-2 mt-2 w-16 hover:text-primary transition-opacity">
+<span class="material-symbols-outlined mb-1" data-icon="settings_input_component">settings_input_component</span>
+<span class="text-[10px]">SYS</span>
+</div>
+</nav>
+<script>
+        function updateClock() {
+            const now = new Date();
+            const utcString = now.toISOString().split('T')[1].split('.')[0];
+            document.getElementById('utc-clock').textContent = `UPTIME: ${utcString.split(':')[1]}:${utcString.split(':')[2]}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        function updateTelemetry() {
+            const rxRate = (Math.random() * 2 + 0.5).toFixed(1);
+            const ping = Math.floor(Math.random() * 20 + 5);
+            document.getElementById('rx-rate').textContent = `${rxRate} MB/s`;
+            document.getElementById('ping-rate').textContent = `${ping}ms`;
+        }
+        setInterval(updateTelemetry, 2000);
+        
+        // Generate status bar
+        const statusBar = document.getElementById('status-bar');
+        if(statusBar) {
+            for(let i=0; i<40; i++) {
+                const bar = document.createElement('div');
+                bar.className = 'w-full h-1 bg-primary/20';
+                if(i > 30) bar.className = 'w-full h-1 bg-primary text-glow animate-pulse';
+                else if(i % 5 === 0) bar.className = 'w-full h-1 bg-primary/50';
+                statusBar.appendChild(bar);
+            }
+        }
+    </script>
+</body></html>

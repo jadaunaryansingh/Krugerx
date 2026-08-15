@@ -1,0 +1,187 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Sovereign Shell - Integrity</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&amp;display=swap" rel="stylesheet">
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    base: "#121212",
+                    accent: "#EE0000",
+                    muted: "#444444",
+                    text: "#E0E0E0"
+                },
+                fontFamily: {
+                    mono: ['JetBrains Mono', 'monospace']
+                }
+            }
+        }
+    }
+</script>
+<style>
+    body {
+        background-color: #121212;
+        color: #E0E0E0;
+        font-family: 'JetBrains Mono', monospace;
+        overflow-x: hidden;
+    }
+    .hairline {
+        border-color: #EE0000;
+        border-width: 1px;
+    }
+    .watermark {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 40vw;
+        font-weight: 800;
+        color: rgba(255, 255, 255, 0.02);
+        z-index: 0;
+        pointer-events: none;
+        user-select: none;
+        line-height: 0.8;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+</style>
+</head>
+<body class="min-h-screen relative p-4 md:p-8">
+<!-- Watermark -->
+<div class="watermark">650</div>
+<div class="relative z-10 max-w-screen-2xl mx-auto h-full flex flex-col gap-12">
+<!-- Header -->
+<header class="flex justify-between items-start border-b hairline pb-4">
+<div>
+<h1 class="text-xs tracking-[0.2em] text-accent mb-2">SOVEREIGN SHELL // MODULE: 03</h1>
+<h2 class="text-2xl md:text-4xl tracking-tighter uppercase font-bold text-text">STRUCTURAL INTEGRITY</h2>
+</div>
+<button aria-label="Menu" class="text-accent border hairline p-2 hover:bg-accent hover:text-base transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">power_settings_new</span>
+</button>
+</header>
+<main class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+<!-- Engine Anatomy (Side-scrolling) -->
+<section class="lg:col-span-8 flex flex-col gap-4">
+<div class="flex justify-between items-end">
+<h3 class="text-xs tracking-[0.2em] text-muted uppercase">Engine Anatomy // Abstract Grid</h3>
+<span class="text-xs bg-accent text-base px-2 py-1 font-bold">SYS: ONLINE</span>
+</div>
+<div class="w-full overflow-x-auto no-scrollbar border-y hairline py-8">
+<div class="flex gap-8 w-max px-4">
+<!-- Cluster 1: Oil -->
+<div class="w-48 h-48 border hairline relative p-4 flex flex-col justify-between group">
+<div class="absolute top-0 left-0 w-2 h-2 bg-accent"></div>
+<div class="text-[10px] tracking-widest text-muted">CLST-01</div>
+<div class="flex-grow flex items-center justify-center">
+<div class="w-24 h-24 border border-muted rounded-full flex items-center justify-center relative">
+<div class="absolute w-full h-full border-t-2 border-accent rounded-full animate-spin" style="animation-duration: 3s;"></div>
+<span class="text-2xl font-bold">80%</span>
+</div>
+</div>
+<div class="flex justify-between items-end border-t border-muted pt-2">
+<span class="text-xs">LUBRICANT</span>
+<span class="text-[10px] text-accent">OPT</span>
+</div>
+</div>
+<!-- Cluster 2: Tires -->
+<div class="w-48 h-48 border hairline relative p-4 flex flex-col justify-between group">
+<div class="absolute top-0 right-0 w-2 h-2 bg-accent"></div>
+<div class="text-[10px] tracking-widest text-muted">CLST-02</div>
+<div class="flex-grow flex items-center justify-center">
+<div class="w-24 h-24 border border-muted flex items-center justify-center relative rotate-45">
+<div class="absolute w-full h-full border border-accent rotate-12"></div>
+<span class="text-xl font-bold -rotate-45">32PSI</span>
+</div>
+</div>
+<div class="flex justify-between items-end border-t border-muted pt-2">
+<span class="text-xs">PRESSURE</span>
+<span class="text-[10px] text-accent animate-pulse">CHK</span>
+</div>
+</div>
+<!-- Cluster 3: Chain -->
+<div class="w-48 h-48 border hairline relative p-4 flex flex-col justify-between group">
+<div class="absolute bottom-0 left-0 w-2 h-2 bg-accent"></div>
+<div class="text-[10px] tracking-widest text-muted">CLST-03</div>
+<div class="flex-grow flex items-center justify-center">
+<div class="w-full h-8 border border-muted flex relative">
+<div class="h-full bg-accent w-1/4"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="text-sm font-bold bg-base px-2">25MM</span>
+</div>
+</div>
+</div>
+<div class="flex justify-between items-end border-t border-muted pt-2">
+<span class="text-xs">TENSION</span>
+<span class="text-[10px] text-accent">NOM</span>
+</div>
+</div>
+<!-- Cluster 4: Battery -->
+<div class="w-48 h-48 border hairline relative p-4 flex flex-col justify-between group">
+<div class="absolute bottom-0 right-0 w-2 h-2 bg-accent"></div>
+<div class="text-[10px] tracking-widest text-muted">CLST-04</div>
+<div class="flex-grow flex items-center justify-center">
+<div class="grid grid-cols-3 gap-1 w-20 h-20">
+<div class="bg-accent h-full"></div>
+<div class="bg-accent h-full"></div>
+<div class="bg-muted h-full opacity-50"></div>
+</div>
+</div>
+<div class="flex justify-between items-end border-t border-muted pt-2">
+<span class="text-xs">POWER</span>
+<span class="text-[10px] text-accent">12.8V</span>
+</div>
+</div>
+</div>
+</div>
+<button class="w-full border hairline text-accent py-4 text-sm tracking-[0.2em] hover:bg-accent hover:text-base transition-colors flex justify-center items-center gap-2 mt-4">
+<span class="material-symbols-outlined text-[16px]">build</span>
+                    INITIATE PROTOCOL
+                </button>
+</section>
+<!-- Event Horizon -->
+<section class="lg:col-span-4 flex flex-col gap-4">
+<h3 class="text-xs tracking-[0.2em] text-accent uppercase border-b hairline pb-2">EVENT HORIZON</h3>
+<div class="flex flex-col gap-6 pt-4 relative">
+<div class="absolute left-[3px] top-0 bottom-0 w-[1px] bg-muted"></div>
+<!-- Event 1 -->
+<div class="relative pl-6">
+<div class="absolute left-0 top-1.5 w-2 h-2 bg-accent"></div>
+<div class="text-[10px] text-muted mb-1">T-MINUS 12.10.23 // DLR</div>
+<h4 class="text-sm font-bold text-text mb-1 uppercase">10k Cycle Override</h4>
+<p class="text-xs text-muted">Fluid exchange, clearance verification.</p>
+</div>
+<!-- Event 2 -->
+<div class="relative pl-6">
+<div class="absolute left-0 top-1.5 w-2 h-2 border border-accent bg-base"></div>
+<div class="text-[10px] text-muted mb-1">T-MINUS 04.07.23 // USR</div>
+<h4 class="text-sm font-bold text-text mb-1 uppercase">Tension Calibration</h4>
+<p class="text-xs text-muted">Drive link sanitation &amp; adjustment.</p>
+</div>
+<!-- Event 3 -->
+<div class="relative pl-6">
+<div class="absolute left-0 top-1.5 w-2 h-2 border border-accent bg-base"></div>
+<div class="text-[10px] text-muted mb-1">T-MINUS 18.03.23 // DLR</div>
+<h4 class="text-sm font-bold text-text mb-1 uppercase">5k Minor Sync</h4>
+<p class="text-xs text-muted">Filtration unit replacement.</p>
+</div>
+</div>
+<button class="mt-4 border border-muted text-muted py-2 text-[10px] tracking-widest hover:border-accent hover:text-accent transition-colors">
+                    EXPAND TIMELINE
+                </button>
+</section>
+</main>
+</div>
+</body></html>
