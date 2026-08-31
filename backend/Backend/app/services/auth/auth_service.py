@@ -78,32 +78,6 @@ class SupabaseAuthService:
                     detail="Auth provider is currently unreachable."
                 )
 
-    async def refresh_token(self, refresh_token: str) -> Dict[str, Any]:
-        """
-        Refresh active access token using refresh token.
-        """
-        url = f"{self.base_url}/auth/v1/token?grant_type=refresh_token"
-        payload = {
-            "refresh_token": refresh_token
-        }
-
-        async with httpx.AsyncClient() as client:
-            try:
-                response = await client.post(url, headers=self.headers, json=payload)
-                if response.status_code != 200:
-                    error_data = response.json()
-                    logger.bind(category="security").error(f"Supabase Refresh Token error: {error_data}")
-                    raise HTTPException(
-                        status_code=response.status_code,
-                        detail=error_data.get("error_description", "Invalid refresh token.")
-                    )
-                return response.json()
-            except httpx.RequestError as e:
-                logger.bind(category="errors").error(f"HTTP request to Supabase failed: {str(e)}")
-                raise HTTPException(
-                    status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-                    detail="Auth provider is currently unreachable."
-                )
 
     async def logout(self, access_token: str) -> None:
         """

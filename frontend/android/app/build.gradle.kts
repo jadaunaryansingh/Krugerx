@@ -13,10 +13,6 @@ android {
     compileSdk = 36
     ndkVersion = "28.2.13676358"
 
-    // Enable 16 KB page size support (required for Android 15+ devices)
-    androidResources {
-        noCompress += listOf("so")
-    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17

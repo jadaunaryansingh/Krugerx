@@ -18,7 +18,8 @@ def verify_supabase_token(token: str) -> Dict[str, Any]:
             token,
             settings.SUPABASE_JWT_SECRET,
             algorithms=["HS256"],
-            audience="authenticated"
+            audience="authenticated",
+            issuer=settings.SUPABASE_URL
         )
         return payload
     except Exception as local_err:

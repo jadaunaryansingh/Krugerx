@@ -140,38 +140,6 @@ async def reset_password(body: UserResetPasswordRequest) -> APIResponse[None]:
 
 
 
-@router.post("/refresh", response_model=APIResponse[TokenResponse])
-async def refresh(body: TokenRefreshRequest) -> APIResponse[TokenResponse]:
-    """
-    Obtain a new access token using a valid refresh token.
-    """
-    res = await auth_service.refresh_token(body.refresh_token)
-    
-    access_token = res.get("access_token")
-    refresh_token = res.get("refresh_token")
-    expires_in = res.get("expires_in")
-    user_data = res.get("user", {})
-    user_id_str = user_data.get("id")
-
-    if not user_id_str or not access_token:
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Unexpected response content received during session refresh."
-        )
-
-    data = TokenResponse(
-        access_token=access_token,
-        refresh_token=refresh_token,
-        expires_in=expires_in,
-        user_id=uuid.UUID(user_id_str)
-    )
-    return APIResponse(
-        success=True,
-        message="Session refresh successful.",
-        data=data
-    )
-
-
 @router.post("/logout", response_model=APIResponse[None])
 async def logout(credentials: HTTPAuthorizationCredentials = Depends(security)) -> APIResponse[None]:
     """
