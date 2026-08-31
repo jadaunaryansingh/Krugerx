@@ -68,7 +68,7 @@ class SupabaseAuthService:
                     logger.bind(category="security").error(f"Supabase Login error: {error_data}")
                     raise HTTPException(
                         status_code=response.status_code,
-                        detail=error_data.get("error_description", "Invalid login credentials.")
+                        detail=error_data.get("msg", error_data.get("error_description", "Invalid login credentials."))
                     )
                 return response.json()
             except httpx.RequestError as e:
@@ -151,6 +151,41 @@ class SupabaseAuthService:
                         status_code=response.status_code,
                         detail=error_data.get("msg", "Error deleting user account from auth system.")
                     )
+            except httpx.RequestError as e:
+                logger.bind(category="errors").error(f"HTTP request to Supabase failed: {str(e)}")
+                raise HTTPException(
+                    status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                    detail="Auth provider is currently unreachable."
+                )
+
+    async def reset_password(self, email: str) -> Dict[str, Any]:
+        """
+        Send password recovery email via Supabase Auth.
+        """
+        url = f"{self.base_url}/auth/v1/recover"
+        payload = {"email": email}
+        # Explicit headers required for this endpoint
+        headers = {
+            "apikey": settings.SUPABASE_KEY,
+            "Content-Type": "application/json"
+        }
+
+        async with httpx.AsyncClient() as client:
+            try:
+                response = await client.post(url, headers=headers, json=payload)
+                if response.status_code != 200:
+                    error_data = response.json()
+                    logger.bind(category="security").error(f"Supabase Reset Password error: {error_data}")
+                    msg = error_data.get("msg", "Error during password reset.")
+                    if response.status_code == 429:
+                        raise HTTPException(status_code=status.HTTP_429_TOO_MANY_REQUESTS, detail=msg)
+                    elif response.status_code == 400:
+                        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=msg)
+                    raise HTTPException(
+                        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                        detail=msg
+                    )
+                return response.json() if response.content else {}
             except httpx.RequestError as e:
                 logger.bind(category="errors").error(f"HTTP request to Supabase failed: {str(e)}")
                 raise HTTPException(

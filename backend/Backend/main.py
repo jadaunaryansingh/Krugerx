@@ -15,7 +15,7 @@ from app.api.bookmarks.router import router as bookmarks_router
 from app.api.history.router import router as history_router
 from app.api.settings.router import router as settings_router
 from app.api.tabs.router import router as tabs_router
-from app.api.downloads.router import router as downloads_router
+
 from app.api.search.router import router as search_router
 from app.api.ai.router import router as ai_router
 from app.api.sync.router import router as sync_router
@@ -74,7 +74,7 @@ app.include_router(bookmarks_router, prefix=settings.API_V1_STR)
 app.include_router(history_router, prefix=settings.API_V1_STR)
 app.include_router(settings_router, prefix=settings.API_V1_STR)
 app.include_router(tabs_router, prefix=settings.API_V1_STR)
-app.include_router(downloads_router, prefix=settings.API_V1_STR)
+
 app.include_router(search_router, prefix=settings.API_V1_STR)
 app.include_router(ai_router, prefix=settings.API_V1_STR)
 app.include_router(sync_router, prefix=settings.API_V1_STR)

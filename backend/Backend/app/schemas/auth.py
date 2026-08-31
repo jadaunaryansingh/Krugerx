@@ -14,6 +14,11 @@ class UserLoginRequest(BaseModel):
     password: str
 
 
+class UserResetPasswordRequest(BaseModel):
+    email: EmailStr
+
+
+
 class TokenRefreshRequest(BaseModel):
     refresh_token: str = Field(..., description="Supabase refresh token")
 

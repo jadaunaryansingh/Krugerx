@@ -72,20 +72,25 @@ redis_data/
 *.swo
 .DS_Store
 
-# Frontend / Mobile specific (krugerx flutter / node)
-krugerx/.flutter-plugins
-krugerx/.flutter-plugins-dependencies
-krugerx/.packages
-krugerx/.pub-cache/
-krugerx/.pub/
-krugerx/build/
-krugerx/ios/.symlinks/
-krugerx/ios/Flutter/Flutter.framework
-krugerx/ios/Flutter/Flutter.podspec
-krugerx/ios/Flutter/Generated.xcconfig
-krugerx/ios/Flutter/flutter_export_environment.sh
-krugerx/android/key.properties
-krugerx/android/app/src/main/res/raw/
+# Logs
+*.log
+backend/Backend/logs/
+
+# Frontend / Mobile specific (Flutter / Dart)
+frontend/.dart_tool/
+frontend/.flutter-plugins
+frontend/.flutter-plugins-dependencies
+frontend/.packages
+frontend/.pub-cache/
+frontend/.pub/
+frontend/build/
+frontend/ios/.symlinks/
+frontend/ios/Flutter/Flutter.framework
+frontend/ios/Flutter/Flutter.podspec
+frontend/ios/Flutter/Generated.xcconfig
+frontend/ios/Flutter/flutter_export_environment.sh
+frontend/android/key.properties
+frontend/android/app/src/main/res/raw/
 node_modules/
 npm-debug.log*
 yarn-debug.log*

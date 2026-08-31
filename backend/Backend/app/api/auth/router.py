@@ -123,6 +123,23 @@ async def login(body: UserLoginRequest, db: AsyncSession = Depends(get_db)) -> A
     )
 
 
+from app.schemas.auth import UserResetPasswordRequest
+
+@router.post("/reset-password", response_model=APIResponse[None])
+async def reset_password(body: UserResetPasswordRequest) -> APIResponse[None]:
+    """
+    Send a password reset email using Supabase.
+    """
+    await auth_service.reset_password(body.email)
+    
+    return APIResponse(
+        success=True,
+        message="Password recovery email sent.",
+        data=None
+    )
+
+
+
 @router.post("/refresh", response_model=APIResponse[TokenResponse])
 async def refresh(body: TokenRefreshRequest) -> APIResponse[TokenResponse]:
     """
