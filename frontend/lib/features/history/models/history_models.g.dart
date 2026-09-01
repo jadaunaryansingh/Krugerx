@@ -1,0 +1,1333 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'history_models.dart';
+
+// **************************************************************************
+// IsarCollectionGenerator
+// **************************************************************************
+
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
+
+extension GetLocalHistoryCollection on Isar {
+  IsarCollection<LocalHistory> get localHistorys => this.collection();
+}
+
+const LocalHistorySchema = CollectionSchema(
+  name: r'LocalHistory',
+  id: 7508124291866281576,
+  properties: {
+    r'remoteId': PropertySchema(
+      id: 0,
+      name: r'remoteId',
+      type: IsarType.string,
+    ),
+    r'synced': PropertySchema(id: 1, name: r'synced', type: IsarType.bool),
+    r'title': PropertySchema(id: 2, name: r'title', type: IsarType.string),
+    r'url': PropertySchema(id: 3, name: r'url', type: IsarType.string),
+    r'visitCount': PropertySchema(
+      id: 4,
+      name: r'visitCount',
+      type: IsarType.long,
+    ),
+    r'visitTime': PropertySchema(
+      id: 5,
+      name: r'visitTime',
+      type: IsarType.dateTime,
+    ),
+  },
+
+  estimateSize: _localHistoryEstimateSize,
+  serialize: _localHistorySerialize,
+  deserialize: _localHistoryDeserialize,
+  deserializeProp: _localHistoryDeserializeProp,
+  idName: r'id',
+  indexes: {
+    r'url': IndexSchema(
+      id: -5756857009679432345,
+      name: r'url',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'url',
+          type: IndexType.hash,
+          caseSensitive: true,
+        ),
+      ],
+    ),
+    r'visitTime': IndexSchema(
+      id: -4141626137083872244,
+      name: r'visitTime',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'visitTime',
+          type: IndexType.value,
+          caseSensitive: false,
+        ),
+      ],
+    ),
+  },
+  links: {},
+  embeddedSchemas: {},
+
+  getId: _localHistoryGetId,
+  getLinks: _localHistoryGetLinks,
+  attach: _localHistoryAttach,
+  version: '3.3.2',
+);
+
+int _localHistoryEstimateSize(
+  LocalHistory object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  {
+    final value = object.remoteId;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
+  {
+    final value = object.title;
+    if (value != null) {
+      bytesCount += 3 + value.length * 3;
+    }
+  }
+  bytesCount += 3 + object.url.length * 3;
+  return bytesCount;
+}
+
+void _localHistorySerialize(
+  LocalHistory object,
+  IsarWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeString(offsets[0], object.remoteId);
+  writer.writeBool(offsets[1], object.synced);
+  writer.writeString(offsets[2], object.title);
+  writer.writeString(offsets[3], object.url);
+  writer.writeLong(offsets[4], object.visitCount);
+  writer.writeDateTime(offsets[5], object.visitTime);
+}
+
+LocalHistory _localHistoryDeserialize(
+  Id id,
+  IsarReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  final object = LocalHistory();
+  object.id = id;
+  object.remoteId = reader.readStringOrNull(offsets[0]);
+  object.synced = reader.readBool(offsets[1]);
+  object.title = reader.readStringOrNull(offsets[2]);
+  object.url = reader.readString(offsets[3]);
+  object.visitCount = reader.readLong(offsets[4]);
+  object.visitTime = reader.readDateTime(offsets[5]);
+  return object;
+}
+
+P _localHistoryDeserializeProp<P>(
+  IsarReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
+    case 0:
+      return (reader.readStringOrNull(offset)) as P;
+    case 1:
+      return (reader.readBool(offset)) as P;
+    case 2:
+      return (reader.readStringOrNull(offset)) as P;
+    case 3:
+      return (reader.readString(offset)) as P;
+    case 4:
+      return (reader.readLong(offset)) as P;
+    case 5:
+      return (reader.readDateTime(offset)) as P;
+    default:
+      throw IsarError('Unknown property with id $propertyId');
+  }
+}
+
+Id _localHistoryGetId(LocalHistory object) {
+  return object.id;
+}
+
+List<IsarLinkBase<dynamic>> _localHistoryGetLinks(LocalHistory object) {
+  return [];
+}
+
+void _localHistoryAttach(
+  IsarCollection<dynamic> col,
+  Id id,
+  LocalHistory object,
+) {
+  object.id = id;
+}
+
+extension LocalHistoryQueryWhereSort
+    on QueryBuilder<LocalHistory, LocalHistory, QWhere> {
+  QueryBuilder<LocalHistory, LocalHistory, QAfterWhere> anyId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(const IdWhereClause.any());
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterWhere> anyVisitTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'visitTime'),
+      );
+    });
+  }
+}
+
+extension LocalHistoryQueryWhere
+    on QueryBuilder<LocalHistory, LocalHistory, QWhereClause> {
+  QueryBuilder<LocalHistory, LocalHistory, QAfterWhereClause> idEqualTo(Id id) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(lower: id, upper: id));
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterWhereClause> idNotEqualTo(
+    Id id,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            )
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            )
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            );
+      }
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterWhereClause> idGreaterThan(
+    Id id, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.greaterThan(lower: id, includeLower: include),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterWhereClause> idLessThan(
+    Id id, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.lessThan(upper: id, includeUpper: include),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterWhereClause> idBetween(
+    Id lowerId,
+    Id upperId, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.between(
+          lower: lowerId,
+          includeLower: includeLower,
+          upper: upperId,
+          includeUpper: includeUpper,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterWhereClause> urlEqualTo(
+    String url,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(indexName: r'url', value: [url]),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterWhereClause> urlNotEqualTo(
+    String url,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'url',
+                lower: [],
+                upper: [url],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'url',
+                lower: [url],
+                includeLower: false,
+                upper: [],
+              ),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'url',
+                lower: [url],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'url',
+                lower: [],
+                upper: [url],
+                includeUpper: false,
+              ),
+            );
+      }
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterWhereClause> visitTimeEqualTo(
+    DateTime visitTime,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IndexWhereClause.equalTo(indexName: r'visitTime', value: [visitTime]),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterWhereClause>
+  visitTimeNotEqualTo(DateTime visitTime) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'visitTime',
+                lower: [],
+                upper: [visitTime],
+                includeUpper: false,
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'visitTime',
+                lower: [visitTime],
+                includeLower: false,
+                upper: [],
+              ),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'visitTime',
+                lower: [visitTime],
+                includeLower: false,
+                upper: [],
+              ),
+            )
+            .addWhereClause(
+              IndexWhereClause.between(
+                indexName: r'visitTime',
+                lower: [],
+                upper: [visitTime],
+                includeUpper: false,
+              ),
+            );
+      }
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterWhereClause>
+  visitTimeGreaterThan(DateTime visitTime, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'visitTime',
+          lower: [visitTime],
+          includeLower: include,
+          upper: [],
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterWhereClause> visitTimeLessThan(
+    DateTime visitTime, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'visitTime',
+          lower: [],
+          upper: [visitTime],
+          includeUpper: include,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterWhereClause> visitTimeBetween(
+    DateTime lowerVisitTime,
+    DateTime upperVisitTime, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IndexWhereClause.between(
+          indexName: r'visitTime',
+          lower: [lowerVisitTime],
+          includeLower: includeLower,
+          upper: [upperVisitTime],
+          includeUpper: includeUpper,
+        ),
+      );
+    });
+  }
+}
+
+extension LocalHistoryQueryFilter
+    on QueryBuilder<LocalHistory, LocalHistory, QFilterCondition> {
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition> idEqualTo(
+    Id value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'id', value: value),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition> idGreaterThan(
+    Id value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'id',
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition> idLessThan(
+    Id value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'id',
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition> idBetween(
+    Id lower,
+    Id upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'id',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition>
+  remoteIdIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'remoteId'),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition>
+  remoteIdIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'remoteId'),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition>
+  remoteIdEqualTo(String? value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'remoteId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition>
+  remoteIdGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'remoteId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition>
+  remoteIdLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'remoteId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition>
+  remoteIdBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'remoteId',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition>
+  remoteIdStartsWith(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'remoteId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition>
+  remoteIdEndsWith(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'remoteId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition>
+  remoteIdContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'remoteId',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition>
+  remoteIdMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'remoteId',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition>
+  remoteIdIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'remoteId', value: ''),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition>
+  remoteIdIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'remoteId', value: ''),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition> syncedEqualTo(
+    bool value,
+  ) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'synced', value: value),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition>
+  titleIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const FilterCondition.isNull(property: r'title'),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition>
+  titleIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        const FilterCondition.isNotNull(property: r'title'),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition> titleEqualTo(
+    String? value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'title',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition>
+  titleGreaterThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'title',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition> titleLessThan(
+    String? value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'title',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition> titleBetween(
+    String? lower,
+    String? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'title',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition>
+  titleStartsWith(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'title',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition> titleEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'title',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition> titleContains(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'title',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition> titleMatches(
+    String pattern, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'title',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition>
+  titleIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'title', value: ''),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition>
+  titleIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'title', value: ''),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition> urlEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(
+          property: r'url',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition>
+  urlGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'url',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition> urlLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'url',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition> urlBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'url',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition> urlStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.startsWith(
+          property: r'url',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition> urlEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.endsWith(
+          property: r'url',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition> urlContains(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.contains(
+          property: r'url',
+          value: value,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition> urlMatches(
+    String pattern, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.matches(
+          property: r'url',
+          wildcard: pattern,
+          caseSensitive: caseSensitive,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition> urlIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'url', value: ''),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition>
+  urlIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(property: r'url', value: ''),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition>
+  visitCountEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'visitCount', value: value),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition>
+  visitCountGreaterThan(int value, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'visitCount',
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition>
+  visitCountLessThan(int value, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'visitCount',
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition>
+  visitCountBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'visitCount',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition>
+  visitTimeEqualTo(DateTime value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'visitTime', value: value),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition>
+  visitTimeGreaterThan(DateTime value, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.greaterThan(
+          include: include,
+          property: r'visitTime',
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition>
+  visitTimeLessThan(DateTime value, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.lessThan(
+          include: include,
+          property: r'visitTime',
+          value: value,
+        ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterFilterCondition>
+  visitTimeBetween(
+    DateTime lower,
+    DateTime upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.between(
+          property: r'visitTime',
+          lower: lower,
+          includeLower: includeLower,
+          upper: upper,
+          includeUpper: includeUpper,
+        ),
+      );
+    });
+  }
+}
+
+extension LocalHistoryQueryObject
+    on QueryBuilder<LocalHistory, LocalHistory, QFilterCondition> {}
+
+extension LocalHistoryQueryLinks
+    on QueryBuilder<LocalHistory, LocalHistory, QFilterCondition> {}
+
+extension LocalHistoryQuerySortBy
+    on QueryBuilder<LocalHistory, LocalHistory, QSortBy> {
+  QueryBuilder<LocalHistory, LocalHistory, QAfterSortBy> sortByRemoteId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'remoteId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterSortBy> sortByRemoteIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'remoteId', Sort.desc);
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterSortBy> sortBySynced() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'synced', Sort.asc);
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterSortBy> sortBySyncedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'synced', Sort.desc);
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterSortBy> sortByTitle() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'title', Sort.asc);
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterSortBy> sortByTitleDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'title', Sort.desc);
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterSortBy> sortByUrl() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'url', Sort.asc);
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterSortBy> sortByUrlDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'url', Sort.desc);
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterSortBy> sortByVisitCount() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'visitCount', Sort.asc);
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterSortBy>
+  sortByVisitCountDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'visitCount', Sort.desc);
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterSortBy> sortByVisitTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'visitTime', Sort.asc);
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterSortBy> sortByVisitTimeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'visitTime', Sort.desc);
+    });
+  }
+}
+
+extension LocalHistoryQuerySortThenBy
+    on QueryBuilder<LocalHistory, LocalHistory, QSortThenBy> {
+  QueryBuilder<LocalHistory, LocalHistory, QAfterSortBy> thenById() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.asc);
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterSortBy> thenByIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.desc);
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterSortBy> thenByRemoteId() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'remoteId', Sort.asc);
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterSortBy> thenByRemoteIdDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'remoteId', Sort.desc);
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterSortBy> thenBySynced() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'synced', Sort.asc);
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterSortBy> thenBySyncedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'synced', Sort.desc);
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterSortBy> thenByTitle() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'title', Sort.asc);
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterSortBy> thenByTitleDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'title', Sort.desc);
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterSortBy> thenByUrl() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'url', Sort.asc);
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterSortBy> thenByUrlDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'url', Sort.desc);
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterSortBy> thenByVisitCount() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'visitCount', Sort.asc);
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterSortBy>
+  thenByVisitCountDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'visitCount', Sort.desc);
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterSortBy> thenByVisitTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'visitTime', Sort.asc);
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QAfterSortBy> thenByVisitTimeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'visitTime', Sort.desc);
+    });
+  }
+}
+
+extension LocalHistoryQueryWhereDistinct
+    on QueryBuilder<LocalHistory, LocalHistory, QDistinct> {
+  QueryBuilder<LocalHistory, LocalHistory, QDistinct> distinctByRemoteId({
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'remoteId', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QDistinct> distinctBySynced() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'synced');
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QDistinct> distinctByTitle({
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'title', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QDistinct> distinctByUrl({
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'url', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QDistinct> distinctByVisitCount() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'visitCount');
+    });
+  }
+
+  QueryBuilder<LocalHistory, LocalHistory, QDistinct> distinctByVisitTime() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'visitTime');
+    });
+  }
+}
+
+extension LocalHistoryQueryProperty
+    on QueryBuilder<LocalHistory, LocalHistory, QQueryProperty> {
+  QueryBuilder<LocalHistory, int, QQueryOperations> idProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<LocalHistory, String?, QQueryOperations> remoteIdProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'remoteId');
+    });
+  }
+
+  QueryBuilder<LocalHistory, bool, QQueryOperations> syncedProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'synced');
+    });
+  }
+
+  QueryBuilder<LocalHistory, String?, QQueryOperations> titleProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'title');
+    });
+  }
+
+  QueryBuilder<LocalHistory, String, QQueryOperations> urlProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'url');
+    });
+  }
+
+  QueryBuilder<LocalHistory, int, QQueryOperations> visitCountProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'visitCount');
+    });
+  }
+
+  QueryBuilder<LocalHistory, DateTime, QQueryOperations> visitTimeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'visitTime');
+    });
+  }
+}
