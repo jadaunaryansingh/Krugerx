@@ -44,3 +44,8 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Build artifacts / SDK archives — never track these
+*.apk
+*.aab
+cmdline.zip

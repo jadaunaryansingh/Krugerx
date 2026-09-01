@@ -99,3 +99,4 @@ yarn-error.log*
 scratch/
 scratch_*
 *.scratch
+releases/
