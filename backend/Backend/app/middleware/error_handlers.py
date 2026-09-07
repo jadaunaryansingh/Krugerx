@@ -48,6 +48,7 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
 async def general_exception_handler(request: Request, exc: Exception) -> JSONResponse:
     """
     Catch-all error handler for unexpected server exceptions.
+    Raw exception details are logged server-side only; clients receive a generic message.
     """
     logger.bind(category="errors").exception(
         f"Unhandled system error - {request.method} {request.url.path} - Error: {str(exc)}"
@@ -58,7 +59,7 @@ async def general_exception_handler(request: Request, exc: Exception) -> JSONRes
             "success": False,
             "message": "An unexpected internal server error occurred.",
             "data": None,
-            "errors": [str(exc)]
+            "errors": []  # SEC-05: never leak internal error details to clients
         }
     )
 

@@ -25,7 +25,7 @@ async def get_current_user(
     but has not been cached in the local database.
     """
     token = credentials.credentials
-    payload = verify_supabase_token(token)
+    payload = await verify_supabase_token(token)
 
     user_id_str = payload.get("sub")
     if not user_id_str:

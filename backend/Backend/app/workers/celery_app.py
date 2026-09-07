@@ -4,7 +4,7 @@ from app.core.config import settings
 
 # Initialize Celery app instance
 celery_app = Celery(
-    "krishna_workers",
+    "krugerx_workers",
     broker=settings.CELERY_BROKER_URL,
     backend=settings.CELERY_RESULT_BACKEND
 )

@@ -3,7 +3,7 @@ import httpx
 from flask import Flask, render_template, request, flash, redirect, url_for, jsonify, send_from_directory
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'mystical-secret-key-12345'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'development-fallback-key-change-in-prod')
 
 @app.route('/', methods=['GET'])
 def index():
@@ -35,11 +35,11 @@ def download_ios():
     return send_from_directory('static/downloads', 'krugerx-ios.ipa', as_attachment=True, download_name='KrugerX-1.0.0-iOS.ipa')
 
 @app.route('/status', methods=['GET'])
-async def backend_status():
-    """Asynchronously ping the FastAPI backend health endpoint"""
+def backend_status():
+    """Ping the FastAPI backend health endpoint"""
     try:
-        async with httpx.AsyncClient(timeout=3.0) as client:
-            response = await client.get('http://localhost:8000/api/v1/health')
+        with httpx.Client(timeout=3.0) as client:
+            response = client.get('http://localhost:8000/api/v1/health')
             if response.status_code == 200:
                 return jsonify({"status": "online", "message": "All Systems Operational"})
             return jsonify({"status": "degraded", "message": "Backend Connectivity Issues"})

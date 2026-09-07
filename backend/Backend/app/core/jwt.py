@@ -6,7 +6,7 @@ from loguru import logger
 from app.core.config import settings
 
 
-def verify_supabase_token(token: str) -> Dict[str, Any]:
+async def verify_supabase_token(token: str) -> Dict[str, Any]:
     """
     Verifies the Supabase-issued JWT token against the project's secret locally,
     with a fallback to validating directly against Supabase Auth API.
@@ -32,8 +32,8 @@ def verify_supabase_token(token: str) -> Dict[str, Any]:
                 "apikey": settings.SUPABASE_KEY,
                 "Authorization": f"Bearer {token}"
             }
-            with httpx.Client(timeout=5.0) as client:
-                response = client.get(url, headers=headers)
+            async with httpx.AsyncClient(timeout=5.0) as client:
+                response = await client.get(url, headers=headers)
                 if response.status_code == 200:
                     user_data = response.json()
                     # Map Supabase response to match expected payload format (sub, email, etc.)

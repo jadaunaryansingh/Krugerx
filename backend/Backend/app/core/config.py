@@ -18,8 +18,12 @@ class Settings(BaseSettings):
     # Project Configurations
     PROJECT_NAME: str = "Krugerx Browser Backend"
     ENV: str = "development"
-    DEBUG: bool = True
+    DEBUG: bool = False
     API_V1_STR: str = "/api/v1"
+
+    # CORS — comma-separated list of allowed origins (e.g. app://krugerx,http://localhost:3000)
+    # In dev set: ALLOWED_ORIGINS=* (or leave unset for wildcard)
+    ALLOWED_ORIGINS: str = ""
 
     # Database
     DATABASE_URL: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/postgres"

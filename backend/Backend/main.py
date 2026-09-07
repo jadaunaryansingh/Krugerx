@@ -15,6 +15,7 @@ from app.api.bookmarks.router import router as bookmarks_router
 from app.api.history.router import router as history_router
 from app.api.settings.router import router as settings_router
 from app.api.tabs.router import router as tabs_router
+from app.api.downloads.router import router as downloads_router
 
 from app.api.search.router import router as search_router
 from app.api.ai.router import router as ai_router
@@ -54,10 +55,17 @@ app = FastAPI(
 )
 
 # 2. CORS configuration
+# Reads from ALLOWED_ORIGINS env var (comma-separated). Falls back to wildcard in dev only.
+_raw_origins = settings.ALLOWED_ORIGINS.strip()
+_cors_origins: list[str] = (
+    [o.strip() for o in _raw_origins.split(",") if o.strip()]
+    if _raw_origins and _raw_origins != "*"
+    else ["*"]
+)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, specify actual desktop origins e.g. chrome-extension://...
-    allow_credentials=True,
+    allow_origins=_cors_origins,
+    allow_credentials=_cors_origins != ["*"],  # credentials forbidden with wildcard
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -74,6 +82,7 @@ app.include_router(bookmarks_router, prefix=settings.API_V1_STR)
 app.include_router(history_router, prefix=settings.API_V1_STR)
 app.include_router(settings_router, prefix=settings.API_V1_STR)
 app.include_router(tabs_router, prefix=settings.API_V1_STR)
+app.include_router(downloads_router, prefix=settings.API_V1_STR)
 
 app.include_router(search_router, prefix=settings.API_V1_STR)
 app.include_router(ai_router, prefix=settings.API_V1_STR)

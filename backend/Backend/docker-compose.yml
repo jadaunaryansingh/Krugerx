@@ -1,13 +1,12 @@
 version: '3.8'
 
 services:
-  # FastAPI Web Application service
   web:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: krugerx_api
-    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
     volumes:
       - .:/workspace
     ports:
@@ -15,3 +14,55 @@ services:
     env_file:
       - .env
     restart: always
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+
+  redis:
+    image: redis:7-alpine
+    container_name: krugerx_redis
+    restart: always
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+
+  celery_worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: krugerx_celery
+    command: celery -A app.workers.celery_app worker --loglevel=info
+    volumes:
+      - .:/workspace
+    env_file:
+      - .env
+    restart: always
+    depends_on:
+      redis:
+        condition: service_healthy
+      web:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
