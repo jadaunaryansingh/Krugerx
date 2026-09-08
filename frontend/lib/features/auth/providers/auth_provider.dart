@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dio/dio.dart';
 import 'package:isar_community/isar.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide AuthState;
+import 'dart:convert';
 
 import '../../../core/api_client.dart';
 import '../../../core/storage.dart';
@@ -17,9 +18,27 @@ class AuthNotifier extends Notifier<AuthState> {
     return const AuthState(isLoading: true);
   }
 
+  bool _isTokenValid(String? token) {
+    if (token == null || token.isEmpty) return false;
+    try {
+      final parts = token.split('.');
+      if (parts.length != 3) return false;
+      final payloadString = utf8.decode(base64Url.decode(base64Url.normalize(parts[1])));
+      final payloadMap = json.decode(payloadString);
+      if (payloadMap['exp'] != null) {
+        final exp = DateTime.fromMillisecondsSinceEpoch(payloadMap['exp'] * 1000);
+        return exp.isAfter(DateTime.now());
+      }
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   Future<void> _init() async {
+    final supabaseSession = Supabase.instance.client.auth.currentSession;
     final session = await Storage.db.authSessions.where().findFirst();
-    if (session != null && session.accessToken != null) {
+    if (session != null && supabaseSession != null && _isTokenValid(supabaseSession.accessToken)) {
       state = state.copyWith(
         isLoading: false,
         isAuthenticated: true,
@@ -44,9 +63,7 @@ class AuthNotifier extends Notifier<AuthState> {
             await Storage.db.authSessions.clear();
             final provider = supabaseSession.user.appMetadata['provider']?.toString() ?? 'unknown';
             final localSession = AuthSession()
-              ..accessToken = supabaseSession.accessToken
-              ..refreshToken = supabaseSession.refreshToken
-              ..expiresIn = supabaseSession.expiresIn
+              ..expiresIn = supabaseSession.expiresIn ?? 3600
               ..userId = supabaseSession.user.id
               ..email = supabaseSession.user.email
               ..authProvider = provider;
@@ -105,6 +122,17 @@ class AuthNotifier extends Notifier<AuthState> {
         } catch (e) {
           // If setting session fails, log it
         }
+
+        final localSession = AuthSession()
+          ..expiresIn = data['expires_in'] ?? 3600
+          ..userId = data['user_id']
+          ..email = email
+          ..authProvider = 'email';
+          
+        await Storage.db.writeTxn(() async {
+          await Storage.db.authSessions.clear();
+          await Storage.db.authSessions.put(localSession);
+        });
 
         state = state.copyWith(
           isLoading: false,
@@ -186,8 +214,12 @@ class AuthNotifier extends Notifier<AuthState> {
   }
 
   Future<void> logout() async {
-    state = state.copyWith(isLoading: true);
+    state = const AuthState();
     
+    await Storage.db.writeTxn(() async {
+      await Storage.db.authSessions.clear();
+    });
+
     // Attempt Supabase signOut first for Google OAuth
     try {
       await Supabase.instance.client.auth.signOut();
@@ -200,14 +232,8 @@ class AuthNotifier extends Notifier<AuthState> {
     } catch (e) {
       // Ignore network errors on logout
     }
-
-    await Storage.db.writeTxn(() async {
-      await Storage.db.authSessions.clear();
-    });
     
     ref.read(systemLoggerProvider.notifier).addLog(LogLevel.info, 'AUTH: User logged out');
-
-    state = const AuthState();
   }
 
   Future<void> _fetchMe() async {

@@ -39,6 +39,8 @@ final tabsProvider = NotifierProvider<TabsNotifier, TabsState>(TabsNotifier.new)
 
 class TabsNotifier extends Notifier<TabsState> {
   int _nextId = 1;
+  bool _isSessionLoaded = false;
+  final List<void Function()> _pendingActions = [];
 
   @override
   TabsState build() {
@@ -78,6 +80,12 @@ class TabsNotifier extends Notifier<TabsState> {
         active: true,
       ),
     ]);
+    
+    _isSessionLoaded = true;
+    for (final action in _pendingActions) {
+      action();
+    }
+    _pendingActions.clear();
   }
 
   void _saveSession() {
@@ -106,6 +114,10 @@ class TabsNotifier extends Notifier<TabsState> {
   }
 
   void addTab({String url = 'kruger://newtab', String title = 'New Tab'}) {
+    if (!_isSessionLoaded) {
+      _pendingActions.add(() => addTab(url: url, title: title));
+      return;
+    }
     final newTab = TabModel(
       id: '${_nextId++}',
       sessionId: 'local',
@@ -129,7 +141,8 @@ class TabsNotifier extends Notifier<TabsState> {
     final closedTab = tab.copyWith(isMuted: true);
     _closedTabsStack.add(closedTab);
     if (_closedTabsStack.length > 3) {
-      _closedTabsStack.removeAt(0); // Max 3 zombie webviews
+      final removed = _closedTabsStack.removeAt(0); // Max 3 zombie webviews
+      webViewControllers.remove(removed.id);
     }
   }
 
@@ -286,7 +299,7 @@ class TabsNotifier extends Notifier<TabsState> {
   void _updateHistoryTitle(String url, String title) {
     if (url.startsWith('kruger://') || url.isEmpty || url == 'about:blank') return;
     
-    ref.read(historyProvider.notifier).recordVisit(url, title: title);
+    ref.read(historyProvider.notifier).updateTitle(url, title);
   }
 }
 

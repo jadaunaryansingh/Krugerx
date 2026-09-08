@@ -19,28 +19,21 @@ class ApiClient {
   static void init() {
     _dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) async {
-        final session = await Storage.db.authSessions.where().findFirst();
-        if (session != null && session.accessToken != null) {
+        final session = Supabase.instance.client.auth.currentSession;
+        if (session != null) {
           options.headers['Authorization'] = 'Bearer ${session.accessToken}';
         }
         return handler.next(options);
       },
       onError: (DioException e, handler) async {
-        if (e.response?.statusCode == 401) {
+        if (e.response?.statusCode == 401 && e.requestOptions.extra['isRetry'] != true) {
           try {
             final response = await Supabase.instance.client.auth.refreshSession();
             if (response.session != null) {
-              var localSession = await Storage.db.authSessions.where().findFirst();
-              if (localSession != null) {
-                localSession.accessToken = response.session!.accessToken;
-                localSession.refreshToken = response.session!.refreshToken;
-                await Storage.db.writeTxn(() async {
-                  await Storage.db.authSessions.put(localSession);
-                });
-              }
               // Retry original request
               final options = e.requestOptions;
               options.headers['Authorization'] = 'Bearer ${response.session!.accessToken}';
+              options.extra['isRetry'] = true;
               final retryResponse = await _dio.fetch(options);
               return handler.resolve(retryResponse);
             }

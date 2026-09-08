@@ -3,6 +3,8 @@ import 'package:isar_community/isar.dart';
 import '../../../core/storage.dart';
 import '../models/history_models.dart';
 
+import 'dart:async';
+
 class HistoryNotifier extends Notifier<List<LocalHistory>> {
   @override
   List<LocalHistory> build() {
@@ -12,7 +14,8 @@ class HistoryNotifier extends Notifier<List<LocalHistory>> {
 
   void _watchData() {
     _fetch();
-    Storage.db.localHistorys.watchLazy().listen((_) => _fetch());
+    final sub = Storage.db.localHistorys.watchLazy().listen((_) => _fetch());
+    ref.onDispose(() => sub.cancel());
   }
 
   Future<void> _fetch() async {
@@ -46,6 +49,21 @@ class HistoryNotifier extends Notifier<List<LocalHistory>> {
           ..visitCount = 1
           ..synced = false;
         await Storage.db.localHistorys.put(entry);
+      }
+    });
+  }
+
+  Future<void> updateTitle(String url, String title) async {
+    if (url.isEmpty || title.isEmpty) return;
+    await Storage.db.writeTxn(() async {
+      final recent = await Storage.db.localHistorys
+          .filter()
+          .urlEqualTo(url)
+          .sortByVisitTimeDesc()
+          .findFirst();
+      if (recent != null) {
+        recent.title = title;
+        await Storage.db.localHistorys.put(recent);
       }
     });
   }

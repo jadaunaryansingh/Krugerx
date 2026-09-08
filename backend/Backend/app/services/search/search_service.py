@@ -1,4 +1,5 @@
 import httpx
+import time
 from typing import List, Dict, Any, Optional
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse, parse_qs, quote
@@ -7,6 +8,12 @@ import xml.etree.ElementTree as ET
 
 from app.core.config import settings
 from app.schemas.search import SearchResultItem, KnowledgePanel
+
+# In-memory cache for SearXNG results: key -> (payload, expire_at)
+# ponytail: single-process only; upgrade to shared Redis if multi-worker
+_searxng_cache: Dict[str, tuple] = {}
+_SEARXNG_TTL = 300  # 5 minutes
+_SEARXNG_RATE: Dict[str, list] = {}  # per-user timestamps for 30 req/min limit
 
 
 class SearchService:
@@ -21,7 +28,7 @@ class SearchService:
             )
         }
 
-    async def search(self, provider: str, query: str) -> dict:
+    async def search(self, provider: str, query: str, user_id: Optional[str] = None) -> dict:
         """
         Execute search across configured search engine provider.
         Returns a dict containing 'results' and optionally 'knowledge_panel'.
@@ -36,6 +43,8 @@ class SearchService:
             results = await self._search_brave(query)
         elif provider == "duckduckgo" or provider == "ddg":
             results = await self._search_duckduckgo(query)
+        elif provider == "searxng":
+            results = await self._search_searxng(query, user_id=user_id)
         else:
             logger.warning(f"Unknown search provider: {provider}, falling back to DuckDuckGo.")
             results = await self._search_duckduckgo(query)
@@ -46,6 +55,81 @@ class SearchService:
             "results": results,
             "knowledge_panel": knowledge_panel
         }
+
+    async def _search_searxng(self, query: str, user_id: Optional[str] = None) -> List[SearchResultItem]:
+        """
+        Proxies search to the self-hosted SearXNG instance.
+        Applies per-user rate limiting (30 req/min) and 5-minute result caching.
+        """
+        if not settings.SEARXNG_URL:
+            logger.warning("SEARXNG_URL not configured, falling back to DuckDuckGo.")
+            return await self._search_duckduckgo(query)
+
+        # Per-user rate limit: 30 req/min
+        if user_id:
+            now = time.time()
+            timestamps = _SEARXNG_RATE.get(user_id, [])
+            timestamps = [t for t in timestamps if now - t < 60]
+            if len(timestamps) >= 30:
+                from fastapi import HTTPException, status
+                raise HTTPException(
+                    status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+                    detail="SearXNG rate limit exceeded. Max 30 requests/minute per user."
+                )
+            timestamps.append(now)
+            _SEARXNG_RATE[user_id] = timestamps
+            if not timestamps:  # All entries expired during cleanup
+                del _SEARXNG_RATE[user_id]
+
+        # Cache check
+        cache_key = f"search:{provider.lower()}:{query.lower()}"
+        cached = _searxng_cache.get(cache_key)
+        if cached:
+            payload, expire_at = cached
+            if time.time() < expire_at:
+                logger.debug(f"SearXNG cache hit: {cache_key}")
+                return payload
+
+        url = f"{settings.SEARXNG_URL.rstrip('/')}/search"
+        async with httpx.AsyncClient() as client:
+            try:
+                res = await client.get(url, params={"q": query, "format": "json"}, timeout=10.0)
+                res.raise_for_status()
+                data = res.json()
+            except httpx.TimeoutException:
+                logger.bind(category="errors").error(f"SearXNG request timed out for query: {query}")
+                from fastapi import HTTPException, status
+                raise HTTPException(
+                    status_code=status.HTTP_504_GATEWAY_TIMEOUT,
+                    detail="SearXNG search engine timed out."
+                )
+            except httpx.HTTPStatusError as exc:
+                logger.bind(category="errors").error(f"SearXNG returned HTTP {exc.response.status_code}")
+                from fastapi import HTTPException, status
+                raise HTTPException(
+                    status_code=status.HTTP_502_BAD_GATEWAY,
+                    detail=f"SearXNG returned an error: {exc.response.status_code}"
+                )
+            except Exception as exc:
+                logger.bind(category="errors").error(f"SearXNG unreachable: {str(exc)}")
+                from fastapi import HTTPException, status
+                raise HTTPException(
+                    status_code=status.HTTP_502_BAD_GATEWAY,
+                    detail="SearXNG search engine is unreachable."
+                )
+
+        results = [
+            SearchResultItem(
+                title=item.get("title", ""),
+                url=item.get("url", ""),
+                snippet=item.get("content", ""),
+                favicon=f"https://icons.duckduckgo.com/ip3/{urlparse(item.get('url', '')).netloc}.ico"
+            )
+            for item in data.get("results", [])
+        ]
+
+        _searxng_cache[cache_key] = (results, time.time() + _SEARXNG_TTL)
+        return results
 
     async def _fetch_knowledge_panel(self, query: str) -> Optional[KnowledgePanel]:
         """

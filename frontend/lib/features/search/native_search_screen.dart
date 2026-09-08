@@ -9,7 +9,7 @@ import 'models/search_models.dart';
 
 final nativeSearchProvider = FutureProvider.family<SearchResponse, String>((ref, query) async {
   final url = '${AppConstants.apiBaseUrl}/search?q=${Uri.encodeComponent(query)}';
-  final response = await http.get(Uri.parse(url));
+  final response = await http.get(Uri.parse(url)).timeout(const Duration(seconds: 15));
   
   if (response.statusCode == 200) {
     final data = jsonDecode(response.body);
@@ -76,7 +76,17 @@ class _NativeSearchScreenState extends ConsumerState<NativeSearchScreen> {
               data: (data) => _buildContent(data),
               loading: () => const Center(child: CircularProgressIndicator(color: DesignSystem.primary)),
               error: (err, stack) => Center(
-                child: Text('Error: $err', style: const TextStyle(color: DesignSystem.error)),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('Error: $err', style: const TextStyle(color: DesignSystem.error)),
+                    const SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: () => ref.invalidate(nativeSearchProvider(widget.query)),
+                      child: const Text('Retry'),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

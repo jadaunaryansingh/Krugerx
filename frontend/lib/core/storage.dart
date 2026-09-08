@@ -16,20 +16,43 @@ class Storage {
 
   static Future<void> init() async {
     final dir = await getApplicationDocumentsDirectory();
-    db = await Isar.open(
-      [
-        AuthSessionSchema,
-        LocalBookmarkSchema,
-        LocalFolderSchema,
-        LocalHistorySchema,
-        LocalDownloadSchema,
-        LocalSettingsSchema,
-        LocalChatSessionSchema,
-        LocalChatMessageSchema,
-        LocalSessionTabSchema,
-      ],
-      directory: dir.path,
-    );
+    try {
+      db = await Isar.open(
+        [
+          AuthSessionSchema,
+          LocalBookmarkSchema,
+          LocalFolderSchema,
+          LocalHistorySchema,
+          LocalDownloadSchema,
+          LocalSettingsSchema,
+          LocalChatSessionSchema,
+          LocalChatMessageSchema,
+          LocalSessionTabSchema,
+        ],
+        directory: dir.path,
+      );
+    } catch (e) {
+      // If schema mismatch or corruption occurs, Isar throws.
+      // To prevent bricking the app, we clean up the directory and try again.
+      final isarFiles = dir.listSync().where((f) => f.path.endsWith('.isar') || f.path.endsWith('.isar.lock'));
+      for (var f in isarFiles) {
+        try { f.deleteSync(); } catch (_) {}
+      }
+      db = await Isar.open(
+        [
+          AuthSessionSchema,
+          LocalBookmarkSchema,
+          LocalFolderSchema,
+          LocalHistorySchema,
+          LocalDownloadSchema,
+          LocalSettingsSchema,
+          LocalChatSessionSchema,
+          LocalChatMessageSchema,
+          LocalSessionTabSchema,
+        ],
+        directory: dir.path,
+      );
+    }
 
     // Initialize default settings if not exists
     final existingSettings = await db.localSettings.get(1);

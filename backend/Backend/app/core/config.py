@@ -54,6 +54,7 @@ class Settings(BaseSettings):
     GOOGLE_SEARCH_CX_ID: Optional[str] = None
     BING_SEARCH_API_KEY: Optional[str] = None
     BRAVE_SEARCH_API_KEY: Optional[str] = None
+    SEARXNG_URL: Optional[str] = None  # Self-hosted SearXNG base URL (e.g. Cloudflare Tunnel)
 
     # Rate Limiting
     RATE_LIMIT_PER_MINUTE: int = 60

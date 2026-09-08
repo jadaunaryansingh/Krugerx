@@ -37,7 +37,7 @@ async def search_query(
         provider = setting.search_engine if setting else "google"
 
     # Execute search
-    search_data = await search_service.search(provider=provider, query=q)
+    search_data = await search_service.search(provider=provider, query=q, user_id=str(current_user.id))
     results = search_data.get("results", [])
     knowledge_panel = search_data.get("knowledge_panel")
 

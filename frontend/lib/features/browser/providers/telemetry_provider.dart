@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/providers/system_logger.dart';
+import '../../../core/constants.dart';
 
 class TelemetryState {
   final String uptime;
@@ -50,6 +51,7 @@ class TelemetryState {
 
 class TelemetryNotifier extends Notifier<TelemetryState> {
   Timer? _timer;
+  Timer? _latencyTimer;
   final _random = Random();
   late final DateTime _appStartTime;
   
@@ -81,13 +83,13 @@ class TelemetryNotifier extends Notifier<TelemetryState> {
     // Ensure we run the timer on the next event loop to not block build
     Future.microtask(() {
       _timer = Timer.periodic(const Duration(seconds: 1), (_) => _tick());
-      // Run latency check every 2 seconds
-      Timer.periodic(const Duration(seconds: 2), (_) => _measureLatency());
+      _latencyTimer = Timer.periodic(const Duration(seconds: 2), (_) => _measureLatency());
     });
 
     // Cleanup timer if provider is destroyed (if autoDispose was used, but it's not)
     ref.onDispose(() {
       _timer?.cancel();
+      _latencyTimer?.cancel();
     });
 
     return state;
@@ -128,8 +130,9 @@ class TelemetryNotifier extends Notifier<TelemetryState> {
   Future<void> _measureLatency() async {
     final stopwatch = Stopwatch()..start();
     try {
-      final request = await HttpClient().head('1.1.1.1', 80, '/').timeout(const Duration(seconds: 2));
-      request.close();
+      final uri = Uri.parse(AppConstants.apiBaseUrl);
+      final request = await HttpClient().headUrl(uri).timeout(const Duration(seconds: 2));
+      final response = await request.close();
       stopwatch.stop();
       _updateLatencyState(stopwatch.elapsedMilliseconds.toDouble(), true);
     } catch (e) {

@@ -12,10 +12,14 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load();
+  try {
+    await dotenv.load();
+  } catch (e) {
+    // .env file is missing, relies on system env or fallbacks
+  }
   await Supabase.initialize(
-    url: dotenv.env['SUPABASE_URL']!,
-    anonKey: dotenv.env['SUPABASE_KEY'] ?? dotenv.env['SUPABASE_ANON_KEY']!,
+    url: dotenv.env['SUPABASE_URL'] ?? 'https://fallback.supabase.co',
+    anonKey: dotenv.env['SUPABASE_KEY'] ?? dotenv.env['SUPABASE_ANON_KEY'] ?? 'fallback-key',
   );
   await Storage.init();
   ApiClient.init();

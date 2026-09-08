@@ -110,8 +110,9 @@ class BrowserScreen extends ConsumerWidget {
                                     }),
                                     // Zombie webviews
                                     ...ref.watch(tabsProvider.notifier).closedTabs.map((tab) {
-                                      return Offstage(
-                                        offstage: true,
+                                      return Visibility(
+                                        visible: false,
+                                        maintainState: true,
                                         child: (tab.url.isEmpty || tab.url == 'about:blank' || tab.url == 'kruger://newtab')
                                             ? const SizedBox.shrink()
                                             : BrowserEngineWidget(

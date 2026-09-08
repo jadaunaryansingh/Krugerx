@@ -15,7 +15,7 @@ extension GetLocalSettingsCollection on Isar {
 
 const LocalSettingsSchema = CollectionSchema(
   name: r'LocalSettings',
-  id: 1193626822998393387,
+  id: 1193626822998393344,
   properties: {
     r'aiModel': PropertySchema(id: 0, name: r'aiModel', type: IsarType.string),
     r'aiProvider': PropertySchema(

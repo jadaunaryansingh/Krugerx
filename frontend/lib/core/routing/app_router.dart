@@ -164,11 +164,15 @@ final routerProvider = Provider<GoRouter>((ref) {
 
   ref.listen(authProvider, (previous, next) {
     if (next.isLoading) return;
-    if (next.isAuthenticated) {
-      router.go('/browser');
-    } else {
-      router.go('/login');
-    }
+    Future.microtask(() {
+      if (next.isAuthenticated) {
+        if (router.routerDelegate.currentConfiguration.uri.toString() == '/login') {
+          router.go('/browser');
+        }
+      } else {
+        router.go('/login');
+      }
+    });
   });
 
   return router;

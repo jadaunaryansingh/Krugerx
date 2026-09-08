@@ -15,7 +15,7 @@ extension GetLocalSessionTabCollection on Isar {
 
 const LocalSessionTabSchema = CollectionSchema(
   name: r'LocalSessionTab',
-  id: 4612125534094202091,
+  id: 4612125534094201856,
   properties: {
     r'groupId': PropertySchema(id: 0, name: r'groupId', type: IsarType.string),
     r'isMuted': PropertySchema(id: 1, name: r'isMuted', type: IsarType.bool),
@@ -43,7 +43,7 @@ const LocalSessionTabSchema = CollectionSchema(
   idName: r'id',
   indexes: {
     r'tabId': IndexSchema(
-      id: 1448272301247555965,
+      id: 1448272301247555840,
       name: r'tabId',
       unique: true,
       replace: true,

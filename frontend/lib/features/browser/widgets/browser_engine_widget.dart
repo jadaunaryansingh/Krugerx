@@ -30,10 +30,12 @@ class _BrowserEngineWidgetState extends ConsumerState<BrowserEngineWidget> {
   bool _isLoading = true;
   final _random = Random();
   bool _isCurrentlyReaderMode = false;
+  late final String _readerToken;
 
   @override
   void initState() {
     super.initState();
+    _readerToken = Random().nextInt(999999999).toString();
     _controller = WebViewController()
       ..setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36')
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
@@ -41,7 +43,7 @@ class _BrowserEngineWidgetState extends ConsumerState<BrowserEngineWidget> {
       ..addJavaScriptChannel(
         'ReaderModeChannel',
         onMessageReceived: (JavaScriptMessage message) {
-          if (message.message == 'failed') {
+          if (message.message == 'failed:$_readerToken') {
             if (mounted) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
@@ -104,8 +106,10 @@ class _BrowserEngineWidgetState extends ConsumerState<BrowserEngineWidget> {
   }
 
   void _applyReaderModeIfNeeded() {
-    final tab = ref.read(tabsProvider).tabs.firstWhere((t) => t.id == widget.tabId, orElse: () => throw Exception('Tab not found'));
-    
+    final tabs = ref.read(tabsProvider).tabs;
+    final tab = tabs.where((t) => t.id == widget.tabId).firstOrNull;
+    if (tab == null || !mounted) return;
+
     if (tab.isReaderMode && !_isCurrentlyReaderMode) {
       _isCurrentlyReaderMode = true;
       _controller.runJavaScript('''
@@ -126,18 +130,18 @@ class _BrowserEngineWidgetState extends ConsumerState<BrowserEngineWidget> {
                     el.remove();
                   });
                 } else {
-                  ReaderModeChannel.postMessage('failed');
+                  ReaderModeChannel.postMessage('failed:$_readerToken');
                 }
               } catch(e) {
-                ReaderModeChannel.postMessage('failed');
+                ReaderModeChannel.postMessage('failed:$_readerToken');
               }
             };
             script.onerror = function() {
-              ReaderModeChannel.postMessage('failed');
+              ReaderModeChannel.postMessage('failed:$_readerToken');
             };
             document.head.appendChild(script);
           } catch(e) {
-            ReaderModeChannel.postMessage('failed');
+            ReaderModeChannel.postMessage('failed:$_readerToken');
           }
         })();
       ''');
@@ -162,8 +166,8 @@ class _BrowserEngineWidgetState extends ConsumerState<BrowserEngineWidget> {
     }
     
     // Check for reader mode changes
-    final tab = ref.read(tabsProvider).tabs.firstWhere((t) => t.id == widget.tabId, orElse: () => throw Exception('Tab not found'));
-    if (tab.isReaderMode != _isCurrentlyReaderMode && !_isLoading) {
+    final tab = ref.read(tabsProvider).tabs.where((t) => t.id == widget.tabId).firstOrNull;
+    if (tab != null && tab.isReaderMode != _isCurrentlyReaderMode && !_isLoading) {
       _applyReaderModeIfNeeded();
     }
 
