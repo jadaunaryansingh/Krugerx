@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:krugerx/core/widgets/countdown_snackbar.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/browser_provider.dart';
@@ -66,9 +67,9 @@ class TabStrip extends ConsumerWidget {
                         ScaffoldMessenger.of(context).clearSnackBars();
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text(
-                              'Tab closed',
-                              style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+                            content: const CountdownSnackBarContent(
+                              text: 'Tab closed',
+                              duration: Duration(seconds: 5),
                             ),
                             backgroundColor: Theme.of(context).colorScheme.surface, // dark theme
                             behavior: SnackBarBehavior.floating,
