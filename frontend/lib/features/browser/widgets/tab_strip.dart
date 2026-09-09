@@ -1,4 +1,4 @@
-﻿import 'dart:ui';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:krugerx/core/widgets/countdown_snackbar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -47,7 +47,7 @@ class TabStrip extends ConsumerWidget {
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(vertical: 4),
               itemCount: state.tabs.length,
-              onReorder: notifier.reorderTabs,
+              onReorderItem: (oldIndex, newIndex) => notifier.reorderTabs(oldIndex, newIndex),
               proxyDecorator: (child, index, animation) => child,
               buildDefaultDragHandles: false,
               itemBuilder: (context, i) {

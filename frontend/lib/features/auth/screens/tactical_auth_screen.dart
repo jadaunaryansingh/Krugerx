@@ -432,7 +432,9 @@ class _TacticalAuthScreenState extends ConsumerState<TacticalAuthScreen> with Ti
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          _buildMobileNavItem(Icons.qr_code_scanner, "AUTH", true, onTap: () {}),
+          _buildMobileNavItem(Icons.qr_code_scanner, "AUTH", true, onTap: () {
+            // Already on AUTH screen — intentional no-op.
+          }),
           _buildMobileNavItem(Icons.radar, "STATUS", false, onTap: () => context.push('/profile')),
           _buildMobileNavItem(Icons.terminal, "CMD", false, onTap: () => context.go('/')),
           _buildMobileNavItem(Icons.settings_input_component, "SYS", false, onTap: () => context.push('/settings')),

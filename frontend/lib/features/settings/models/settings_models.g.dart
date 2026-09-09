@@ -15,42 +15,67 @@ extension GetLocalSettingsCollection on Isar {
 
 const LocalSettingsSchema = CollectionSchema(
   name: r'LocalSettings',
-  id: 1193626822998393344,
+  id: 1193626822998393387,
   properties: {
-    r'aiModel': PropertySchema(id: 0, name: r'aiModel', type: IsarType.string),
+    r'aesEncryption': PropertySchema(
+      id: 0,
+      name: r'aesEncryption',
+      type: IsarType.bool,
+    ),
+    r'aiModel': PropertySchema(id: 1, name: r'aiModel', type: IsarType.string),
     r'aiProvider': PropertySchema(
-      id: 1,
+      id: 2,
       name: r'aiProvider',
       type: IsarType.string,
     ),
-    r'fontSize': PropertySchema(id: 2, name: r'fontSize', type: IsarType.long),
-    r'homepageUrl': PropertySchema(
+    r'biometricUplink': PropertySchema(
       id: 3,
+      name: r'biometricUplink',
+      type: IsarType.bool,
+    ),
+    r'dnsOverHttps': PropertySchema(
+      id: 4,
+      name: r'dnsOverHttps',
+      type: IsarType.bool,
+    ),
+    r'fontSize': PropertySchema(id: 5, name: r'fontSize', type: IsarType.long),
+    r'hardStrike': PropertySchema(
+      id: 6,
+      name: r'hardStrike',
+      type: IsarType.bool,
+    ),
+    r'homepageUrl': PropertySchema(
+      id: 7,
       name: r'homepageUrl',
       type: IsarType.string,
     ),
     r'language': PropertySchema(
-      id: 4,
+      id: 8,
       name: r'language',
       type: IsarType.string,
     ),
     r'persistSession': PropertySchema(
-      id: 5,
+      id: 9,
       name: r'persistSession',
       type: IsarType.bool,
     ),
     r'privacyTrackingProtection': PropertySchema(
-      id: 6,
+      id: 10,
       name: r'privacyTrackingProtection',
       type: IsarType.bool,
     ),
     r'searchEngine': PropertySchema(
-      id: 7,
+      id: 11,
       name: r'searchEngine',
       type: IsarType.string,
     ),
-    r'synced': PropertySchema(id: 8, name: r'synced', type: IsarType.bool),
-    r'theme': PropertySchema(id: 9, name: r'theme', type: IsarType.string),
+    r'synced': PropertySchema(id: 12, name: r'synced', type: IsarType.bool),
+    r'theme': PropertySchema(id: 13, name: r'theme', type: IsarType.string),
+    r'vpnTunnel': PropertySchema(
+      id: 14,
+      name: r'vpnTunnel',
+      type: IsarType.bool,
+    ),
   },
 
   estimateSize: _localSettingsEstimateSize,
@@ -89,16 +114,21 @@ void _localSettingsSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeString(offsets[0], object.aiModel);
-  writer.writeString(offsets[1], object.aiProvider);
-  writer.writeLong(offsets[2], object.fontSize);
-  writer.writeString(offsets[3], object.homepageUrl);
-  writer.writeString(offsets[4], object.language);
-  writer.writeBool(offsets[5], object.persistSession);
-  writer.writeBool(offsets[6], object.privacyTrackingProtection);
-  writer.writeString(offsets[7], object.searchEngine);
-  writer.writeBool(offsets[8], object.synced);
-  writer.writeString(offsets[9], object.theme);
+  writer.writeBool(offsets[0], object.aesEncryption);
+  writer.writeString(offsets[1], object.aiModel);
+  writer.writeString(offsets[2], object.aiProvider);
+  writer.writeBool(offsets[3], object.biometricUplink);
+  writer.writeBool(offsets[4], object.dnsOverHttps);
+  writer.writeLong(offsets[5], object.fontSize);
+  writer.writeBool(offsets[6], object.hardStrike);
+  writer.writeString(offsets[7], object.homepageUrl);
+  writer.writeString(offsets[8], object.language);
+  writer.writeBool(offsets[9], object.persistSession);
+  writer.writeBool(offsets[10], object.privacyTrackingProtection);
+  writer.writeString(offsets[11], object.searchEngine);
+  writer.writeBool(offsets[12], object.synced);
+  writer.writeString(offsets[13], object.theme);
+  writer.writeBool(offsets[14], object.vpnTunnel);
 }
 
 LocalSettings _localSettingsDeserialize(
@@ -108,17 +138,22 @@ LocalSettings _localSettingsDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = LocalSettings();
-  object.aiModel = reader.readString(offsets[0]);
-  object.aiProvider = reader.readString(offsets[1]);
-  object.fontSize = reader.readLong(offsets[2]);
-  object.homepageUrl = reader.readString(offsets[3]);
+  object.aesEncryption = reader.readBool(offsets[0]);
+  object.aiModel = reader.readString(offsets[1]);
+  object.aiProvider = reader.readString(offsets[2]);
+  object.biometricUplink = reader.readBool(offsets[3]);
+  object.dnsOverHttps = reader.readBool(offsets[4]);
+  object.fontSize = reader.readLong(offsets[5]);
+  object.hardStrike = reader.readBool(offsets[6]);
+  object.homepageUrl = reader.readString(offsets[7]);
   object.id = id;
-  object.language = reader.readString(offsets[4]);
-  object.persistSession = reader.readBool(offsets[5]);
-  object.privacyTrackingProtection = reader.readBool(offsets[6]);
-  object.searchEngine = reader.readString(offsets[7]);
-  object.synced = reader.readBool(offsets[8]);
-  object.theme = reader.readString(offsets[9]);
+  object.language = reader.readString(offsets[8]);
+  object.persistSession = reader.readBool(offsets[9]);
+  object.privacyTrackingProtection = reader.readBool(offsets[10]);
+  object.searchEngine = reader.readString(offsets[11]);
+  object.synced = reader.readBool(offsets[12]);
+  object.theme = reader.readString(offsets[13]);
+  object.vpnTunnel = reader.readBool(offsets[14]);
   return object;
 }
 
@@ -130,25 +165,35 @@ P _localSettingsDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readString(offset)) as P;
+      return (reader.readBool(offset)) as P;
     case 1:
       return (reader.readString(offset)) as P;
     case 2:
-      return (reader.readLong(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 3:
-      return (reader.readString(offset)) as P;
-    case 4:
-      return (reader.readString(offset)) as P;
-    case 5:
       return (reader.readBool(offset)) as P;
+    case 4:
+      return (reader.readBool(offset)) as P;
+    case 5:
+      return (reader.readLong(offset)) as P;
     case 6:
       return (reader.readBool(offset)) as P;
     case 7:
       return (reader.readString(offset)) as P;
     case 8:
-      return (reader.readBool(offset)) as P;
-    case 9:
       return (reader.readString(offset)) as P;
+    case 9:
+      return (reader.readBool(offset)) as P;
+    case 10:
+      return (reader.readBool(offset)) as P;
+    case 11:
+      return (reader.readString(offset)) as P;
+    case 12:
+      return (reader.readBool(offset)) as P;
+    case 13:
+      return (reader.readString(offset)) as P;
+    case 14:
+      return (reader.readBool(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -256,6 +301,15 @@ extension LocalSettingsQueryWhere
 
 extension LocalSettingsQueryFilter
     on QueryBuilder<LocalSettings, LocalSettings, QFilterCondition> {
+  QueryBuilder<LocalSettings, LocalSettings, QAfterFilterCondition>
+  aesEncryptionEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'aesEncryption', value: value),
+      );
+    });
+  }
+
   QueryBuilder<LocalSettings, LocalSettings, QAfterFilterCondition>
   aiModelEqualTo(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -539,6 +593,24 @@ extension LocalSettingsQueryFilter
   }
 
   QueryBuilder<LocalSettings, LocalSettings, QAfterFilterCondition>
+  biometricUplinkEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'biometricUplink', value: value),
+      );
+    });
+  }
+
+  QueryBuilder<LocalSettings, LocalSettings, QAfterFilterCondition>
+  dnsOverHttpsEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'dnsOverHttps', value: value),
+      );
+    });
+  }
+
+  QueryBuilder<LocalSettings, LocalSettings, QAfterFilterCondition>
   fontSizeEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
@@ -589,6 +661,15 @@ extension LocalSettingsQueryFilter
           upper: upper,
           includeUpper: includeUpper,
         ),
+      );
+    });
+  }
+
+  QueryBuilder<LocalSettings, LocalSettings, QAfterFilterCondition>
+  hardStrikeEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'hardStrike', value: value),
       );
     });
   }
@@ -1243,6 +1324,15 @@ extension LocalSettingsQueryFilter
       );
     });
   }
+
+  QueryBuilder<LocalSettings, LocalSettings, QAfterFilterCondition>
+  vpnTunnelEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'vpnTunnel', value: value),
+      );
+    });
+  }
 }
 
 extension LocalSettingsQueryObject
@@ -1253,6 +1343,20 @@ extension LocalSettingsQueryLinks
 
 extension LocalSettingsQuerySortBy
     on QueryBuilder<LocalSettings, LocalSettings, QSortBy> {
+  QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy>
+  sortByAesEncryption() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'aesEncryption', Sort.asc);
+    });
+  }
+
+  QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy>
+  sortByAesEncryptionDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'aesEncryption', Sort.desc);
+    });
+  }
+
   QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy> sortByAiModel() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'aiModel', Sort.asc);
@@ -1278,6 +1382,34 @@ extension LocalSettingsQuerySortBy
     });
   }
 
+  QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy>
+  sortByBiometricUplink() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'biometricUplink', Sort.asc);
+    });
+  }
+
+  QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy>
+  sortByBiometricUplinkDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'biometricUplink', Sort.desc);
+    });
+  }
+
+  QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy>
+  sortByDnsOverHttps() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'dnsOverHttps', Sort.asc);
+    });
+  }
+
+  QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy>
+  sortByDnsOverHttpsDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'dnsOverHttps', Sort.desc);
+    });
+  }
+
   QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy> sortByFontSize() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'fontSize', Sort.asc);
@@ -1288,6 +1420,19 @@ extension LocalSettingsQuerySortBy
   sortByFontSizeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'fontSize', Sort.desc);
+    });
+  }
+
+  QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy> sortByHardStrike() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hardStrike', Sort.asc);
+    });
+  }
+
+  QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy>
+  sortByHardStrikeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hardStrike', Sort.desc);
     });
   }
 
@@ -1382,10 +1527,37 @@ extension LocalSettingsQuerySortBy
       return query.addSortBy(r'theme', Sort.desc);
     });
   }
+
+  QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy> sortByVpnTunnel() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'vpnTunnel', Sort.asc);
+    });
+  }
+
+  QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy>
+  sortByVpnTunnelDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'vpnTunnel', Sort.desc);
+    });
+  }
 }
 
 extension LocalSettingsQuerySortThenBy
     on QueryBuilder<LocalSettings, LocalSettings, QSortThenBy> {
+  QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy>
+  thenByAesEncryption() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'aesEncryption', Sort.asc);
+    });
+  }
+
+  QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy>
+  thenByAesEncryptionDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'aesEncryption', Sort.desc);
+    });
+  }
+
   QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy> thenByAiModel() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'aiModel', Sort.asc);
@@ -1411,6 +1583,34 @@ extension LocalSettingsQuerySortThenBy
     });
   }
 
+  QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy>
+  thenByBiometricUplink() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'biometricUplink', Sort.asc);
+    });
+  }
+
+  QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy>
+  thenByBiometricUplinkDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'biometricUplink', Sort.desc);
+    });
+  }
+
+  QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy>
+  thenByDnsOverHttps() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'dnsOverHttps', Sort.asc);
+    });
+  }
+
+  QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy>
+  thenByDnsOverHttpsDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'dnsOverHttps', Sort.desc);
+    });
+  }
+
   QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy> thenByFontSize() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'fontSize', Sort.asc);
@@ -1421,6 +1621,19 @@ extension LocalSettingsQuerySortThenBy
   thenByFontSizeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'fontSize', Sort.desc);
+    });
+  }
+
+  QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy> thenByHardStrike() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hardStrike', Sort.asc);
+    });
+  }
+
+  QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy>
+  thenByHardStrikeDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hardStrike', Sort.desc);
     });
   }
 
@@ -1527,10 +1740,30 @@ extension LocalSettingsQuerySortThenBy
       return query.addSortBy(r'theme', Sort.desc);
     });
   }
+
+  QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy> thenByVpnTunnel() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'vpnTunnel', Sort.asc);
+    });
+  }
+
+  QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy>
+  thenByVpnTunnelDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'vpnTunnel', Sort.desc);
+    });
+  }
 }
 
 extension LocalSettingsQueryWhereDistinct
     on QueryBuilder<LocalSettings, LocalSettings, QDistinct> {
+  QueryBuilder<LocalSettings, LocalSettings, QDistinct>
+  distinctByAesEncryption() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'aesEncryption');
+    });
+  }
+
   QueryBuilder<LocalSettings, LocalSettings, QDistinct> distinctByAiModel({
     bool caseSensitive = true,
   }) {
@@ -1547,9 +1780,29 @@ extension LocalSettingsQueryWhereDistinct
     });
   }
 
+  QueryBuilder<LocalSettings, LocalSettings, QDistinct>
+  distinctByBiometricUplink() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'biometricUplink');
+    });
+  }
+
+  QueryBuilder<LocalSettings, LocalSettings, QDistinct>
+  distinctByDnsOverHttps() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'dnsOverHttps');
+    });
+  }
+
   QueryBuilder<LocalSettings, LocalSettings, QDistinct> distinctByFontSize() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'fontSize');
+    });
+  }
+
+  QueryBuilder<LocalSettings, LocalSettings, QDistinct> distinctByHardStrike() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'hardStrike');
     });
   }
 
@@ -1604,6 +1857,12 @@ extension LocalSettingsQueryWhereDistinct
       return query.addDistinctBy(r'theme', caseSensitive: caseSensitive);
     });
   }
+
+  QueryBuilder<LocalSettings, LocalSettings, QDistinct> distinctByVpnTunnel() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'vpnTunnel');
+    });
+  }
 }
 
 extension LocalSettingsQueryProperty
@@ -1611,6 +1870,12 @@ extension LocalSettingsQueryProperty
   QueryBuilder<LocalSettings, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<LocalSettings, bool, QQueryOperations> aesEncryptionProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'aesEncryption');
     });
   }
 
@@ -1626,9 +1891,28 @@ extension LocalSettingsQueryProperty
     });
   }
 
+  QueryBuilder<LocalSettings, bool, QQueryOperations>
+  biometricUplinkProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'biometricUplink');
+    });
+  }
+
+  QueryBuilder<LocalSettings, bool, QQueryOperations> dnsOverHttpsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'dnsOverHttps');
+    });
+  }
+
   QueryBuilder<LocalSettings, int, QQueryOperations> fontSizeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'fontSize');
+    });
+  }
+
+  QueryBuilder<LocalSettings, bool, QQueryOperations> hardStrikeProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'hardStrike');
     });
   }
 
@@ -1672,6 +1956,12 @@ extension LocalSettingsQueryProperty
   QueryBuilder<LocalSettings, String, QQueryOperations> themeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'theme');
+    });
+  }
+
+  QueryBuilder<LocalSettings, bool, QQueryOperations> vpnTunnelProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'vpnTunnel');
     });
   }
 }

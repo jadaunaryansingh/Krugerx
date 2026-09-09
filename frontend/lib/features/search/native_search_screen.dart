@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import '../../core/theme/design_system.dart';
 import '../../core/providers/tabs_provider.dart';
-import '../../core/constants.dart';
+import '../../core/api_client.dart';
 import 'models/search_models.dart';
 
 final nativeSearchProvider = FutureProvider.family<SearchResponse, String>((ref, query) async {
-  final url = '${AppConstants.apiBaseUrl}/search?q=${Uri.encodeComponent(query)}';
-  final response = await http.get(Uri.parse(url)).timeout(const Duration(seconds: 15));
-  
-  if (response.statusCode == 200) {
-    final data = jsonDecode(response.body);
-    if (data['success'] == true) {
-      return SearchResponse.fromJson(data['data']);
-    }
+  final response = await ApiClient.client.get(
+    '/search',
+    queryParameters: {'q': query},
+  );
+  final data = response.data as Map<String, dynamic>;
+  if (data['success'] == true) {
+    return SearchResponse.fromJson(data['data'] as Map<String, dynamic>);
   }
   throw Exception('Failed to load search results');
 });

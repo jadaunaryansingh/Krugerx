@@ -15,7 +15,7 @@ extension GetAuthSessionCollection on Isar {
 
 const AuthSessionSchema = CollectionSchema(
   name: r'AuthSession',
-  id: 7043438331616121856,
+  id: 7043438331616121534,
   properties: {
     r'accessToken': PropertySchema(
       id: 0,

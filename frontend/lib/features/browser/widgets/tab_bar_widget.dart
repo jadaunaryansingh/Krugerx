@@ -23,7 +23,9 @@ class TabBarWidget extends ConsumerWidget {
             child: ReorderableListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: tabsState.tabs.length,
-              onReorder: ref.read(tabsProvider.notifier).reorderTabs,
+            onReorderItem: (oldIndex, newIndex) {
+              ref.read(tabsProvider.notifier).reorderTabs(oldIndex, newIndex);
+            },
               proxyDecorator: (child, index, animation) => child,
               buildDefaultDragHandles: false,
               itemBuilder: (context, index) {
@@ -59,7 +61,7 @@ class TabBarWidget extends ConsumerWidget {
                             const SizedBox(width: 8),
                             Expanded(
                               child: Text(
-                                (tab.title?.isEmpty ?? true) ? 'System Diag' : tab.title!.toUpperCase(),
+                                tab.title.isEmpty ? 'System Diag' : tab.title.toUpperCase(),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: DesignSystem.dataMono.copyWith(

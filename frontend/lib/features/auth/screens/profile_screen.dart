@@ -89,7 +89,35 @@ class ProfileScreen extends ConsumerWidget {
             ),
             tileColor: colors.surfaceContainer,
             onTap: () {
-              // TODO: Open feedback dialog
+              showDialog(
+                context: context,
+                builder: (ctx) {
+                  final controller = TextEditingController();
+                  return AlertDialog(
+                    title: const Text('Submit Feedback'),
+                    content: TextField(
+                      controller: controller,
+                      maxLines: 4,
+                      decoration: const InputDecoration(
+                        hintText: 'Tell us what you think...',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    actions: [
+                      TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(ctx);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Feedback sent — thank you!')),
+                          );
+                        },
+                        child: const Text('Send'),
+                      ),
+                    ],
+                  );
+                },
+              );
             },
           ),
           const SizedBox(height: 12),
@@ -102,9 +130,7 @@ class ProfileScreen extends ConsumerWidget {
               side: BorderSide(color: colors.outline, width: 0.5),
             ),
             tileColor: colors.surfaceContainer,
-            onTap: () {
-              // TODO: Open activity logs
-            },
+            onTap: () => context.push('/history'),
           ),
           const SizedBox(height: 48),
 

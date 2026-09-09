@@ -58,7 +58,7 @@ class BrowserSidebar extends ConsumerWidget {
             icon: Icons.public_rounded,
             tooltip: 'Browser',
             isActive: true,
-            onTap: () {},
+            onTap: () {}, // already on browser; no-op is correct here
           ),
           const SizedBox(height: 8),
           _SidebarBtn(

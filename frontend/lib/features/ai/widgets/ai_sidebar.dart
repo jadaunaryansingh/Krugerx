@@ -4,6 +4,7 @@ import '../providers/ai_provider.dart';
 import '../../../core/theme/design_system.dart';
 import '../../../core/widgets/hover_scale_widget.dart';
 import '../../browser/browser_screen.dart';
+import '../../settings/providers/settings_provider.dart';
 
 class AiSidebar extends ConsumerStatefulWidget {
   const AiSidebar({super.key});
@@ -88,11 +89,23 @@ class _AiSidebarState extends ConsumerState<AiSidebar> {
           ),
           child: Row(
             children: [
-              _actionButton('[OPTIMIZE]', () {}),
+              _actionButton('[OPTIMIZE]', () {
+                final settings = ref.read(settingsProvider);
+                if (aiState.activeSession == null) {
+                  ref.read(aiProvider.notifier).createSession(settings.aiProvider, settings.aiModel);
+                } else {
+                  ref.read(aiProvider.notifier).sendMessage('[OPTIMIZE] Analyze the current page and suggest performance improvements.');
+                }
+              }),
               const SizedBox(width: 8),
-              _actionButton('[REBOOT]', () {}),
+              _actionButton('[REBOOT]', () {
+                final settings = ref.read(settingsProvider);
+                ref.read(aiProvider.notifier).createSession(settings.aiProvider, settings.aiModel);
+              }),
               const SizedBox(width: 8),
-              _actionButton('[SCAN]', () {}),
+              _actionButton('[SCAN]', () {
+                ref.read(aiProvider.notifier).sendMessage('[SCAN] Summarize the main content and key information on this page.');
+              }),
             ],
           ),
         ),
@@ -141,6 +154,25 @@ class _AiSidebarState extends ConsumerState<AiSidebar> {
                   ),
           ),
         ),
+
+        // No-session guard banner
+        if (aiState.activeSession == null)
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            color: DesignSystem.primary.withValues(alpha: 0.08),
+            child: Row(
+              children: [
+                const Icon(Icons.info_outline, size: 12, color: DesignSystem.primary),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    'No session active. Tap [OPTIMIZE] to start.',
+                    style: DesignSystem.dataMono.copyWith(fontSize: 9, color: DesignSystem.primary),
+                  ),
+                ),
+              ],
+            ),
+          ),
 
         // Input Area
         Container(

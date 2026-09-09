@@ -62,6 +62,31 @@ class SettingsNotifier extends Notifier<LocalSettings> {
     await _save(updated);
   }
 
+  Future<void> updateBiometricUplink(bool val) async {
+    final updated = _cloneState()..biometricUplink = val;
+    await _save(updated);
+  }
+
+  Future<void> updateAesEncryption(bool val) async {
+    final updated = _cloneState()..aesEncryption = val;
+    await _save(updated);
+  }
+
+  Future<void> updateHardStrike(bool val) async {
+    final updated = _cloneState()..hardStrike = val;
+    await _save(updated);
+  }
+
+  Future<void> updateVpnTunnel(bool val) async {
+    final updated = _cloneState()..vpnTunnel = val;
+    await _save(updated);
+  }
+
+  Future<void> updateDnsOverHttps(bool val) async {
+    final updated = _cloneState()..dnsOverHttps = val;
+    await _save(updated);
+  }
+
   LocalSettings _cloneState() {
     return LocalSettings()
       ..id = state.id
@@ -74,7 +99,12 @@ class SettingsNotifier extends Notifier<LocalSettings> {
       ..aiProvider = state.aiProvider
       ..aiModel = state.aiModel
       ..synced = false
-      ..persistSession = state.persistSession;
+      ..persistSession = state.persistSession
+      ..biometricUplink = state.biometricUplink
+      ..aesEncryption = state.aesEncryption
+      ..hardStrike = state.hardStrike
+      ..vpnTunnel = state.vpnTunnel
+      ..dnsOverHttps = state.dnsOverHttps;
   }
 
   Future<void> _save(LocalSettings settings) async {

@@ -384,8 +384,8 @@ class _AddressBarWidgetState extends ConsumerState<AddressBarWidget> {
                       onTap: () {
                         if (activeTab != null && activeTab.url.isNotEmpty && activeTab.url != 'kruger://newtab') {
                           ref.read(bookmarksProvider.notifier).addBookmark(
-                            activeTab.title ?? 'New Bookmark', 
-                            activeTab.url
+                            activeTab.title.isEmpty ? 'New Bookmark' : activeTab.title,
+                            activeTab.url,
                           );
                         }
                       },
@@ -426,7 +426,7 @@ class _AddressBarWidgetState extends ConsumerState<AddressBarWidget> {
                       ref.read(tabsProvider.notifier).toggleFindBar();
                     } else if (value == 'view_source') {
                       if (activeTab != null) {
-                        ref.read(tabsProvider.notifier).addTab(url: 'kruger://source?id=${activeTab!.id}', title: 'Source: ${activeTab!.title ?? activeTab!.url}');
+                        ref.read(tabsProvider.notifier).addTab(url: 'kruger://source?id=${activeTab.id}', title: 'Source: ${activeTab.title.isEmpty ? activeTab.url : activeTab.title}');
                       }
                     } else if (value == 'settings') {
                       context.push('/settings');

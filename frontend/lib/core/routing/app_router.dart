@@ -10,6 +10,8 @@ import '../../features/settings/screens/tactical_settings_screen.dart';
 import '../../features/common/unimplemented_screen.dart';
 import '../../features/downloads/downloads_screen.dart';
 import '../../features/auth/screens/profile_screen.dart';
+import '../../features/search/native_search_screen.dart';
+import '../../features/browser/widgets/ssl_info_sheet.dart';
 import '../providers/navigation_provider.dart';
 
 CustomTransitionPage<void> _buildTransition(Widget child, GoRouterState state) {
@@ -186,12 +188,18 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: '/search',
             name: '/search',
-            pageBuilder: (context, state) => _buildTransition(const UnimplementedScreen(moduleName: 'SYS.SEARCH'), state),
+            pageBuilder: (context, state) {
+              final q = state.uri.queryParameters['q'] ?? '';
+              return _buildTransition(NativeSearchScreen(query: q), state);
+            },
           ),
           GoRoute(
             path: '/lock',
             name: '/lock',
-            pageBuilder: (context, state) => _buildTransition(const UnimplementedScreen(moduleName: 'SYS.LOCK'), state),
+            pageBuilder: (context, state) {
+              final url = state.uri.queryParameters['url'] ?? '';
+              return _buildTransition(_SslInfoPage(url: url), state);
+            },
           ),
           GoRoute(
             path: '/downloads',
@@ -218,3 +226,20 @@ final routerProvider = Provider<GoRouter>((ref) {
 
   return router;
 });
+
+/// Full-page wrapper for SSL info (used by the /lock route).
+class _SslInfoPage extends StatelessWidget {
+  final String url;
+  const _SslInfoPage({required this.url});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Align(
+        alignment: Alignment.bottomCenter,
+        child: SslInfoSheet(),
+      ),
+    );
+  }
+}

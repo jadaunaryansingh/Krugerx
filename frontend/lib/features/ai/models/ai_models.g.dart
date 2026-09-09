@@ -15,7 +15,7 @@ extension GetLocalChatSessionCollection on Isar {
 
 const LocalChatSessionSchema = CollectionSchema(
   name: r'LocalChatSession',
-  id: -2807187536903840768,
+  id: -2807187536903840701,
   properties: {
     r'model': PropertySchema(id: 0, name: r'model', type: IsarType.string),
     r'provider': PropertySchema(
@@ -1215,7 +1215,7 @@ extension GetLocalChatMessageCollection on Isar {
 
 const LocalChatMessageSchema = CollectionSchema(
   name: r'LocalChatMessage',
-  id: 6507709770333573120,
+  id: 6507709770333572945,
   properties: {
     r'content': PropertySchema(id: 0, name: r'content', type: IsarType.string),
     r'createdAt': PropertySchema(

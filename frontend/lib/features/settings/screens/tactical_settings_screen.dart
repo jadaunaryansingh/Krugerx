@@ -30,11 +30,6 @@ class TacticalSettingsScreen extends ConsumerStatefulWidget {
 
 class _TacticalSettingsScreenState extends ConsumerState<TacticalSettingsScreen> {
   String _selectedTab = 'Security';
-  bool biometricUplink = true;
-  bool aesEncryption = true;
-  bool hardStrike = false;
-  bool vpnTunnel = true;
-  bool dnsOverHttps = true;
   double predictiveBias = 72;
   double diagnosticDepth = 100;
   String bufferRetention = '50ms';
@@ -242,7 +237,9 @@ class _TacticalSettingsScreenState extends ConsumerState<TacticalSettingsScreen>
           const Spacer(),
           const Divider(color: TacticalColors.outlineVariant, height: 1),
           const SizedBox(height: 24),
-          _buildNavItem('Settings', Icons.settings_outlined, isActive: true, onTap: () {}),
+          _buildNavItem('Settings', Icons.settings_outlined, isActive: true, onTap: () {
+            // Already on Settings screen — intentional no-op.
+          }),
         ],
       ),
     );
@@ -369,18 +366,28 @@ class _TacticalSettingsScreenState extends ConsumerState<TacticalSettingsScreen>
                   const SizedBox(height: 24),
                   const Divider(color: TacticalColors.outlineVariant, height: 1),
                   const SizedBox(height: 24),
-                  _buildToggleRow(
-                    'VPN Tunnel',
-                    'ID: 0xNET // ENCRYPTED',
-                    vpnTunnel,
-                    (val) => setState(() => vpnTunnel = val),
+                  Consumer(
+                    builder: (context, ref, _) {
+                      final s = ref.watch(settingsProvider);
+                      return _buildToggleRow(
+                        'VPN Tunnel',
+                        'ID: 0xNET // ENCRYPTED',
+                        s.vpnTunnel,
+                        (val) => ref.read(settingsProvider.notifier).updateVpnTunnel(val),
+                      );
+                    },
                   ),
                   const Divider(color: TacticalColors.outlineVariant, height: 1),
-                  _buildToggleRow(
-                    'DNS over HTTPS',
-                    'ID: 0xDOH // SECURE',
-                    dnsOverHttps,
-                    (val) => setState(() => dnsOverHttps = val),
+                  Consumer(
+                    builder: (context, ref, _) {
+                      final s = ref.watch(settingsProvider);
+                      return _buildToggleRow(
+                        'DNS over HTTPS',
+                        'ID: 0xDOH // SECURE',
+                        s.dnsOverHttps,
+                        (val) => ref.read(settingsProvider.notifier).updateDnsOverHttps(val),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -468,26 +475,41 @@ class _TacticalSettingsScreenState extends ConsumerState<TacticalSettingsScreen>
                       );
                     }
                   ),
-                  const Divider(color: TacticalColors.outlineVariant, height: 1),
-                  _buildToggleRow(
-                    'Biometric Uplink',
-                    'ID: 0xAF4 // REQ_AUTH',
-                    biometricUplink,
-                    (val) => setState(() => biometricUplink = val),
+                   const Divider(color: TacticalColors.outlineVariant, height: 1),
+                  Consumer(
+                    builder: (context, ref, _) {
+                      final s = ref.watch(settingsProvider);
+                      return _buildToggleRow(
+                        'Biometric Uplink',
+                        'ID: 0xAF4 // REQ_AUTH',
+                        s.biometricUplink,
+                        (val) => ref.read(settingsProvider.notifier).updateBiometricUplink(val),
+                      );
+                    },
                   ),
                   const Divider(color: TacticalColors.outlineVariant, height: 1),
-                  _buildToggleRow(
-                    'AES-256 Encryption',
-                    'ID: 0xAF5 // DATA_REST',
-                    aesEncryption,
-                    (val) => setState(() => aesEncryption = val),
+                  Consumer(
+                    builder: (context, ref, _) {
+                      final s = ref.watch(settingsProvider);
+                      return _buildToggleRow(
+                        'AES-256 Encryption',
+                        'ID: 0xAF5 // DATA_REST',
+                        s.aesEncryption,
+                        (val) => ref.read(settingsProvider.notifier).updateAesEncryption(val),
+                      );
+                    },
                   ),
                   const Divider(color: TacticalColors.outlineVariant, height: 1),
-                  _buildToggleRow(
-                    'Hard-Strike Protection',
-                    'ID: 0xAF6 // PHYS_LAYER',
-                    hardStrike,
-                    (val) => setState(() => hardStrike = val),
+                  Consumer(
+                    builder: (context, ref, _) {
+                      final s = ref.watch(settingsProvider);
+                      return _buildToggleRow(
+                        'Hard-Strike Protection',
+                        'ID: 0xAF6 // PHYS_LAYER',
+                        s.hardStrike,
+                        (val) => ref.read(settingsProvider.notifier).updateHardStrike(val),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -535,10 +557,13 @@ class _TacticalSettingsScreenState extends ConsumerState<TacticalSettingsScreen>
             children: [
               OutlinedButton(
                 onPressed: () {
+                  final notifier = ref.read(settingsProvider.notifier);
+                  notifier.updateBiometricUplink(true);
+                  notifier.updateAesEncryption(true);
+                  notifier.updateHardStrike(false);
+                  notifier.updateVpnTunnel(true);
+                  notifier.updateDnsOverHttps(true);
                   setState(() {
-                    biometricUplink = true;
-                    aesEncryption = true;
-                    hardStrike = false;
                     predictiveBias = 72;
                     diagnosticDepth = 100;
                     bufferRetention = '50ms';

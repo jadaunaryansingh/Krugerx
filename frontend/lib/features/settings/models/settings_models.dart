@@ -16,4 +16,11 @@ class LocalSettings {
   String aiModel = 'gpt-4o';
   bool synced = false;
   bool persistSession = true;
+  // Security settings
+  bool biometricUplink = true;
+  bool aesEncryption = true;
+  bool hardStrike = false;
+  // Network settings
+  bool vpnTunnel = true;
+  bool dnsOverHttps = true;
 }
