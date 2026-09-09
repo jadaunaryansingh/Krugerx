@@ -15,7 +15,12 @@
 secrets.json
 credentials.json
 *.p12
-
+venv/
+.venv/
+env/
+credential/
+credential
+credentials/
 # Python artifacts
 __pycache__/
 *.py[cod]

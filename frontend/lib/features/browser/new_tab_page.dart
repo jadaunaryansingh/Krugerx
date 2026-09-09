@@ -435,7 +435,7 @@ class _NewTabPageState extends ConsumerState<NewTabPage> with TickerProviderStat
     );
   }
 
-tt  Widget _buildBrowserStatusGrid(TelemetryState telemetry, BrowserState browserState) {
+  Widget _buildBrowserStatusGrid(TelemetryState telemetry, BrowserState browserState) {
     final networkHealth = (telemetry.packetLoss > 5.0 || telemetry.jitter > 100) ? 'DEGRADED' : 'STABLE';
     
     return FadeSlideReveal(
