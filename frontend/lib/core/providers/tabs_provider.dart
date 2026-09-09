@@ -67,24 +67,28 @@ class TabsNotifier extends Notifier<TabsState> {
         )).toList();
         state = state.copyWith(tabs: tabs, activeIndex: 0);
         _nextId = tabs.map((t) => int.tryParse(t.id) ?? 0).fold(0, (a, b) => a > b ? a : b) + 1;
-        return;
+        // Fall through to mark session loaded and flush pending actions
       }
     }
-    state = state.copyWith(tabs: [
-      TabModel(
-        id: '0',
-        sessionId: 'local',
-        url: 'kruger://newtab',
-        title: 'New Tab',
-        active: true,
-      ),
-    ]);
-    
-    _isSessionLoaded = true;
-    for (final action in _pendingActions) {
-      action();
+    if (!_isSessionLoaded) {
+      // Only set default new tab if nothing was restored above
+      if (state.tabs.isEmpty) {
+        state = state.copyWith(tabs: [
+          TabModel(
+            id: '0',
+            sessionId: 'local',
+            url: 'kruger://newtab',
+            title: 'New Tab',
+            active: true,
+          ),
+        ]);
+      }
+      _isSessionLoaded = true;
+      for (final action in _pendingActions) {
+        action();
+      }
+      _pendingActions.clear();
     }
-    _pendingActions.clear();
   }
 
   void _saveSession() {

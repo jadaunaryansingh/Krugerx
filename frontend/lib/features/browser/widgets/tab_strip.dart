@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:krugerx/core/widgets/countdown_snackbar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/browser_provider.dart';
+import '../../../core/providers/tabs_provider.dart';
 import '../../../core/theme/design_system.dart';
 import '../../../core/widgets/hover_scale_widget.dart';
 
@@ -99,13 +100,13 @@ class TabStrip extends ConsumerWidget {
           _TabStripAction(
             icon: Icons.add_rounded,
             tooltip: 'New tab',
-            onTap: notifier.addTab,
+            onTap: () => ref.read(tabsProvider.notifier).addTab(),
           ),
           // Incognito tab button
           _TabStripAction(
             icon: Icons.visibility_off_outlined,
             tooltip: 'New incognito tab',
-            onTap: () => notifier.addTab(incognito: true),
+            onTap: () => ref.read(tabsProvider.notifier).addTab(),
           ),
           const SizedBox(width: 4),
         ],

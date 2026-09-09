@@ -34,7 +34,7 @@ async def search_query(
         stmt = select(Setting).where(Setting.user_id == current_user.id)
         res = await db.execute(stmt)
         setting = res.scalars().first()
-        provider = setting.search_engine if setting else "google"
+        provider = (setting.search_engine or "duckduckgo") if setting else "duckduckgo"
 
     # Execute search
     search_data = await search_service.search(provider=provider, query=q, user_id=str(current_user.id))

@@ -100,7 +100,7 @@ class _BrowserEngineWidgetState extends ConsumerState<BrowserEngineWidget> {
         ),
       )
       ..loadRequest(Uri.parse(_formatUrl(widget.url)));
-      
+
     webViewControllers[widget.tabId] = _controller;
   }
 
@@ -124,7 +124,6 @@ class _BrowserEngineWidgetState extends ConsumerState<BrowserEngineWidget> {
                     '<h1 style="color: #ff3333; font-size: 24px; margin-bottom: 24px;">' + article.title + '</h1>' + 
                     article.content + '</div>';
                   document.body.style.backgroundColor = '#050505';
-                  // Remove all other stylesheets to prevent interference
                   document.querySelectorAll('link[rel="stylesheet"], style').forEach(function(el) {
                     el.remove();
                   });
@@ -189,8 +188,8 @@ class _BrowserEngineWidgetState extends ConsumerState<BrowserEngineWidget> {
       return 'https://$input';
     }
     
-    final encodedQuery = Uri.encodeComponent(input);
-    return 'https://www.google.com/search?q=$encodedQuery';
+    final q = Uri.encodeQueryComponent(input);
+    return 'https://www.google.com/search?q=$q';
   }
 
   @override
@@ -211,7 +210,13 @@ class _BrowserEngineWidgetState extends ConsumerState<BrowserEngineWidget> {
     
     return Stack(
       children: [
-        WebViewWidget(controller: _controller),
+        SizedBox.expand(child: WebViewWidget(controller: _controller)),
+        // Hide WebView2 grey init flash on Windows — fade out once loaded
+        AnimatedOpacity(
+          opacity: _isLoading ? 1.0 : 0.0,
+          duration: const Duration(milliseconds: 300),
+          child: Container(color: const Color(0xFF050505)),
+        ),
         if (_isLoading)
           const Positioned(
             top: 0,

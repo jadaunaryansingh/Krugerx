@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/design_system.dart';
 import '../../../core/providers/system_logger.dart';
+import '../../../core/providers/tabs_provider.dart';
 import '../../../core/widgets/hover_scale_widget.dart';
 import '../../../core/widgets/fade_slide_reveal.dart';
 import 'providers/telemetry_provider.dart';
@@ -21,6 +22,8 @@ class _NewTabPageState extends ConsumerState<NewTabPage> with TickerProviderStat
   late final AnimationController _scanlineController;
   late final AnimationController _spinController;
   late final AnimationController _radarController;
+  late final TextEditingController _searchController;
+  late final FocusNode _searchFocus;
 
   @override
   void initState() {
@@ -28,6 +31,8 @@ class _NewTabPageState extends ConsumerState<NewTabPage> with TickerProviderStat
     _scanlineController = AnimationController(vsync: this, duration: const Duration(seconds: 4))..repeat();
     _spinController = AnimationController(vsync: this, duration: const Duration(seconds: 20))..repeat();
     _radarController = AnimationController(vsync: this, duration: const Duration(seconds: 4))..repeat();
+    _searchController = TextEditingController();
+    _searchFocus = FocusNode();
   }
 
   @override
@@ -35,6 +40,8 @@ class _NewTabPageState extends ConsumerState<NewTabPage> with TickerProviderStat
     _scanlineController.dispose();
     _spinController.dispose();
     _radarController.dispose();
+    _searchController.dispose();
+    _searchFocus.dispose();
     super.dispose();
   }
 
@@ -61,8 +68,11 @@ class _NewTabPageState extends ConsumerState<NewTabPage> with TickerProviderStat
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 _buildTopHeader(),
-                const SizedBox(height: 16),
-                
+                const SizedBox(height: 20),
+                _buildSearchBar(),
+                const SizedBox(height: 12),
+                _buildQuickAccess(),
+                const SizedBox(height: 12),
                 Expanded(
                   child: LayoutBuilder(
                     builder: (context, constraints) {
@@ -128,6 +138,115 @@ class _NewTabPageState extends ConsumerState<NewTabPage> with TickerProviderStat
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildSearchBar() {
+    void doSearch() {
+      final q = _searchController.text.trim();
+      if (q.isEmpty) return;
+      final tabsState = ref.read(tabsProvider);
+      ref.read(tabsProvider.notifier).updateTabUrl(
+        tabsState.activeIndex,
+        'kruger://search?q=${Uri.encodeComponent(q)}',
+      );
+    }
+
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 680),
+        child: Container(
+          height: 52,
+          decoration: BoxDecoration(
+            color: const Color(0xFF111111),
+            borderRadius: BorderRadius.circular(26),
+            border: Border.all(color: DesignSystem.primary.withValues(alpha: 0.35), width: 1.5),
+            boxShadow: [
+              BoxShadow(color: DesignSystem.primary.withValues(alpha: 0.12), blurRadius: 20, spreadRadius: 2),
+            ],
+          ),
+          child: Row(
+            children: [
+              const SizedBox(width: 18),
+              Icon(Icons.search, color: DesignSystem.primary, size: 20),
+              const SizedBox(width: 12),
+              Expanded(
+                child: TextField(
+                  controller: _searchController,
+                  focusNode: _searchFocus,
+                  style: DesignSystem.dataMono.copyWith(fontSize: 14, color: Colors.white, letterSpacing: 1.0),
+                  decoration: InputDecoration(
+                    hintText: 'Search or enter address...',
+                    hintStyle: DesignSystem.dataMono.copyWith(fontSize: 13, color: Colors.white30),
+                    border: InputBorder.none,
+                    isDense: true,
+                  ),
+                  textInputAction: TextInputAction.go,
+                  onSubmitted: (_) => doSearch(),
+                ),
+              ),
+              const SizedBox(width: 8),
+              HoverScaleWidget(
+                scaleFactor: 0.9,
+                onTap: doSearch,
+                child: Container(
+                  width: 36, height: 36,
+                  decoration: BoxDecoration(
+                    color: DesignSystem.primary.withValues(alpha: 0.15),
+                    borderRadius: BorderRadius.circular(18),
+                  ),
+                  alignment: Alignment.center,
+                  child: Icon(Icons.arrow_forward, color: DesignSystem.primary, size: 18),
+                ),
+              ),
+              const SizedBox(width: 8),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildQuickAccess() {
+    final sites = [
+      (icon: Icons.code,             label: 'GitHub',    url: 'https://github.com'),
+      (icon: Icons.play_circle,      label: 'YouTube',   url: 'https://youtube.com'),
+      (icon: Icons.travel_explore,   label: 'Google',    url: 'https://google.com'),
+      (icon: Icons.chat_bubble,      label: 'Reddit',    url: 'https://reddit.com'),
+      (icon: Icons.auto_stories,     label: 'Wikipedia', url: 'https://wikipedia.org'),
+      (icon: Icons.cloud,            label: 'Supabase',  url: 'https://supabase.com'),
+    ];
+
+    return Center(
+      child: Wrap(
+        spacing: 12,
+        children: sites.map((s) {
+          return HoverScaleWidget(
+            scaleFactor: 0.9,
+            onTap: () {
+              final tabsState = ref.read(tabsProvider);
+              ref.read(tabsProvider.notifier).updateTabUrl(tabsState.activeIndex, s.url);
+            },
+            child: Container(
+              width: 72,
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              decoration: BoxDecoration(
+                color: const Color(0xFF111111),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: const Color(0xFF2A2A2A)),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(s.icon, size: 22, color: DesignSystem.primary),
+                  const SizedBox(height: 6),
+                  Text(s.label, style: DesignSystem.dataMono.copyWith(fontSize: 10, color: Colors.white60)),
+                ],
+              ),
+            ),
+          );
+        }).toList(),
+      ),
     );
   }
 

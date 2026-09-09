@@ -82,7 +82,7 @@ class SearchService:
                 del _SEARXNG_RATE[user_id]
 
         # Cache check
-        cache_key = f"search:{provider.lower()}:{query.lower()}"
+        cache_key = f"search:searxng:{query.lower()}"
         cached = _searxng_cache.get(cache_key)
         if cached:
             payload, expire_at = cached

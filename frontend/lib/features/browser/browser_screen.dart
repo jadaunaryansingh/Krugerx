@@ -119,31 +119,66 @@ class _BrowserScreenState extends ConsumerState<BrowserScreen> {
                                   children: [
                                     ...tabsState.tabs.map((tab) {
                                       final isActive = tab.id == activeTab?.id;
-                                      return Offstage(
-                                        offstage: !isActive,
-                                        child: (tab.url.isEmpty || tab.url == 'about:blank' || tab.url == 'kruger://newtab')
-                                            ? const NewTabPage()
-                                            : BrowserEngineWidget(
-                                                key: ValueKey(tab.id),
-                                                url: tab.url,
-                                                tabId: tab.id,
-                                                isMuted: tab.isMuted,
-                                              ),
+                                      final isNewTab = tab.url.isEmpty || tab.url == 'about:blank' || tab.url == 'kruger://newtab';
+                                      
+                                      // NewTabPage is pure Flutter — Offstage works fine.
+                                      if (isNewTab) {
+                                        return Offstage(
+                                          offstage: !isActive,
+                                          child: const NewTabPage(),
+                                        );
+                                      }
+                                      
+                                      // Real URLs use WebView2 (native control). Inactive tabs must be
+                                      // constrained to 1×1 — Offstage doesn't prevent WebView2 from
+                                      // painting in the native layer on Windows.
+                                      if (isActive) {
+                                        return BrowserEngineWidget(
+                                          key: ValueKey(tab.id),
+                                          url: tab.url,
+                                          tabId: tab.id,
+                                          isMuted: tab.isMuted,
+                                        );
+                                      }
+                                      return SizedBox(
+                                        width: 1,
+                                        height: 1,
+                                        child: ClipRect(
+                                          child: OverflowBox(
+                                            maxWidth: 1,
+                                            maxHeight: 1,
+                                            child: BrowserEngineWidget(
+                                              key: ValueKey(tab.id),
+                                              url: tab.url,
+                                              tabId: tab.id,
+                                              isMuted: tab.isMuted,
+                                            ),
+                                          ),
+                                        ),
                                       );
                                     }),
-                                    // Zombie webviews
+                                    // Zombie webviews — constrained to 1×1 so the WebView2
+                                    // native control can't paint over the active tab on Windows.
+                                    // OverflowBox clips the platform view; state is preserved.
                                     ...ref.watch(tabsProvider.notifier).closedTabs.map((tab) {
-                                      return Visibility(
-                                        visible: false,
-                                        maintainState: true,
-                                        child: (tab.url.isEmpty || tab.url == 'about:blank' || tab.url == 'kruger://newtab')
-                                            ? const SizedBox.shrink()
-                                            : BrowserEngineWidget(
-                                                key: ValueKey(tab.id),
-                                                url: tab.url,
-                                                tabId: tab.id,
-                                                isMuted: tab.isMuted, // true for closed tabs
-                                              ),
+                                      if (tab.url.isEmpty || tab.url == 'about:blank' || tab.url == 'kruger://newtab') {
+                                        return const SizedBox.shrink();
+                                      }
+                                      return SizedBox(
+                                        width: 1,
+                                        height: 1,
+                                        child: ClipRect(
+                                          child: OverflowBox(
+                                            maxWidth: 1,
+                                            maxHeight: 1,
+                                            child: BrowserEngineWidget(
+                                              key: ValueKey(tab.id),
+                                              url: tab.url,
+                                              tabId: tab.id,
+                                              isMuted: true,
+                                            ),
+                                          ),
+                                        ),
                                       );
                                     }),
                                   ],

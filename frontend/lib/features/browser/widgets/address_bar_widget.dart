@@ -231,7 +231,7 @@ class _AddressBarWidgetState extends ConsumerState<AddressBarWidget> {
                             input.startsWith('localhost:');
 
         if (!isLikelyUrl) {
-          url = 'https://duckduckgo.com/?q=${Uri.encodeComponent(input)}';
+          url = 'kruger://search?q=${Uri.encodeComponent(input)}';
         } else if (!input.startsWith('http://') && !input.startsWith('https://') && !input.startsWith('kruger://')) {
           url = 'https://$input';
         }
@@ -286,6 +286,11 @@ class _AddressBarWidgetState extends ConsumerState<AddressBarWidget> {
                   } else {
                     ref.read(tabsProvider.notifier).updateTabUrl(tabsState.activeIndex, activeTab.url);
                   }
+                }
+              }),
+              AnimatedIconButton(icon: Icons.home_outlined, tooltip: 'Home', onPressed: () {
+                if (tabsState.activeIndex >= 0) {
+                  ref.read(tabsProvider.notifier).updateTabUrl(tabsState.activeIndex, 'kruger://newtab');
                 }
               }),
             ],
@@ -396,88 +401,16 @@ class _AddressBarWidgetState extends ConsumerState<AddressBarWidget> {
               ),
             ),
           ),
-          const SizedBox(width: 16),
-          // Right Icons
+          const SizedBox(width: 12),
+          // Right: Profile avatar + hamburger menu
           Row(
             children: [
-              AnimatedIconButton(text: "INT", tooltip: "History", onPressed: () {
-                context.push('/history');
-              }),
-              const SizedBox(width: 8),
-              AnimatedIconButton(icon: Icons.data_object, tooltip: "Downloads", isPrimary: true, onPressed: () {
-                context.push('/downloads');
-              }),
-              const SizedBox(width: 8),
-              Theme(
-                data: Theme.of(context).copyWith(
-                  hoverColor: const Color(0xFF2A2A2A),
-                ),
-                child: PopupMenuButton<String>(
-                  tooltip: 'Profile & Settings',
-                  color: const Color(0xFF1A1A1A),
-                  elevation: 8,
-                  offset: const Offset(0, 40),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    side: const BorderSide(color: Color(0xFF333333)),
-                  ),
-                  onSelected: (value) {
-                    if (value == 'find_in_page') {
-                      ref.read(tabsProvider.notifier).toggleFindBar();
-                    } else if (value == 'view_source') {
-                      if (activeTab != null) {
-                        ref.read(tabsProvider.notifier).addTab(url: 'kruger://source?id=${activeTab.id}', title: 'Source: ${activeTab.title.isEmpty ? activeTab.url : activeTab.title}');
-                      }
-                    } else if (value == 'settings') {
-                      context.push('/settings');
-                    } else if (value == 'logout') {
-                      ref.read(authProvider.notifier).logout();
-                      context.go('/login');
-                    }
-                  },
-                  itemBuilder: (context) => [
-                    PopupMenuItem(
-                      value: 'find_in_page',
-                      child: Row(
-                        children: [
-                          const Icon(Icons.search_outlined, size: 16, color: DesignSystem.onSurface),
-                          const SizedBox(width: 12),
-                          Text('Find in Page', style: DesignSystem.dataMono.copyWith(fontSize: 12, color: DesignSystem.onSurface)),
-                        ],
-                      ),
-                    ),
-                    PopupMenuItem(
-                      value: 'view_source',
-                      child: Row(
-                        children: [
-                          const Icon(Icons.code, size: 16, color: DesignSystem.onSurface),
-                          const SizedBox(width: 12),
-                          Text('View Source', style: DesignSystem.dataMono.copyWith(fontSize: 12, color: DesignSystem.onSurface)),
-                        ],
-                      ),
-                    ),
-                    PopupMenuItem(
-                      value: 'settings',
-                      child: Row(
-                        children: [
-                          const Icon(Icons.settings_outlined, size: 16, color: DesignSystem.onSurface),
-                          const SizedBox(width: 12),
-                          Text('Settings', style: DesignSystem.dataMono.copyWith(fontSize: 12, color: DesignSystem.onSurface)),
-                        ],
-                      ),
-                    ),
-                    const PopupMenuDivider(),
-                    PopupMenuItem(
-                      value: 'logout',
-                      child: Row(
-                        children: [
-                          Icon(Icons.logout, size: 16, color: DesignSystem.primary),
-                          const SizedBox(width: 12),
-                          Text('Logout', style: DesignSystem.dataMono.copyWith(fontSize: 12, color: DesignSystem.primary)),
-                        ],
-                      ),
-                    ),
-                  ],
+              // Profile avatar (quick access to profile page)
+              Tooltip(
+                message: 'Profile',
+                child: HoverScaleWidget(
+                  scaleFactor: 0.9,
+                  onTap: () => context.push('/profile'),
                   child: Container(
                     width: 28,
                     height: 28,
@@ -488,6 +421,141 @@ class _AddressBarWidgetState extends ConsumerState<AddressBarWidget> {
                     ),
                     alignment: Alignment.center,
                     child: Icon(Icons.person, size: 16, color: DesignSystem.primary),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              // Hamburger menu
+              Theme(
+                data: Theme.of(context).copyWith(hoverColor: const Color(0xFF2A2A2A)),
+                child: PopupMenuButton<String>(
+                  tooltip: 'Menu',
+                  color: const Color(0xFF181818),
+                  elevation: 12,
+                  offset: const Offset(0, 40),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    side: BorderSide(color: DesignSystem.primary.withValues(alpha: 0.2)),
+                  ),
+                  onSelected: (value) {
+                    switch (value) {
+                      case 'new_tab':
+                        ref.read(tabsProvider.notifier).addTab();
+                      case 'history':
+                        context.push('/history');
+                      case 'bookmarks':
+                        context.push('/bookmarks');
+                      case 'downloads':
+                        context.push('/downloads');
+                      case 'delete_data':
+                        showDialog(
+                          context: context,
+                          builder: (_) => AlertDialog(
+                            backgroundColor: const Color(0xFF181818),
+                            title: Text('Delete Browsing Data', style: DesignSystem.dataMono.copyWith(color: DesignSystem.primary)),
+                            content: Text('Clear history and session data?', style: DesignSystem.bodyMd),
+                            actions: [
+                              TextButton(onPressed: () => Navigator.pop(context), child: const Text('CANCEL')),
+                              TextButton(
+                                onPressed: () {
+                                  ref.read(historyProvider.notifier).clearAll();
+                                  Navigator.pop(context);
+                                },
+                                child: Text('CLEAR', style: TextStyle(color: DesignSystem.primary)),
+                              ),
+                            ],
+                          ),
+                        );
+                      case 'zoom_in':
+                        if (activeTab != null) {
+                          final idx = tabsState.tabs.indexWhere((t) => t.id == activeTab.id);
+                          if (idx != -1) {
+                            final newZoom = (tabsState.tabs[idx].zoomScale + 0.1).clamp(0.5, 3.0);
+                            ref.read(tabsProvider.notifier).updateTabZoomScale(idx, newZoom);
+                            webViewControllers[activeTab.id]?.runJavaScript("document.body.style.zoom='$newZoom'");
+                          }
+                        }
+                      case 'zoom_out':
+                        if (activeTab != null) {
+                          final idx = tabsState.tabs.indexWhere((t) => t.id == activeTab.id);
+                          if (idx != -1) {
+                            final newZoom = (tabsState.tabs[idx].zoomScale - 0.1).clamp(0.5, 3.0);
+                            ref.read(tabsProvider.notifier).updateTabZoomScale(idx, newZoom);
+                            webViewControllers[activeTab.id]?.runJavaScript("document.body.style.zoom='$newZoom'");
+                          }
+                        }
+                      case 'find_in_page':
+                        ref.read(tabsProvider.notifier).toggleFindBar();
+                      case 'view_source':
+                        if (activeTab != null) {
+                          ref.read(tabsProvider.notifier).addTab(
+                            url: 'kruger://source?id=${activeTab.id}',
+                            title: 'Source: ${activeTab.title.isEmpty ? activeTab.url : activeTab.title}',
+                          );
+                        }
+                      case 'settings':
+                        context.push('/settings');
+                      case 'logout':
+                        ref.read(authProvider.notifier).logout();
+                        context.go('/login');
+                    }
+                  },
+                  itemBuilder: (context) {
+                    final zoom = activeTab != null
+                        ? (tabsState.tabs.firstWhere((t) => t.id == activeTab.id, orElse: () => tabsState.tabs.first).zoomScale * 100).round()
+                        : 100;
+                    final mono = DesignSystem.dataMono;
+                    Widget item(IconData icon, String label, {String? shortcut, Color? color}) {
+                      return Row(children: [
+                        Icon(icon, size: 15, color: color ?? DesignSystem.onSurfaceVariant),
+                        const SizedBox(width: 12),
+                        Expanded(child: Text(label, style: mono.copyWith(fontSize: 12, color: color ?? DesignSystem.onSurface))),
+                        if (shortcut != null) Text(shortcut, style: mono.copyWith(fontSize: 11, color: const Color(0xFF666666))),
+                      ]);
+                    }
+                    return [
+                      PopupMenuItem(value: 'new_tab',      child: item(Icons.add,                    'New Tab',               shortcut: 'Ctrl+T')),
+                      const PopupMenuDivider(),
+                      PopupMenuItem(value: 'history',      child: item(Icons.history,                'History',               shortcut: 'Ctrl+H')),
+                      PopupMenuItem(value: 'bookmarks',    child: item(Icons.bookmarks_outlined,     'Bookmarks',             shortcut: 'Ctrl+D')),
+                      PopupMenuItem(value: 'downloads',    child: item(Icons.download_outlined,      'Downloads',             shortcut: 'Ctrl+J')),
+                      PopupMenuItem(value: 'delete_data',  child: item(Icons.delete_outline,         'Delete Browsing Data…', shortcut: 'Ctrl+⇧+Del')),
+                      const PopupMenuDivider(),
+                      PopupMenuItem(
+                        enabled: false,
+                        child: Row(children: [
+                          Icon(Icons.zoom_in, size: 15, color: DesignSystem.onSurfaceVariant),
+                          const SizedBox(width: 12),
+                          Text('Zoom', style: mono.copyWith(fontSize: 12, color: DesignSystem.onSurface)),
+                          const Spacer(),
+                          _ZoomControl(
+                            zoom: zoom,
+                            onZoomOut: () { Navigator.pop(context); },
+                            onZoomIn:  () { Navigator.pop(context); },
+                            tabId: activeTab?.id,
+                            tabIndex: activeTab != null ? tabsState.tabs.indexWhere((t) => t.id == activeTab.id) : -1,
+                          ),
+                        ]),
+                      ),
+                      const PopupMenuDivider(),
+                      PopupMenuItem(value: 'find_in_page', child: item(Icons.search,                'Find in Page',          shortcut: 'Ctrl+F')),
+                      PopupMenuItem(value: 'view_source',  child: item(Icons.code,                  'View Source')),
+                      const PopupMenuDivider(),
+                      PopupMenuItem(value: 'settings',     child: item(Icons.settings_outlined,     'Settings')),
+                      const PopupMenuDivider(),
+                      PopupMenuItem(value: 'logout',       child: item(Icons.logout,                'Logout',               color: DesignSystem.primary)),
+                    ];
+                  },
+                  child: Container(
+                    width: 28,
+                    height: 28,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.transparent,
+                      border: Border.all(color: const Color(0xFF333333)),
+                    ),
+                    alignment: Alignment.center,
+                    child: Icon(Icons.menu, size: 16, color: DesignSystem.onSurfaceVariant),
                   ),
                 ),
               ),
@@ -584,6 +652,69 @@ class _AnimatedIconButtonState extends State<AnimatedIconButton> {
     );
 
     return button;
+  }
+}
+
+/// Inline zoom control used inside the hamburger menu.
+class _ZoomControl extends ConsumerWidget {
+  final int zoom;
+  final VoidCallback onZoomOut;
+  final VoidCallback onZoomIn;
+  final String? tabId;
+  final int tabIndex;
+
+  const _ZoomControl({
+    required this.zoom,
+    required this.onZoomOut,
+    required this.onZoomIn,
+    required this.tabId,
+    required this.tabIndex,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    void adjustZoom(double delta) {
+      if (tabIndex < 0 || tabId == null) return;
+      final tabsState = ref.read(tabsProvider);
+      final current = tabsState.tabs[tabIndex].zoomScale;
+      final next = (current + delta).clamp(0.5, 3.0);
+      ref.read(tabsProvider.notifier).updateTabZoomScale(tabIndex, next);
+      webViewControllers[tabId]?.runJavaScript("document.body.style.zoom='$next'");
+    }
+
+    return Row(children: [
+      _SmallBtn(icon: Icons.remove, onTap: () { adjustZoom(-0.1); onZoomOut(); }),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Text('$zoom%', style: DesignSystem.dataMono.copyWith(fontSize: 11, color: DesignSystem.onSurface)),
+      ),
+      _SmallBtn(icon: Icons.add, onTap: () { adjustZoom(0.1); onZoomIn(); }),
+    ]);
+  }
+}
+
+class _SmallBtn extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback onTap;
+  const _SmallBtn({required this.icon, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: Container(
+          width: 24, height: 24,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+            border: Border.all(color: const Color(0xFF333333)),
+          ),
+          alignment: Alignment.center,
+          child: Icon(icon, size: 13, color: DesignSystem.onSurface),
+        ),
+      ),
+    );
   }
 }
 
