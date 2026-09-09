@@ -251,7 +251,14 @@ class _NewTabPageState extends ConsumerState<NewTabPage> with TickerProviderStat
                       children: [
                         Text(telemetry.systemTime, style: TextStyle(fontFamily: DesignSystem.fontFamilyHanken).copyWith(fontSize: 48, fontWeight: FontWeight.bold, color: Colors.white, shadows: [Shadow(color: DesignSystem.primary.withValues(alpha: 0.6), blurRadius: 8)])),
                         const SizedBox(width: 8),
-                        Text('UTC', style: TextStyle(fontFamily: DesignSystem.fontFamilyHanken).copyWith(fontSize: 20, color: DesignSystem.primary)),
+        Text(
+          'LOCAL',
+          style: TextStyle(fontFamily: DesignSystem.fontFamilyHanken).copyWith(
+            fontSize: 10,
+            color: DesignSystem.onSurfaceVariant,
+            letterSpacing: 1.5,
+          ),
+        ),
                       ],
                     ),
                   ],
@@ -428,7 +435,7 @@ class _NewTabPageState extends ConsumerState<NewTabPage> with TickerProviderStat
     );
   }
 
-  Widget _buildBrowserStatusGrid(TelemetryState telemetry, BrowserState browserState) {
+ttt  Widget _buildBrowserStatusGrid(TelemetryState telemetry, BrowserState browserState) {
     final networkHealth = (telemetry.packetLoss > 5.0 || telemetry.jitter > 100) ? 'DEGRADED' : 'STABLE';
     
     return FadeSlideReveal(

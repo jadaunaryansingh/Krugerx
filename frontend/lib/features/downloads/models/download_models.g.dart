@@ -15,7 +15,7 @@ extension GetLocalDownloadCollection on Isar {
 
 const LocalDownloadSchema = CollectionSchema(
   name: r'LocalDownload',
-  id: -2671520070721424021,
+  id: -2671520070721423872,
   properties: {
     r'completedAt': PropertySchema(
       id: 0,

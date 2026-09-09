@@ -71,7 +71,7 @@ class TelemetryNotifier extends Notifier<TelemetryState> {
     // Initial state
     final state = TelemetryState(
       uptime: '00:00:00:00',
-      systemTime: _formatTime(DateTime.now().toUtc()),
+      systemTime: _formatTime(DateTime.now()),
       memory: _getMemory(),
       cpuCycles: 1.24,
       latency: 0.0,
@@ -120,7 +120,7 @@ class TelemetryNotifier extends Notifier<TelemetryState> {
 
     state = state.copyWith(
       uptime: '$days:$hours:$mins:$secs',
-      systemTime: _formatTime(now.toUtc()),
+      systemTime: _formatTime(now),
       memory: memoryStr,
       cpuCycles: newCpu,
       freqScan: newFreq,

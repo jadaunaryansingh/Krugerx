@@ -36,9 +36,8 @@ class AuthNotifier extends Notifier<AuthState> {
   }
 
   Future<void> _init() async {
-    final supabaseSession = Supabase.instance.client.auth.currentSession;
     final session = await Storage.db.authSessions.where().findFirst();
-    if (session != null && supabaseSession != null && _isTokenValid(supabaseSession.accessToken)) {
+    if (session != null) {
       state = state.copyWith(
         isLoading: false,
         isAuthenticated: true,

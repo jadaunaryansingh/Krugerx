@@ -15,7 +15,7 @@ extension GetLocalBookmarkCollection on Isar {
 
 const LocalBookmarkSchema = CollectionSchema(
   name: r'LocalBookmark',
-  id: 4159604974902886797,
+  id: 4159604974902886912,
   properties: {
     r'createdAt': PropertySchema(
       id: 0,
@@ -45,7 +45,7 @@ const LocalBookmarkSchema = CollectionSchema(
   idName: r'id',
   indexes: {
     r'remoteId': IndexSchema(
-      id: 6301175856541681032,
+      id: 6301175856541680640,
       name: r'remoteId',
       unique: false,
       replace: false,
@@ -1423,7 +1423,7 @@ extension GetLocalFolderCollection on Isar {
 
 const LocalFolderSchema = CollectionSchema(
   name: r'LocalFolder',
-  id: -5658159691360085183,
+  id: -5658159691360084992,
   properties: {
     r'name': PropertySchema(id: 0, name: r'name', type: IsarType.string),
     r'parentId': PropertySchema(
@@ -1446,7 +1446,7 @@ const LocalFolderSchema = CollectionSchema(
   idName: r'id',
   indexes: {
     r'remoteId': IndexSchema(
-      id: 6301175856541681032,
+      id: 6301175856541680640,
       name: r'remoteId',
       unique: false,
       replace: false,

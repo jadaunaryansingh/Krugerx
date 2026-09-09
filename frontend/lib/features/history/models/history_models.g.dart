@@ -15,7 +15,7 @@ extension GetLocalHistoryCollection on Isar {
 
 const LocalHistorySchema = CollectionSchema(
   name: r'LocalHistory',
-  id: 7508124291866281576,
+  id: 7508124291866281984,
   properties: {
     r'remoteId': PropertySchema(
       id: 0,
@@ -44,7 +44,7 @@ const LocalHistorySchema = CollectionSchema(
   idName: r'id',
   indexes: {
     r'url': IndexSchema(
-      id: -5756857009679432345,
+      id: -5756857009679432704,
       name: r'url',
       unique: false,
       replace: false,
@@ -57,7 +57,7 @@ const LocalHistorySchema = CollectionSchema(
       ],
     ),
     r'visitTime': IndexSchema(
-      id: -4141626137083872244,
+      id: -4141626137083872256,
       name: r'visitTime',
       unique: false,
       replace: false,

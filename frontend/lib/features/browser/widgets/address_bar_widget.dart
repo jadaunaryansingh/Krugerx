@@ -413,7 +413,7 @@ class _AddressBarWidgetState extends ConsumerState<AddressBarWidget> {
                   hoverColor: const Color(0xFF2A2A2A),
                 ),
                 child: PopupMenuButton<String>(
-                  tooltip: 'Menu',
+                  tooltip: 'Profile & Settings',
                   color: const Color(0xFF1A1A1A),
                   elevation: 8,
                   offset: const Offset(0, 40),
@@ -481,12 +481,13 @@ class _AddressBarWidgetState extends ConsumerState<AddressBarWidget> {
                   child: Container(
                     width: 28,
                     height: 28,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.transparent,
+                      color: DesignSystem.primary.withValues(alpha: 0.1),
+                      border: Border.all(color: DesignSystem.primary.withValues(alpha: 0.3)),
                     ),
                     alignment: Alignment.center,
-                    child: const Icon(Icons.settings, size: 16, color: DesignSystem.onSurfaceVariant),
+                    child: Icon(Icons.person, size: 16, color: DesignSystem.primary),
                   ),
                 ),
               ),
