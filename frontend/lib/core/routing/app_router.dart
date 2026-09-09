@@ -44,6 +44,41 @@ final routerProvider = Provider<GoRouter>((ref) {
   final router = GoRouter(
     initialLocation: '/login',
     observers: [observer],
+    errorBuilder: (context, state) => Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF0A0A0A),
+        elevation: 0,
+        title: const Text(
+          'SYS.ERROR',
+          style: TextStyle(
+            fontFamily: 'JetBrains Mono',
+            color: Colors.red,
+            fontSize: 14,
+            letterSpacing: 2,
+          ),
+        ),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.error_outline, color: Colors.red, size: 64),
+            const SizedBox(height: 16),
+            const Text('PAGE NOT FOUND', style: TextStyle(color: Colors.red, fontFamily: 'JetBrains Mono', fontSize: 18)),
+            const SizedBox(height: 24),
+            OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: Colors.red.withValues(alpha: 0.5)),
+                backgroundColor: const Color(0xFF111111),
+              ),
+              onPressed: () => context.go('/browser'),
+              child: const Text('RETURN TO BROWSER', style: TextStyle(color: Colors.red, fontFamily: 'JetBrains Mono')),
+            ),
+          ],
+        ),
+      ),
+    ),
     redirect: (context, state) {
       final auth = ref.read(authProvider);
 

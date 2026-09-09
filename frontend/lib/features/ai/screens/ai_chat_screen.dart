@@ -33,6 +33,12 @@ class _AiChatPanelState extends ConsumerState<AiChatPanel> {
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final aiState = ref.watch(aiProvider);
     final colors = Theme.of(context).colorScheme;

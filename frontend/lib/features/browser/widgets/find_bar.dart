@@ -54,13 +54,13 @@ class _FindBarState extends State<FindBar> {
         color: colors.surfaceContainerHigh,
         border: Border(
           bottom: BorderSide(
-            color: DesignSystem.primary.withOpacity(0.3),
+            color: DesignSystem.primary.withValues(alpha: 0.3),
             width: 1,
           ),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.3),
+            color: Colors.black.withValues(alpha: 0.3),
             blurRadius: 12,
             offset: const Offset(0, 2),
           ),
