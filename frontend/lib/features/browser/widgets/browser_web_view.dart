@@ -5,7 +5,7 @@ import 'package:krugerx/features/browser/models/tab_model.dart';
 import '../providers/browser_provider.dart';
 import '../../downloads/providers/downloads_provider.dart';
 import '../../history/providers/history_provider.dart';
-import '../../../theme/tokens.dart';
+import '../../../core/theme/design_system.dart';
 
 class BrowserWebView extends ConsumerStatefulWidget {
   final TabModel activeTab;
@@ -159,7 +159,7 @@ class _BrowserWebViewState extends ConsumerState<BrowserWebView> {
           SnackBar(
             content: Row(
               children: [
-                Icon(Icons.download_rounded, size: 16, color: Theme.of(context).extension<KrugerColors>()!.gold),
+                Icon(Icons.download_rounded, size: 16, color: DesignSystem.brandGold),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text('Downloading "$safeFilename"', maxLines: 1, overflow: TextOverflow.ellipsis),
