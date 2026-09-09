@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/new_tab_providers.dart';
-import '../../../../theme.dart';
+import '../../../../core/theme/design_system.dart';
 
 class BottomStatPanel extends ConsumerWidget {
   const BottomStatPanel({super.key});
@@ -25,7 +25,7 @@ class BottomStatPanel extends ConsumerWidget {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      KrugerXTheme.surfaceContainer.withValues(alpha: 0.3),
+                      DesignSystem.surfaceContainer.withValues(alpha: 0.3),
                       Colors.black.withValues(alpha: 0.2),
                     ],
                     begin: Alignment.topLeft,
@@ -89,10 +89,10 @@ class _StatRow extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: KrugerXTheme.incognitoColor.withValues(alpha: 0.2),
+            color: DesignSystem.incognitoColor.withValues(alpha: 0.2),
             borderRadius: BorderRadius.circular(8),
           ),
-          child: Icon(icon, color: KrugerXTheme.incognitoColor, size: 20),
+          child: Icon(icon, color: DesignSystem.incognitoColor, size: 20),
         ),
         const SizedBox(width: 16),
         Expanded(

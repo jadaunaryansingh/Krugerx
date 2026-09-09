@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/ai_provider.dart';
-import '../../../theme.dart';
+import '../../../core/theme/design_system.dart';
 
 class AiChatPanel extends ConsumerStatefulWidget {
   final VoidCallback onClose;
@@ -64,7 +64,7 @@ class _AiChatPanelState extends ConsumerState<AiChatPanel> {
                 Expanded(
                   child: Text(
                     aiState.activeSession?.title ?? 'AI Assistant',
-                    style: const TextStyle(fontWeight: FontWeight.bold, color: KrugerXTheme.primary),
+                    style: const TextStyle(fontWeight: FontWeight.bold, color: DesignSystem.brandGold),
                     maxLines: 1, overflow: TextOverflow.ellipsis,
                   ),
                 ),

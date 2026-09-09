@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import '../../../theme.dart';
+import '../../../core/theme/design_system.dart';
 
 /// Bottom sheet with QR code scanner. Navigates to scanned URL.
 class QrScannerSheet extends StatefulWidget {
@@ -71,7 +71,7 @@ class _QrScannerSheetState extends State<QrScannerSheet> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.qr_code_scanner_rounded, size: 20, color: KrugerXTheme.primary),
+              Icon(Icons.qr_code_scanner_rounded, size: 20, color: DesignSystem.brandGold),
               const SizedBox(width: 8),
               Text(
                 'Scan QR Code',
@@ -91,7 +91,7 @@ class _QrScannerSheetState extends State<QrScannerSheet> {
               clipBehavior: Clip.antiAlias,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: KrugerXTheme.primary.withValues(alpha: 0.3), width: 1),
+                border: Border.all(color: DesignSystem.brandGold.withValues(alpha: 0.3), width: 1),
               ),
               child: MobileScanner(
                 controller: _controller,

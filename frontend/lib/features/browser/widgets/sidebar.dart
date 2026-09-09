@@ -4,8 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../providers/browser_provider.dart';
-import '../../../theme.dart';
-import '../../../theme/motion.dart';
+import '../../../core/theme/design_system.dart';
 import '../browser_screen.dart';
 
 class BrowserSidebar extends ConsumerWidget {
@@ -24,12 +23,12 @@ class BrowserSidebar extends ConsumerWidget {
           width: 64,
           decoration: BoxDecoration(
             color: isIncognito
-                ? KrugerXTheme.incognitoColor.withValues(alpha: 0.1)
+                ? DesignSystem.incognitoColor.withValues(alpha: 0.1)
                 : Colors.black.withValues(alpha: 0.2), // Glassmorphic translucent background
             border: Border(
               right: BorderSide(
                 color: isIncognito
-                    ? KrugerXTheme.incognitoColor.withValues(alpha: 0.4)
+                    ? DesignSystem.incognitoColor.withValues(alpha: 0.4)
                     : Colors.white.withValues(alpha: 0.1), // Subtle border
                 width: 1.0,
               ),
@@ -40,7 +39,7 @@ class BrowserSidebar extends ConsumerWidget {
           const SizedBox(height: 12),
           // KrugerX Logo Mark
           ShaderMask(
-            shaderCallback: (bounds) => KrugerXTheme.brassGradient.createShader(bounds),
+            shaderCallback: (bounds) => DesignSystem.brandBrassGradient.createShader(bounds),
             child: const Text(
               'KX',
               style: TextStyle(
@@ -50,7 +49,7 @@ class BrowserSidebar extends ConsumerWidget {
                 letterSpacing: -1,
               ),
             ),
-          ).animate().fadeIn(duration: KrugerMotion.base).slideY(begin: -0.2, end: 0),
+          ).animate().fadeIn(duration: const Duration(milliseconds: 300)).slideY(begin: -0.2, end: 0),
           
           const SizedBox(height: 24),
           
@@ -135,17 +134,17 @@ class _SidebarBtnState extends State<_SidebarBtn> {
         child: GestureDetector(
           onTap: widget.onTap,
           child: AnimatedContainer(
-            duration: KrugerMotion.fast,
+            duration: const Duration(milliseconds: 200),
             width: 44,
             height: 44,
             decoration: BoxDecoration(
               color: widget.isActive
-                  ? KrugerXTheme.primary.withValues(alpha: 0.15)
+                  ? DesignSystem.brandGold.withValues(alpha: 0.15)
                   : (_hovering ? colors.surfaceContainerHigh : Colors.transparent),
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
                 color: widget.isActive
-                    ? KrugerXTheme.primary.withValues(alpha: 0.5)
+                    ? DesignSystem.brandGold.withValues(alpha: 0.5)
                     : Colors.transparent,
                 width: 1,
               ),
@@ -154,7 +153,7 @@ class _SidebarBtnState extends State<_SidebarBtn> {
               widget.icon,
               size: 20,
               color: widget.isActive
-                  ? KrugerXTheme.primary
+                  ? DesignSystem.brandGold
                   : (_hovering ? colors.onSurface : colors.onSurfaceVariant),
             ),
           ).animate(target: _hovering ? 1 : 0).scale(

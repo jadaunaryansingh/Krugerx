@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/speed_dial_provider.dart';
 import 'stats_card.dart';
 import 'qr_scanner_sheet.dart';
-import '../../../theme.dart';
+import '../../../core/theme/design_system.dart';
 import '../../../core/responsive.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -81,7 +81,7 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
                 Navigator.pop(ctx);
               }
             },
-            child: const Text('Add', style: TextStyle(color: KrugerXTheme.primary)),
+            child: const Text('Add', style: TextStyle(color: DesignSystem.brandGold)),
           ),
         ],
       ),
@@ -119,7 +119,7 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
               ref.read(speedDialProvider.notifier).remove(id);
               Navigator.pop(ctx);
             },
-            child: const Text('Delete', style: TextStyle(color: KrugerXTheme.secondary)),
+            child: const Text('Delete', style: TextStyle(color: DesignSystem.error)),
           ),
           const Spacer(),
           TextButton(
@@ -133,7 +133,7 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
                 Navigator.pop(ctx);
               }
             },
-            child: const Text('Save', style: TextStyle(color: KrugerXTheme.primary)),
+            child: const Text('Save', style: TextStyle(color: DesignSystem.brandGold)),
           ),
         ],
       ),
@@ -146,7 +146,7 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
     final speedDial = ref.watch(speedDialProvider);
 
     return Scaffold(
-      backgroundColor: KrugerXTheme.dark.scaffoldBackgroundColor,
+      backgroundColor: DesignSystem.background,
       body: Stack(
         children: [
           // Background ambient glow (Iron Classic style)
@@ -168,7 +168,7 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
                         
                         // Iron Classic Branding
                         ShaderMask(
-                          shaderCallback: (bounds) => KrugerXTheme.brassGradient.createShader(bounds),
+                          shaderCallback: (bounds) => DesignSystem.brandBrassGradient.createShader(bounds),
                           child: Text(
                             'KrugerX',
                             style: Theme.of(context).textTheme.headlineLarge?.copyWith(
@@ -198,7 +198,7 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
                           decoration: BoxDecoration(
                             boxShadow: [
                               BoxShadow(
-                                color: KrugerXTheme.primary.withValues(alpha: 0.05),
+                                color: DesignSystem.brandGold.withValues(alpha: 0.05),
                                 blurRadius: 30,
                                 spreadRadius: 5,
                                 offset: const Offset(0, 10),
@@ -214,7 +214,7 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
                               hintStyle: TextStyle(color: colors.onSurfaceVariant.withValues(alpha: 0.7)),
                               prefixIcon: Padding(
                                 padding: const EdgeInsets.only(left: 20, right: 12),
-                                child: Icon(Icons.search_rounded, color: KrugerXTheme.primary, size: 22),
+                                child: Icon(Icons.search_rounded, color: DesignSystem.brandGold, size: 22),
                               ),
                               suffixIcon: IconButton(
                                 icon: const Icon(Icons.qr_code_scanner_rounded),
@@ -231,7 +231,7 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(30),
-                                borderSide: const BorderSide(color: KrugerXTheme.primary, width: 1.5),
+                                borderSide: const BorderSide(color: DesignSystem.brandGold, width: 1.5),
                               ),
                             ),
                           ),
@@ -409,14 +409,14 @@ class _IronAmbientPainter extends CustomPainter {
     // Base dark
     canvas.drawRect(
       rect,
-      Paint()..color = KrugerXTheme.dark.scaffoldBackgroundColor,
+      Paint()..color = DesignSystem.background,
     );
 
     // Warm brass orb top right
     final paint1 = Paint()
       ..shader = RadialGradient(
         colors: [
-          KrugerXTheme.primary.withValues(alpha: 0.15 + (animation.value * 0.05)),
+          DesignSystem.brandGold.withValues(alpha: 0.15 + (animation.value * 0.05)),
           Colors.transparent,
         ],
       ).createShader(Rect.fromCircle(
@@ -427,7 +427,7 @@ class _IronAmbientPainter extends CustomPainter {
     final paint2 = Paint()
       ..shader = RadialGradient(
         colors: [
-          KrugerXTheme.secondary.withValues(alpha: 0.1 + (animation.value * 0.03)),
+          DesignSystem.error.withValues(alpha: 0.1 + (animation.value * 0.03)),
           Colors.transparent,
         ],
       ).createShader(Rect.fromCircle(

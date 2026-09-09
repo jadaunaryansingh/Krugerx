@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import '../../../theme.dart';
+import '../../../core/theme/design_system.dart';
 
 /// Reader mode overlay — displays extracted article text in a clean, readable layout.
 class ReaderModeView extends StatelessWidget {
@@ -29,19 +29,19 @@ class ReaderModeView extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               decoration: BoxDecoration(
                 border: Border(
-                  bottom: BorderSide(color: KrugerXTheme.primary.withValues(alpha: 0.2), width: 0.5),
+                  bottom: BorderSide(color: DesignSystem.brandGold.withValues(alpha: 0.2), width: 0.5),
                 ),
               ),
               child: Row(
                 children: [
-                  Icon(Icons.chrome_reader_mode_rounded, size: 18, color: KrugerXTheme.primary),
+                  Icon(Icons.chrome_reader_mode_rounded, size: 18, color: DesignSystem.brandGold),
                   const SizedBox(width: 10),
                   Text(
                     'Reader Mode',
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: KrugerXTheme.primary,
+                      color: DesignSystem.brandGold,
                       letterSpacing: 0.5,
                     ),
                   ),
@@ -77,7 +77,7 @@ class ReaderModeView extends StatelessWidget {
                         width: 60,
                         height: 2,
                         decoration: BoxDecoration(
-                          gradient: KrugerXTheme.brassGradient,
+                          gradient: DesignSystem.brandBrassGradient,
                           borderRadius: BorderRadius.circular(1),
                         ),
                       ),

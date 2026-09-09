@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../history/providers/history_provider.dart';
-import '../../../theme.dart';
+import '../../../core/theme/design_system.dart';
 
 /// Browsing stats card for the home page — sites visited today, top domains.
 class StatsCard extends ConsumerWidget {
@@ -32,21 +32,21 @@ class StatsCard extends ConsumerWidget {
       decoration: BoxDecoration(
         color: colors.surfaceContainer.withValues(alpha: 0.6),
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: KrugerXTheme.primary.withValues(alpha: 0.15), width: 0.5),
+        border: Border.all(color: DesignSystem.brandGold.withValues(alpha: 0.15), width: 0.5),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(Icons.insights_rounded, size: 14, color: KrugerXTheme.primary),
+              Icon(Icons.insights_rounded, size: 14, color: DesignSystem.brandGold),
               const SizedBox(width: 6),
               Text(
                 'TODAY\'S BROWSING',
                 style: TextStyle(
                   fontSize: 10,
                   fontWeight: FontWeight.w700,
-                  color: KrugerXTheme.primary.withValues(alpha: 0.8),
+                  color: DesignSystem.brandGold.withValues(alpha: 0.8),
                   letterSpacing: 1.5,
                 ),
               ),
@@ -100,7 +100,7 @@ class _StatPill extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Icon(icon, size: 14, color: KrugerXTheme.primary.withValues(alpha: 0.6)),
+            Icon(icon, size: 14, color: DesignSystem.brandGold.withValues(alpha: 0.6)),
             const SizedBox(height: 4),
             Text(
               value,

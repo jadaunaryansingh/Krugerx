@@ -4,7 +4,7 @@ import 'package:krugerx/core/widgets/countdown_snackbar.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/browser_provider.dart';
-import '../../../theme.dart';
+import '../../../core/theme/design_system.dart';
 import '../../../core/widgets/hover_scale_widget.dart';
 
 class TabStrip extends ConsumerWidget {
@@ -24,12 +24,12 @@ class TabStrip extends ConsumerWidget {
           height: 40,
           decoration: BoxDecoration(
             color: isIncognito
-                ? KrugerXTheme.incognitoColor.withValues(alpha: 0.1)
+                ? DesignSystem.incognitoColor.withValues(alpha: 0.1)
                 : Colors.black.withValues(alpha: 0.2), // Glassmorphic translucent background
             border: Border(
               bottom: BorderSide(
                 color: isIncognito
-                    ? KrugerXTheme.incognitoColor.withValues(alpha: 0.4)
+                    ? DesignSystem.incognitoColor.withValues(alpha: 0.4)
                     : Colors.white.withValues(alpha: 0.1), // Subtle border
                 width: 1.0,
               ),
@@ -40,7 +40,7 @@ class TabStrip extends ConsumerWidget {
           if (isIncognito) ...[
             const SizedBox(width: 10),
             Icon(Icons.visibility_off_rounded, size: 13,
-                color: KrugerXTheme.incognitoColor.withValues(alpha: 0.8)),
+                color: DesignSystem.incognitoColor.withValues(alpha: 0.8)),
           ],
           const SizedBox(width: 6),
           Expanded(
@@ -77,11 +77,11 @@ class TabStrip extends ConsumerWidget {
                             duration: const Duration(seconds: 5),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
-                              side: BorderSide(color: KrugerXTheme.primary.withValues(alpha: 0.5)),
+                              side: BorderSide(color: DesignSystem.brandGold.withValues(alpha: 0.5)),
                             ),
                             action: SnackBarAction(
                               label: 'UNDO',
-                              textColor: KrugerXTheme.primary,
+                              textColor: DesignSystem.brandGold,
                               onPressed: () => notifier.undoCloseTab(),
                             ),
                           ),
@@ -183,7 +183,7 @@ class _TabChipState extends State<_TabChip> {
       color: Theme.of(context).colorScheme.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
-        side: BorderSide(color: KrugerXTheme.primary.withValues(alpha: 0.3)),
+        side: BorderSide(color: DesignSystem.brandGold.withValues(alpha: 0.3)),
       ),
       items: [
         PopupMenuItem(
@@ -236,22 +236,22 @@ class _TabChipState extends State<_TabChip> {
           decoration: BoxDecoration(
             color: widget.isActive
                 ? (isIncognito
-                    ? KrugerXTheme.incognitoColor.withValues(alpha: 0.25)
+                    ? DesignSystem.incognitoColor.withValues(alpha: 0.25)
                     : colors.surfaceContainerHigh)
                 : (_hovering ? colors.surfaceContainer : colors.surfaceContainerLowest),
             borderRadius: BorderRadius.circular(8),
             border: Border.all(
               color: widget.isActive
                   ? (isIncognito
-                      ? KrugerXTheme.incognitoColor.withValues(alpha: 0.5)
-                      : KrugerXTheme.primary.withValues(alpha: 0.5))
+                      ? DesignSystem.incognitoColor.withValues(alpha: 0.5)
+                      : DesignSystem.brandGold.withValues(alpha: 0.5))
                   : colors.outline.withValues(alpha: _hovering ? 0.6 : 0.3),
               width: widget.isActive ? 1 : 0.5,
             ),
             boxShadow: widget.isActive
                 ? [
                     BoxShadow(
-                      color: (isIncognito ? KrugerXTheme.incognitoColor : KrugerXTheme.primary)
+                      color: (isIncognito ? DesignSystem.incognitoColor : DesignSystem.brandGold)
                           .withValues(alpha: 0.15),
                       blurRadius: 6,
                       offset: const Offset(0, 2),
@@ -322,7 +322,7 @@ class _TabFavicon extends StatelessWidget {
 
     if (isIncognito) {
       return Icon(Icons.visibility_off_rounded, size: 11,
-          color: KrugerXTheme.incognitoColor.withValues(alpha: 0.8));
+          color: DesignSystem.incognitoColor.withValues(alpha: 0.8));
     }
 
     if (faviconUrl != null && faviconUrl!.isNotEmpty) {
@@ -347,7 +347,7 @@ class _TabFavicon extends StatelessWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: isActive
-              ? KrugerXTheme.primary
+              ? DesignSystem.brandGold
               : colors.onSurfaceVariant.withValues(alpha: 0.35),
         ),
       );

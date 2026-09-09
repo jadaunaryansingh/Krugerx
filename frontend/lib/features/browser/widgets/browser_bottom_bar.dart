@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../theme.dart';
-import '../../../theme/tokens.dart';
+import '../../../core/theme/design_system.dart';
 
 class BrowserBottomBar extends StatelessWidget {
   final VoidCallback onBack;
@@ -28,19 +27,17 @@ class BrowserBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeExt = Theme.of(context).extension<KrugerColors>()!;
-
     return Container(
       height: 50,
       decoration: BoxDecoration(
         color: isIncognito
-            ? Color.lerp(themeExt.surface1, KrugerXTheme.incognitoColor, 0.15)
-            : themeExt.surface1,
+            ? Color.lerp(DesignSystem.surfaceContainerHigh, DesignSystem.incognitoColor, 0.15)
+            : DesignSystem.surfaceContainerHigh,
         border: Border(
           top: BorderSide(
             color: isIncognito
-                ? KrugerXTheme.incognitoColor.withValues(alpha: 0.3)
-                : themeExt.gold.withValues(alpha: 0.15),
+                ? DesignSystem.incognitoColor.withValues(alpha: 0.3)
+                : DesignSystem.brandGold.withValues(alpha: 0.15),
             width: 0.5,
           ),
         ),
@@ -64,14 +61,14 @@ class BrowserBottomBar extends StatelessWidget {
                   borderRadius: BorderRadius.circular(7),
                   border: Border.all(
                     color: showTabGrid
-                        ? themeExt.gold
+                        ? DesignSystem.brandGold
                         : (isIncognito
-                            ? KrugerXTheme.incognitoColor.withValues(alpha: 0.6)
-                            : themeExt.gold.withValues(alpha: 0.6)),
+                            ? DesignSystem.incognitoColor.withValues(alpha: 0.6)
+                            : DesignSystem.brandGold.withValues(alpha: 0.6)),
                     width: showTabGrid ? 2 : 1.5,
                   ),
                   color: showTabGrid
-                      ? themeExt.gold.withValues(alpha: 0.15)
+                      ? DesignSystem.brandGold.withValues(alpha: 0.15)
                       : Colors.transparent,
                 ),
                 alignment: Alignment.center,
@@ -80,7 +77,7 @@ class BrowserBottomBar extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.w700,
-                    color: isIncognito ? KrugerXTheme.incognitoColor : themeExt.gold,
+                    color: isIncognito ? DesignSystem.incognitoColor : DesignSystem.brandGold,
                   ),
                 ),
               ),
@@ -91,7 +88,7 @@ class BrowserBottomBar extends StatelessWidget {
             icon: showAi ? Icons.auto_awesome_rounded : Icons.auto_awesome_outlined,
             onTap: onShowAi,
             tooltip: 'AI Assistant',
-            activeColor: showAi ? themeExt.gold : null,
+            activeColor: showAi ? DesignSystem.brandGold : null,
           ),
         ],
       ),
@@ -121,8 +118,7 @@ class _BarBtnState extends State<_BarBtn> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).extension<KrugerColors>()!;
-    final color = widget.activeColor ?? colors.textSecondary;
+    final color = widget.activeColor ?? DesignSystem.onSurfaceVariant;
 
     return Tooltip(
       message: widget.tooltip,

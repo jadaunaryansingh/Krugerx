@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/browser_provider.dart';
-import '../../../theme.dart';
+import '../../../core/theme/design_system.dart';
 
 /// Visual grid overview of all open tabs — like Chrome mobile's tab switcher.
 class TabGridView extends ConsumerWidget {
@@ -42,12 +42,12 @@ class TabGridView extends ConsumerWidget {
                   ),
                   const Spacer(),
                   IconButton(
-                    icon: Icon(Icons.add_rounded, color: KrugerXTheme.primary),
+                    icon: Icon(Icons.add_rounded, color: DesignSystem.brandGold),
                     onPressed: onNewTab,
                     tooltip: 'New Tab',
                   ),
                   IconButton(
-                    icon: Icon(Icons.visibility_off_rounded, color: KrugerXTheme.incognitoColor, size: 20),
+                    icon: Icon(Icons.visibility_off_rounded, color: DesignSystem.incognitoColor, size: 20),
                     onPressed: () => onNewTabWith(true),
                     tooltip: 'New Incognito Tab',
                   ),
@@ -129,7 +129,7 @@ class _TabGridCardState extends State<_TabGridCard> {
     final url = tab.url as String;
 
     final borderColor = widget.isActive
-        ? (isIncognito ? KrugerXTheme.incognitoColor : KrugerXTheme.primary)
+        ? (isIncognito ? DesignSystem.incognitoColor : DesignSystem.brandGold)
         : colors.outline;
 
     return GestureDetector(
@@ -149,7 +149,7 @@ class _TabGridCardState extends State<_TabGridCard> {
         transformAlignment: Alignment.center,
         decoration: BoxDecoration(
           color: isIncognito
-              ? KrugerXTheme.incognitoColor.withValues(alpha: 0.12)
+              ? DesignSystem.incognitoColor.withValues(alpha: 0.12)
               : colors.surfaceContainer,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
@@ -176,13 +176,13 @@ class _TabGridCardState extends State<_TabGridCard> {
                 children: [
                   if (isIncognito)
                     Icon(Icons.visibility_off_rounded, size: 12,
-                        color: KrugerXTheme.incognitoColor.withValues(alpha: 0.8))
+                        color: DesignSystem.incognitoColor.withValues(alpha: 0.8))
                   else
                     Container(
                       width: 8, height: 8,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: widget.isActive ? KrugerXTheme.primary : colors.onSurfaceVariant.withValues(alpha: 0.3),
+                        color: widget.isActive ? DesignSystem.brandGold : colors.onSurfaceVariant.withValues(alpha: 0.3),
                       ),
                     ),
                   const SizedBox(width: 8),
@@ -224,7 +224,7 @@ class _TabGridCardState extends State<_TabGridCard> {
                 child: url.isEmpty
                     ? Center(
                         child: Icon(Icons.language_rounded, size: 32,
-                            color: KrugerXTheme.primary.withValues(alpha: 0.3)),
+                            color: DesignSystem.brandGold.withValues(alpha: 0.3)),
                       )
                     : Column(
                         mainAxisAlignment: MainAxisAlignment.center,

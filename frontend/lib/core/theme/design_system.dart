@@ -133,4 +133,26 @@ class DesignSystem {
     letterSpacing: 0.1 * 12,
     fontWeight: FontWeight.w700,
   );
+
+  // --- Brand & Status Colors (from Legacy KrugerXTheme) ---
+  static const Color brandGold = Color(0xFFC9A038);
+  static const Color brandGoldGlow = Color(0x26C9A038);
+  static const Color electricLight = Color(0xFFDABF6E);
+  static const Color incognitoColor = Color(0xFF3D7A52);
+  
+  static const Color statusSafe = Color(0xFF4CAF6E);
+  static const Color statusWarning = Color(0xFFD4A017);
+  static const Color statusDanger = Color(0xFFE05252);
+  
+  static const LinearGradient brandBrassGradient = LinearGradient(
+    colors: [brandGold, electricLight],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  // --- Motion ---
+  static const Duration motionFast = Duration(milliseconds: 80);
+  static const Duration motionBase = Duration(milliseconds: 120);
+  static const Duration motionSlow = Duration(milliseconds: 200);
+  static const Curve motionCurve = Curves.easeOutCubic;
 }
