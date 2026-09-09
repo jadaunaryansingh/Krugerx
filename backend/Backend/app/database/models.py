@@ -168,7 +168,7 @@ class Folder(BaseModel):
     subfolders: Mapped[List["Folder"]] = relationship(
         "Folder", back_populates="parent", cascade="all, delete-orphan"
     )
-    parent: Mapped[Optional["Folder"]] = relationship("Folder", back_populates="subfolders", remote_side="Folder.id")
+    parent: Mapped[Optional["Folder"]] = relationship("Folder", back_populates="subfolders", remote_side="[id]")
     bookmarks: Mapped[List["Bookmark"]] = relationship(back_populates="folder", cascade="all, delete-orphan")
 
 

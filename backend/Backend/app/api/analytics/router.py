@@ -1,6 +1,7 @@
 import uuid
 from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, status, Request
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy import func
@@ -18,6 +19,10 @@ from app.schemas.analytics import (
 )
 from app.dependencies.auth import get_current_user
 from app.dependencies.rate_limiter import check_rate_limit
+from app.core.jwt import verify_supabase_token
+
+# Optional bearer — does NOT raise 403 when Authorization header is absent
+_optional_bearer = HTTPBearer(auto_error=False)
 
 router = APIRouter(
     prefix="/analytics",
@@ -29,22 +34,19 @@ router = APIRouter(
 @router.post("/feedback", response_model=APIResponse[FeedbackResponse], status_code=status.HTTP_201_CREATED)
 async def submit_feedback(
     body: FeedbackCreate,
-    request: Request,
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(_optional_bearer)
 ) -> APIResponse[FeedbackResponse]:
     """
-    Submits user feedback or bug report details.
-    Supports both anonymous submissions and authenticated users.
+    Submits user feedback. Supports anonymous and authenticated users.
     """
-    user_id = None
-    # Attempt to extract user context if logged in
-    auth_header = request.headers.get("Authorization")
-    if auth_header and auth_header.startswith("Bearer "):
+    user_id: Optional[uuid.UUID] = None
+    if credentials:
         try:
-            current_user = await get_current_user(dependencies=Depends(get_current_user))
-            user_id = current_user.id
+            payload = verify_supabase_token(credentials.credentials)
+            user_id = uuid.UUID(payload["sub"])
         except Exception:
-            pass
+            pass  # anonymous fallback
 
     feedback = Feedback(
         user_id=user_id,
@@ -66,23 +68,19 @@ async def submit_feedback(
 @router.post("/crash", response_model=APIResponse[CrashReportResponse], status_code=status.HTTP_201_CREATED)
 async def submit_crash_report(
     body: CrashReportCreate,
-    request: Request,
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(_optional_bearer)
 ) -> APIResponse[CrashReportResponse]:
     """
-    Upload application core logs or crash stack traces for diagnostics.
+    Upload application crash stack traces for diagnostics.
     """
-    user_id = None
-    auth_header = request.headers.get("Authorization")
-    if auth_header and auth_header.startswith("Bearer "):
+    user_id: Optional[uuid.UUID] = None
+    if credentials:
         try:
-            # Parse token if available, but do not fail requests if auth is invalid
-            from app.core.jwt import verify_supabase_token
-            token = auth_header.split(" ")[1]
-            payload = verify_supabase_token(token)
-            user_id = uuid.UUID(payload.get("sub"))
+            payload = verify_supabase_token(credentials.credentials)
+            user_id = uuid.UUID(payload["sub"])
         except Exception:
-            pass
+            pass  # anonymous fallback
 
     report = CrashReport(
         user_id=user_id,
@@ -103,15 +101,16 @@ async def submit_crash_report(
     )
 
 
-@router.get("/feedback", response_model=APIResponse[List[FeedbackResponse]], dependencies=[Depends(get_current_user)])
+@router.get("/feedback", response_model=APIResponse[List[FeedbackResponse]])
 async def list_feedback(
     category: Optional[str] = None,
+    current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db)
 ) -> APIResponse[List[FeedbackResponse]]:
     """
-    List historical feedback items. (Admin/User access)
+    List feedback submitted by the current user.
     """
-    stmt = select(Feedback).order_by(Feedback.created_at.desc())
+    stmt = select(Feedback).where(Feedback.user_id == current_user.id).order_by(Feedback.created_at.desc())
     if category:
         stmt = stmt.where(Feedback.category == category)
     
@@ -125,14 +124,15 @@ async def list_feedback(
     )
 
 
-@router.get("/crash", response_model=APIResponse[List[CrashReportResponse]], dependencies=[Depends(get_current_user)])
+@router.get("/crash", response_model=APIResponse[List[CrashReportResponse]])
 async def list_crashes(
+    current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db)
 ) -> APIResponse[List[CrashReportResponse]]:
     """
-    List historical app crash traces. (Diagnostic team access)
+    List crash reports submitted by the current user.
     """
-    stmt = select(CrashReport).order_by(CrashReport.created_at.desc())
+    stmt = select(CrashReport).where(CrashReport.user_id == current_user.id).order_by(CrashReport.created_at.desc())
     res = await db.execute(stmt)
     reports = res.scalars().all()
 
@@ -170,42 +170,38 @@ async def log_activity(
     )
 
 
-@router.get("/summary", response_model=APIResponse[AnalyticsSummaryResponse], dependencies=[Depends(get_current_user)])
+@router.get("/summary", response_model=APIResponse[AnalyticsSummaryResponse])
 async def get_analytics_summary(
+    current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db)
 ) -> APIResponse[AnalyticsSummaryResponse]:
     """
-    Return high-level system usage dashboards.
+    Return usage stats scoped to the current user.
     """
-    # Active Users
-    users_stmt = select(func.count(User.id)).where(User.is_active == True)
-    users_res = await db.execute(users_stmt)
-    users_count = users_res.scalar() or 0
-
-    # Sync operations
-    sync_stmt = select(func.count(SyncQueue.id))
+    # User's own sync operations
+    sync_stmt = select(func.count(SyncQueue.id)).where(SyncQueue.user_id == current_user.id)
     sync_res = await db.execute(sync_stmt)
     sync_count = sync_res.scalar() or 0
 
-    # Crash counts
-    crash_stmt = select(func.count(CrashReport.id))
+    # User's own crash reports
+    crash_stmt = select(func.count(CrashReport.id)).where(CrashReport.user_id == current_user.id)
     crash_res = await db.execute(crash_stmt)
     crash_count = crash_res.scalar() or 0
 
-    # Avg feedback rating
-    rating_stmt = select(func.avg(Feedback.rating))
+    # User's own avg feedback rating
+    rating_stmt = select(func.avg(Feedback.rating)).where(Feedback.user_id == current_user.id)
     rating_res = await db.execute(rating_stmt)
     avg_rating = rating_res.scalar()
     avg_rating_val = float(avg_rating) if avg_rating is not None else 5.0
 
     data = AnalyticsSummaryResponse(
-        total_active_users=users_count,
+        total_active_users=1,  # always 1 — the current user
         total_sync_events=sync_count,
         crash_reports_count=crash_count,
         feedback_average_rating=avg_rating_val
     )
     return APIResponse(
         success=True,
-        message="Analytics metrics dashboard summary calculated.",
+        message="User analytics summary calculated.",
         data=data
     )

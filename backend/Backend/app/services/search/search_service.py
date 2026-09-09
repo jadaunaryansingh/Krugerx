@@ -1,3 +1,4 @@
+import asyncio
 import httpx
 import time
 from typing import List, Dict, Any, Optional
@@ -34,27 +35,20 @@ class SearchService:
         Returns a dict containing 'results' and optionally 'knowledge_panel'.
         """
         provider = provider.lower()
-        results = []
-        if provider == "google":
-            results = await self._search_google(query)
-        elif provider == "bing":
-            results = await self._search_bing(query)
-        elif provider == "brave":
-            results = await self._search_brave(query)
-        elif provider == "duckduckgo" or provider == "ddg":
-            results = await self._search_duckduckgo(query)
-        elif provider == "searxng":
-            results = await self._search_searxng(query, user_id=user_id)
-        else:
-            logger.warning(f"Unknown search provider: {provider}, falling back to DuckDuckGo.")
-            results = await self._search_duckduckgo(query)
-
-        knowledge_panel = await self._fetch_knowledge_panel(query)
-        
-        return {
-            "results": results,
-            "knowledge_panel": knowledge_panel
-        }
+        # Run main search and Wikipedia knowledge panel concurrently
+        search_coro = (
+            self._search_google(query) if provider == "google"
+            else self._search_bing(query) if provider == "bing"
+            else self._search_brave(query) if provider == "brave"
+            else self._search_searxng(query, user_id=user_id) if provider == "searxng"
+            else self._search_duckduckgo(query) if provider in ("duckduckgo", "ddg")
+            else (logger.warning(f"Unknown provider: {provider}, falling back to DuckDuckGo.") or None) or self._search_duckduckgo(query)
+        )
+        results, knowledge_panel = await asyncio.gather(
+            search_coro,
+            self._fetch_knowledge_panel(query),
+        )
+        return {"results": results, "knowledge_panel": knowledge_panel}
 
     async def _search_searxng(self, query: str, user_id: Optional[str] = None) -> List[SearchResultItem]:
         """
@@ -65,11 +59,10 @@ class SearchService:
             logger.warning("SEARXNG_URL not configured, falling back to DuckDuckGo.")
             return await self._search_duckduckgo(query)
 
-        # Per-user rate limit: 30 req/min
+        # Per-user rate limit: 30 req/min — check BEFORE appending (BUG-03)
         if user_id:
             now = time.time()
-            timestamps = _SEARXNG_RATE.get(user_id, [])
-            timestamps = [t for t in timestamps if now - t < 60]
+            timestamps = [t for t in _SEARXNG_RATE.get(user_id, []) if now - t < 60]
             if len(timestamps) >= 30:
                 from fastapi import HTTPException, status
                 raise HTTPException(
@@ -78,8 +71,6 @@ class SearchService:
                 )
             timestamps.append(now)
             _SEARXNG_RATE[user_id] = timestamps
-            if not timestamps:  # All entries expired during cleanup
-                del _SEARXNG_RATE[user_id]
 
         # Cache check
         cache_key = f"search:searxng:{query.lower()}"

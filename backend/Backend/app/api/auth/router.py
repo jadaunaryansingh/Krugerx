@@ -3,6 +3,7 @@ import datetime
 from typing import Any
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials
+from loguru import logger
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
@@ -15,7 +16,8 @@ from app.schemas.auth import (
     UserLoginRequest,
     TokenRefreshRequest,
     TokenResponse,
-    UserMeResponse
+    UserMeResponse,
+    UserResetPasswordRequest
 )
 from app.services.auth.auth_service import auth_service
 from app.dependencies.auth import get_current_user, security
@@ -56,9 +58,11 @@ async def signup(body: UserSignupRequest, db: AsyncSession = Depends(get_db)) ->
                 await db.commit()
             except Exception as e:
                 await db.rollback()
-                # Do not fail request because user was created in Supabase.
-                # The local JIT sync will pick it up on first auth request.
-                pass
+                # Do not fail request — user was created in Supabase.
+                # JIT sync will pick it up on first auth request.
+                logger.bind(category="errors").error(
+                    f"Local DB sync failed for new user {user_uuid}: {e}"
+                )
 
     return APIResponse(
         success=True,
@@ -107,8 +111,11 @@ async def login(body: UserLoginRequest, db: AsyncSession = Depends(get_db)) -> A
             db.add(setting)
 
             await db.commit()
-        except Exception:
+        except Exception as e:
             await db.rollback()
+            logger.bind(category="errors").error(
+                f"Local DB sync failed on login for user {user_uuid}: {e}"
+            )
 
     data = TokenResponse(
         access_token=access_token,
@@ -123,7 +130,6 @@ async def login(body: UserLoginRequest, db: AsyncSession = Depends(get_db)) -> A
     )
 
 
-from app.schemas.auth import UserResetPasswordRequest
 
 @router.post("/reset-password", response_model=APIResponse[None])
 async def reset_password(body: UserResetPasswordRequest) -> APIResponse[None]:
