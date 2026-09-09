@@ -1,7 +1,6 @@
-import 'dart:ui';
+﻿import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:krugerx/core/widgets/countdown_snackbar.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/browser_provider.dart';
 import '../../../core/theme/design_system.dart';
@@ -148,7 +147,7 @@ class _TabStripAction extends StatelessWidget {
   }
 }
 
-// ── Individual Tab Chip ────────────────────────────────────────────────────
+// â”€â”€ Individual Tab Chip â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _TabChip extends StatefulWidget {
   final dynamic tab; // TabModel

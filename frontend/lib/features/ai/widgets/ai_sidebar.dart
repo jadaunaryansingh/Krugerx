@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../core/providers/ai_provider.dart';
+import '../providers/ai_provider.dart';
 import '../../../core/theme/design_system.dart';
 import '../../../core/widgets/hover_scale_widget.dart';
 import '../../browser/browser_screen.dart';
@@ -43,7 +43,8 @@ class _AiSidebarState extends ConsumerState<AiSidebar> {
 
   @override
   Widget build(BuildContext context) {
-    final messages = ref.watch(aiProvider);
+    final aiState = ref.watch(aiProvider);
+    final messages = aiState.activeMessages;
 
     return Column(
       children: [

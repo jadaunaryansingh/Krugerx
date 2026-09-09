@@ -7,7 +7,6 @@ import 'widgets/address_bar_widget.dart';
 import '../ai/widgets/ai_sidebar.dart';
 import 'widgets/browser_engine_widget.dart';
 import 'new_tab_page.dart';
-import 'providers/browser_provider.dart';
 
 import 'providers/telemetry_provider.dart';
 import 'package:go_router/go_router.dart';

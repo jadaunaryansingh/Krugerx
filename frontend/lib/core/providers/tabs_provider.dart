@@ -2,11 +2,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:isar_community/isar.dart';
 
-import '../models/tab.dart';
+import '../../features/browser/models/tab_model.dart';
 import '../storage.dart';
 import '../../features/settings/models/settings_models.dart';
 import '../../features/browser/models/session_models.dart';
-import '../../features/history/models/history_models.dart';
 import '../../features/history/providers/history_provider.dart';
 
 class TabsState {
@@ -58,7 +57,7 @@ class TabsNotifier extends Notifier<TabsState> {
           id: s.tabId,
           sessionId: 'local',
           url: s.url,
-          title: s.title,
+          title: s.title ?? 'New Tab',
           pinned: s.isPinned,
           isMuted: s.isMuted,
           position: s.position,

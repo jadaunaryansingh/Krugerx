@@ -1,9 +1,6 @@
-import 'package:dio/dio.dart';
-import 'package:isar_community/isar.dart';
+﻿import 'package:dio/dio.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'constants.dart';
-import 'storage.dart';
-import '../features/auth/models/auth_models.dart';
 import 'package:flutter/foundation.dart';
 
 class ApiClient {
@@ -49,3 +46,4 @@ class ApiClient {
     ));
   }
 }
+

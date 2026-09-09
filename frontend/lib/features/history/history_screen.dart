@@ -1,39 +1,67 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../core/providers/history_provider.dart';
 import '../../core/theme/design_system.dart';
+import 'providers/history_provider.dart';
 import 'package:go_router/go_router.dart';
 
-class HistoryScreen extends ConsumerStatefulWidget {
+class HistoryScreen extends ConsumerWidget {
   const HistoryScreen({super.key});
 
   @override
-  ConsumerState<HistoryScreen> createState() => _HistoryScreenState();
-}
-
-class _HistoryScreenState extends ConsumerState<HistoryScreen> {
-  @override
-  void initState() {
-    super.initState();
-    Future.microtask(() => ref.read(historyProvider.notifier).fetch());
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final historyList = ref.watch(historyProvider);
-    final theme = Theme.of(context);
 
     return Scaffold(
+      backgroundColor: DesignSystem.background,
       appBar: AppBar(
-        title: const Text('History'),
+        backgroundColor: const Color(0xFF0A0A0A),
+        elevation: 0,
+        title: const Text(
+          'SYS.HISTORY',
+          style: TextStyle(
+            fontFamily: 'JetBrains Mono',
+            color: DesignSystem.primary,
+            fontSize: 14,
+            letterSpacing: 2,
+          ),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.delete_outline_rounded),
-            style: IconButton.styleFrom(
-              foregroundColor: DesignSystem.error.withValues(alpha: 0.8),
-            ),
+            color: DesignSystem.primary,
+            tooltip: 'Clear all history',
             onPressed: () {
-              ref.read(historyProvider.notifier).clearAll();
+              showDialog(
+                context: context,
+                builder: (ctx) => AlertDialog(
+                  backgroundColor: const Color(0xFF1A1A1A),
+                  title: const Text(
+                    'CLEAR_HISTORY?',
+                    style: TextStyle(
+                      fontFamily: 'JetBrains Mono',
+                      color: DesignSystem.primary,
+                      fontSize: 14,
+                    ),
+                  ),
+                  content: const Text(
+                    'This will permanently delete all local history.',
+                    style: TextStyle(color: Color(0xFFAAAAAA)),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(ctx),
+                      child: const Text('CANCEL', style: TextStyle(color: Color(0xFF777777))),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        ref.read(historyProvider.notifier).clearAll();
+                        Navigator.pop(ctx);
+                      },
+                      child: const Text('CONFIRM', style: TextStyle(color: DesignSystem.primary)),
+                    ),
+                  ],
+                ),
+              );
             },
           ),
         ],
@@ -48,19 +76,26 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                     height: 64,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: DesignSystem.surfaceContainer,
-                      border: Border.all(color: DesignSystem.outlineVariant),
+                      color: const Color(0xFF111111),
+                      border: Border.all(color: DesignSystem.primary.withValues(alpha: 0.3)),
                     ),
                     child: const Icon(Icons.history_rounded,
                         size: 28, color: DesignSystem.onSurfaceVariant),
                   ),
                   const SizedBox(height: 16),
-                  Text('No history',
-                      style: theme.textTheme.titleMedium?.copyWith(
-                          color: DesignSystem.onSurfaceVariant)),
+                  const Text(
+                    'NO_HISTORY',
+                    style: TextStyle(
+                      fontFamily: 'JetBrains Mono',
+                      color: DesignSystem.onSurfaceVariant,
+                      letterSpacing: 2,
+                    ),
+                  ),
                   const SizedBox(height: 6),
-                  Text('Pages you visit will show up here',
-                      style: theme.textTheme.bodySmall),
+                  const Text(
+                    'Pages you visit will appear here',
+                    style: TextStyle(color: Color(0xFF555555), fontSize: 12),
+                  ),
                 ],
               ),
             )
@@ -78,10 +113,9 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                         width: 36,
                         height: 36,
                         decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.circular(4.0),
-                          color: DesignSystem.surfaceContainerHigh,
-                          border: Border.all(color: DesignSystem.outlineVariant),
+                          borderRadius: BorderRadius.circular(4.0),
+                          color: const Color(0xFF111111),
+                          border: Border.all(color: DesignSystem.primary.withValues(alpha: 0.2)),
                         ),
                         child: const Icon(Icons.public,
                             size: 16, color: DesignSystem.onSurfaceVariant),
@@ -91,13 +125,16 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                            fontSize: 13, fontWeight: FontWeight.w500),
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
                       ),
                       subtitle: Text(
                         item.url,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 11,
                             color: DesignSystem.onSurfaceVariant),
                       ),
@@ -107,21 +144,20 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                         children: [
                           Text(
                             _formatTime(item.visitTime),
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 11,
                               color: DesignSystem.onSurfaceVariant,
+                              fontFamily: 'JetBrains Mono',
                             ),
                           ),
                           if (item.visitCount > 1)
                             Container(
                               margin: const EdgeInsets.only(top: 4),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 6, vertical: 2),
+                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                               decoration: BoxDecoration(
-                                color:
-                                    DesignSystem.primary.withValues(alpha: 0.1),
-                                borderRadius: BorderRadius.circular(
-                                    32.0),
+                                color: DesignSystem.primary.withValues(alpha: 0.1),
+                                border: Border.all(color: DesignSystem.primary.withValues(alpha: 0.3)),
+                                borderRadius: BorderRadius.circular(32.0),
                               ),
                               child: Text(
                                 '${item.visitCount}×',
@@ -129,15 +165,17 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                                   fontSize: 10,
                                   color: DesignSystem.primary,
                                   fontWeight: FontWeight.w600,
+                                  fontFamily: 'JetBrains Mono',
                                 ),
                               ),
                             ),
                         ],
                       ),
                       shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(4.0),
+                        borderRadius: BorderRadius.circular(4.0),
+                        side: BorderSide(color: DesignSystem.primary.withValues(alpha: 0.08)),
                       ),
+                      tileColor: const Color(0xFF0D0D0D),
                       hoverColor: DesignSystem.primary.withValues(alpha: 0.06),
                       onTap: () {
                         context.go('/browser', extra: {
@@ -163,7 +201,4 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
     return '${local.day}/${local.month}/${local.year}';
   }
 }
-
-
-
 

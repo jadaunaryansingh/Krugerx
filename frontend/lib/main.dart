@@ -20,7 +20,7 @@ void main() async {
   }
   await Supabase.initialize(
     url: dotenv.env['SUPABASE_URL'] ?? 'https://fallback.supabase.co',
-    anonKey: dotenv.env['SUPABASE_KEY'] ?? dotenv.env['SUPABASE_ANON_KEY'] ?? 'fallback-key',
+    publishableKey: dotenv.env['SUPABASE_KEY'] ?? dotenv.env['SUPABASE_ANON_KEY'] ?? 'fallback-key',
   );
   await Storage.init();
   ApiClient.init();

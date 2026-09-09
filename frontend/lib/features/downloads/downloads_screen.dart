@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../core/providers/downloads_provider.dart';
 import '../../core/theme/design_system.dart';
+import 'providers/downloads_provider.dart';
 
 class DownloadsScreen extends ConsumerStatefulWidget {
   const DownloadsScreen({super.key});
@@ -12,18 +12,34 @@ class DownloadsScreen extends ConsumerStatefulWidget {
 
 class _DownloadsScreenState extends ConsumerState<DownloadsScreen> {
   @override
-  void initState() {
-    super.initState();
-    Future.microtask(() => ref.read(downloadsProvider.notifier).fetch());
-  }
-
-  @override
   Widget build(BuildContext context) {
     final list = ref.watch(downloadsProvider);
-    final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Downloads')),
+      backgroundColor: DesignSystem.background,
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF0A0A0A),
+        elevation: 0,
+        title: const Text(
+          'SYS.DOWNLOADS',
+          style: TextStyle(
+            fontFamily: 'JetBrains Mono',
+            color: DesignSystem.primary,
+            fontSize: 14,
+            letterSpacing: 2,
+          ),
+        ),
+        actions: [
+          if (list.any((d) => d.status == 'completed'))
+            IconButton(
+              icon: const Icon(Icons.cleaning_services_rounded),
+              color: DesignSystem.primary,
+              tooltip: 'Clear completed',
+              onPressed: () =>
+                  ref.read(downloadsProvider.notifier).clearCompleted(),
+            ),
+        ],
+      ),
       body: list.isEmpty
           ? Center(
               child: Column(
@@ -34,19 +50,26 @@ class _DownloadsScreenState extends ConsumerState<DownloadsScreen> {
                     height: 64,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: DesignSystem.surfaceContainer,
-                      border: Border.all(color: DesignSystem.outlineVariant),
+                      color: const Color(0xFF111111),
+                      border: Border.all(color: DesignSystem.primary.withValues(alpha: 0.3)),
                     ),
                     child: const Icon(Icons.download_rounded,
                         size: 28, color: DesignSystem.onSurfaceVariant),
                   ),
                   const SizedBox(height: 16),
-                  Text('No downloads',
-                      style: theme.textTheme.titleMedium?.copyWith(
-                          color: DesignSystem.onSurfaceVariant)),
+                  const Text(
+                    'NO_DOWNLOADS',
+                    style: TextStyle(
+                      fontFamily: 'JetBrains Mono',
+                      color: DesignSystem.onSurfaceVariant,
+                      letterSpacing: 2,
+                    ),
+                  ),
                   const SizedBox(height: 6),
-                  Text('Your downloads will appear here',
-                      style: theme.textTheme.bodySmall),
+                  const Text(
+                    'Your downloads will appear here',
+                    style: TextStyle(color: Color(0xFF555555), fontSize: 12),
+                  ),
                 ],
               ),
             )
@@ -59,10 +82,9 @@ class _DownloadsScreenState extends ConsumerState<DownloadsScreen> {
                   margin: const EdgeInsets.only(bottom: 8),
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
-                    color: DesignSystem.surfaceContainer,
-                    borderRadius:
-                        BorderRadius.circular(12.0),
-                    border: Border.all(color: DesignSystem.outlineVariant),
+                    color: const Color(0xFF0D0D0D),
+                    borderRadius: BorderRadius.circular(4.0),
+                    border: Border.all(color: DesignSystem.primary.withValues(alpha: 0.1)),
                   ),
                   child: Row(
                     children: [
@@ -70,9 +92,9 @@ class _DownloadsScreenState extends ConsumerState<DownloadsScreen> {
                         width: 40,
                         height: 40,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                              8.0),
-                          color: DesignSystem.primary.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(4.0),
+                          color: const Color(0xFF111111),
+                          border: Border.all(color: DesignSystem.primary.withValues(alpha: 0.2)),
                         ),
                         child: const Icon(Icons.insert_drive_file_rounded,
                             size: 20, color: DesignSystem.primary),
@@ -82,31 +104,34 @@ class _DownloadsScreenState extends ConsumerState<DownloadsScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(item.filename,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500)),
+                            Text(
+                              item.filename,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white),
+                            ),
                             const SizedBox(height: 4),
-                            Text(item.url,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    fontSize: 11,
-                                    color: DesignSystem.onSurfaceVariant)),
+                            Text(
+                              item.url,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                  fontSize: 11,
+                                  color: DesignSystem.onSurfaceVariant),
+                            ),
                             const SizedBox(height: 8),
                             ClipRRect(
-                              borderRadius: BorderRadius.circular(4),
+                              borderRadius: BorderRadius.circular(2),
                               child: SizedBox(
-                                height: 4,
+                                height: 3,
                                 child: LinearProgressIndicator(
                                   value: item.progress,
-                                  backgroundColor:
-                                      DesignSystem.surfaceContainerHighest,
-                                  valueColor:
-                                      const AlwaysStoppedAnimation<Color>(
-                                          DesignSystem.primary),
+                                  backgroundColor: const Color(0xFF1A1A1A),
+                                  valueColor: const AlwaysStoppedAnimation<Color>(
+                                      DesignSystem.primary),
                                 ),
                               ),
                             ),
@@ -124,20 +149,12 @@ class _DownloadsScreenState extends ConsumerState<DownloadsScreen> {
   }
 
   Widget _statusChip(String status) {
-    Color color;
-    switch (status.toLowerCase()) {
-      case 'completed':
-        color = DesignSystem.primary;
-        break;
-      case 'downloading':
-        color = DesignSystem.primary;
-        break;
-      case 'failed':
-        color = DesignSystem.error;
-        break;
-      default:
-        color = DesignSystem.onSurfaceVariant;
-    }
+    final Color color = switch (status.toLowerCase()) {
+      'completed' => DesignSystem.primary,
+      'downloading' => DesignSystem.primary,
+      'failed' => DesignSystem.error,
+      _ => DesignSystem.onSurfaceVariant,
+    };
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
@@ -146,17 +163,15 @@ class _DownloadsScreenState extends ConsumerState<DownloadsScreen> {
         border: Border.all(color: color.withValues(alpha: 0.25)),
       ),
       child: Text(
-        status,
+        status.toUpperCase(),
         style: TextStyle(
           color: color,
-          fontSize: 11,
-          fontWeight: FontWeight.w600,
+          fontSize: 10,
+          fontWeight: FontWeight.w700,
+          fontFamily: 'JetBrains Mono',
+          letterSpacing: 1,
         ),
       ),
     );
   }
 }
-
-
-
-

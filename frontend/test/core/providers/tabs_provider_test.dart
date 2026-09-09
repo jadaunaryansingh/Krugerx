@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:krugerx/core/models/tab.dart';
 import 'package:krugerx/core/providers/tabs_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

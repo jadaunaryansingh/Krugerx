@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../../core/theme/design_system.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:math';
-import '../providers/new_tab_providers.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../core/providers/tabs_provider.dart';
 import '../../search/native_search_screen.dart';
 import 'find_bar.dart';
@@ -28,7 +28,6 @@ class BrowserEngineWidget extends ConsumerStatefulWidget {
 class _BrowserEngineWidgetState extends ConsumerState<BrowserEngineWidget> {
   late final WebViewController _controller;
   bool _isLoading = true;
-  final _random = Random();
   bool _isCurrentlyReaderMode = false;
   late final String _readerToken;
 

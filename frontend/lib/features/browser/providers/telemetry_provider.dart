@@ -132,7 +132,7 @@ class TelemetryNotifier extends Notifier<TelemetryState> {
     try {
       final uri = Uri.parse(AppConstants.apiBaseUrl);
       final request = await HttpClient().headUrl(uri).timeout(const Duration(seconds: 2));
-      final response = await request.close();
+      await (await request.close()).drain<void>();
       stopwatch.stop();
       _updateLatencyState(stopwatch.elapsedMilliseconds.toDouble(), true);
     } catch (e) {

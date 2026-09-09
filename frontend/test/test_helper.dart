@@ -1,9 +1,8 @@
-import 'dart:io';
+﻿import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:isar_community/isar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:krugerx/core/storage.dart';
 import 'package:krugerx/core/api_client.dart';
 import 'package:krugerx/features/auth/models/auth_models.dart';

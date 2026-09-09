@@ -1,5 +1,4 @@
-import 'dart:convert';
-import 'package:dio/dio.dart';
+﻿import 'package:dio/dio.dart';
 import 'dart:typed_data';
 
 class MockDioAdapter implements HttpClientAdapter {

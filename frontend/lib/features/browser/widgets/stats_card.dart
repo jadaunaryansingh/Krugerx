@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/foundation.dart';
 import '../../history/providers/history_provider.dart';
 import '../../../core/theme/design_system.dart';
 
-/// Browsing stats card for the home page — sites visited today, top domains.
+/// Browsing stats card for the home page â€” sites visited today, top domains.
 class StatsCard extends ConsumerWidget {
   const StatsCard({super.key});
 

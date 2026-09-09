@@ -33,14 +33,14 @@ class ProfileScreen extends ConsumerWidget {
               padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                border: Border.all(color: DesignSystem.brandGold, width: 2),
+                border: Border.all(color: DesignSystem.primary, width: 2),
               ),
               child: CircleAvatar(
                 radius: 40,
-                backgroundColor: DesignSystem.brandGold.withValues(alpha: 0.1),
+                backgroundColor: DesignSystem.primary.withValues(alpha: 0.1),
                 backgroundImage: authState.avatarUrl != null ? NetworkImage(authState.avatarUrl!) : null,
                 child: authState.avatarUrl == null
-                    ? const Icon(Icons.person_rounded, size: 40, color: DesignSystem.brandGold)
+                    ? const Icon(Icons.person_rounded, size: 40, color: DesignSystem.primary)
                     : null,
               ),
             ),
@@ -62,7 +62,7 @@ class ProfileScreen extends ConsumerWidget {
 
           // Actions
           ListTile(
-            leading: const Icon(Icons.devices_rounded, color: DesignSystem.brandGold),
+            leading: const Icon(Icons.devices_rounded, color: DesignSystem.primary),
             title: const Text('Synced Devices'),
             trailing: const Icon(Icons.chevron_right_rounded),
             shape: RoundedRectangleBorder(
@@ -80,7 +80,7 @@ class ProfileScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 12),
           ListTile(
-            leading: const Icon(Icons.feedback_rounded, color: DesignSystem.brandGold),
+            leading: const Icon(Icons.feedback_rounded, color: DesignSystem.primary),
             title: const Text('Submit Feedback'),
             trailing: const Icon(Icons.chevron_right_rounded),
             shape: RoundedRectangleBorder(
@@ -94,7 +94,7 @@ class ProfileScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 12),
           ListTile(
-            leading: const Icon(Icons.history_edu_rounded, color: DesignSystem.brandGold),
+            leading: const Icon(Icons.history_edu_rounded, color: DesignSystem.primary),
             title: const Text('Activity Logs'),
             trailing: const Icon(Icons.chevron_right_rounded),
             shape: RoundedRectangleBorder(
@@ -109,8 +109,8 @@ class ProfileScreen extends ConsumerWidget {
           const SizedBox(height: 48),
 
           ListTile(
-            leading: const Icon(Icons.logout_rounded, color: DesignSystem.electricLight),
-            title: const Text('Log Out', style: TextStyle(color: DesignSystem.electricLight)),
+            leading: const Icon(Icons.logout_rounded, color: DesignSystem.error),
+            title: const Text('Log Out', style: TextStyle(color: DesignSystem.error)),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
               side: BorderSide(color: colors.outline, width: 0.5),
@@ -193,7 +193,7 @@ class _SyncedDevicesSheet extends ConsumerWidget {
                   itemBuilder: (ctx, index) {
                     final d = devices[index];
                     return ListTile(
-                      leading: Icon(d['device_type'] == 'mobile' ? Icons.phone_android : Icons.computer, color: DesignSystem.brandGold),
+                      leading: Icon(d['device_type'] == 'mobile' ? Icons.phone_android : Icons.computer, color: DesignSystem.primary),
                       title: Text(d['device_name'] ?? 'Unknown Device'),
                       subtitle: Text('OS: ${d['os'] ?? 'Unknown'}'),
                       trailing: IconButton(

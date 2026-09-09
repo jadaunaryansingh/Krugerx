@@ -112,11 +112,7 @@ class _TacticalSettingsScreenState extends ConsumerState<TacticalSettingsScreen>
             children: [
               _buildIconButton(Icons.timer_outlined, onTap: () => context.push('/history')),
               const SizedBox(width: 8),
-              _buildIconButton(Icons.sync_outlined, onTap: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Syncing...')),
-                );
-              }),
+              _buildIconButton(Icons.sync_outlined, onTap: null),
               const SizedBox(width: 8),
               _buildIconButton(Icons.power_settings_new, onTap: () => context.pop()),
             ],

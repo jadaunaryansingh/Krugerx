@@ -7,11 +7,17 @@ class TabModel {
   final bool isDesktopMode;
   final bool isNightMode;
   final double zoomLevel;
-  
-  // Phase A: Tab Management Foundation
   final bool isPinned;
   final bool isMuted;
   final double loadingProgress;
+  // Session/ordering fields
+  final String sessionId;
+  final bool active;
+  final bool pinned;
+  final String? tabGroupId;
+  final double zoomScale;
+  final bool isReaderMode;
+  final int position;
 
   const TabModel({
     required this.id,
@@ -25,6 +31,13 @@ class TabModel {
     this.isPinned = false,
     this.isMuted = false,
     this.loadingProgress = 0.0,
+    this.sessionId = 'local',
+    this.active = false,
+    this.pinned = false,
+    this.tabGroupId,
+    this.zoomScale = 1.0,
+    this.isReaderMode = false,
+    this.position = 0,
   });
 
   TabModel copyWith({
@@ -38,6 +51,13 @@ class TabModel {
     bool? isPinned,
     bool? isMuted,
     double? loadingProgress,
+    String? sessionId,
+    bool? active,
+    bool? pinned,
+    String? tabGroupId,
+    double? zoomScale,
+    bool? isReaderMode,
+    int? position,
   }) =>
       TabModel(
         id: id,
@@ -51,5 +71,12 @@ class TabModel {
         isPinned: isPinned ?? this.isPinned,
         isMuted: isMuted ?? this.isMuted,
         loadingProgress: loadingProgress ?? this.loadingProgress,
+        sessionId: sessionId ?? this.sessionId,
+        active: active ?? this.active,
+        pinned: pinned ?? this.pinned,
+        tabGroupId: tabGroupId ?? this.tabGroupId,
+        zoomScale: zoomScale ?? this.zoomScale,
+        isReaderMode: isReaderMode ?? this.isReaderMode,
+        position: position ?? this.position,
       );
 }

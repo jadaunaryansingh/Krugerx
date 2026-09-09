@@ -160,10 +160,7 @@ class _NewTabPageState extends ConsumerState<NewTabPage> with TickerProviderStat
         ),
         Row(
           children: [
-            _navLink('sys.garage', false),
-            _navLink('sys.journeys', false),
             _navLink('sys.core_diag', true),
-            _navLink('sys.network', false),
           ],
         ),
         Row(
@@ -176,23 +173,14 @@ class _NewTabPageState extends ConsumerState<NewTabPage> with TickerProviderStat
               ],
             ),
             const SizedBox(width: 16),
-            HoverScaleWidget(
-              onTap: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('TERMINAL CONSOLE: INITIALIZING...')),
-                );
-              },
-              scaleFactor: 0.95,
-              child: Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF111111),
-                  border: Border.all(color: DesignSystem.primary.withValues(alpha: 0.5)),
-                  borderRadius: BorderRadius.circular(4),
-                  boxShadow: [BoxShadow(color: DesignSystem.primary.withValues(alpha: 0.1), blurRadius: 10)],
-                ),
-                child: const Icon(Icons.terminal, size: 16, color: DesignSystem.primary),
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: const Color(0xFF111111),
+                border: Border.all(color: DesignSystem.primary.withValues(alpha: 0.2)),
+                borderRadius: BorderRadius.circular(4),
               ),
+              child: const Icon(Icons.terminal, size: 16, color: DesignSystem.onSurfaceVariant),
             ),
           ],
         ),
