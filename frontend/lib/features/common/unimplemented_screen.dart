@@ -12,15 +12,15 @@ class UnimplementedScreen extends StatelessWidget {
     Widget content = Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Icon(Icons.warning_amber_rounded, color: DesignSystem.primary, size: 64),
+        const Icon(Icons.hourglass_empty_rounded, color: DesignSystem.primary, size: 64),
         const SizedBox(height: 24),
         Text(
-          'SYS_ERR // 0xDEAD',
+          'COMING SOON',
           style: DesignSystem.dataMono.copyWith(fontSize: 16, color: DesignSystem.primary, letterSpacing: 3.0),
         ),
         const SizedBox(height: 8),
         Text(
-          'MODULE_OFFLINE: $moduleName',
+          '$moduleName is in development',
           style: TextStyle(fontFamily: DesignSystem.fontFamilyHanken).copyWith(
             fontSize: 24,
             color: Colors.white,

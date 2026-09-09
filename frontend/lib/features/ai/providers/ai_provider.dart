@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar_community/isar.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import '../../../core/storage.dart';
 import '../../../core/api_client.dart';
 import '../models/ai_models.dart';
@@ -118,7 +119,9 @@ class AiNotifier extends Notifier<AiState> {
                 accumulated += json['content'] as String;
                 state = state.copyWith(streamingText: accumulated);
               }
-            } catch (_) {}
+            } catch (e) {
+              debugPrint('[AiNotifier] SSE parsing error: $e');
+            }
           }
         }
       }

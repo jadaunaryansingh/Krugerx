@@ -2,6 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/settings.dart';
 import 'auth_provider.dart';
 import '../storage.dart';
+import 'package:flutter/material.dart';
+import '../globals.dart';
 import '../../features/settings/models/settings_models.dart';
 
 final settingsProvider = NotifierProvider<SettingsNotifier, SettingModel>(SettingsNotifier.new);
@@ -37,7 +39,9 @@ class SettingsNotifier extends Notifier<SettingModel> {
         final serverSettings = SettingModel.fromJson(res.data['data']);
         await updateSettings(serverSettings, syncToServer: false);
       }
-    } catch (_) {}
+    } catch (e) {
+      debugPrint('[SettingsNotifier] fetch error: $e');
+    }
   }
 
   Future<void> updateSettings(SettingModel newSettings, {bool syncToServer = true}) async {
@@ -79,7 +83,12 @@ class SettingsNotifier extends Notifier<SettingModel> {
             await Storage.db.localSettings.put(local);
           }
         });
-      } catch (_) {}
+      } catch (e) {
+        debugPrint('[SettingsNotifier] sync error: $e');
+        scaffoldMessengerKey.currentState?.showSnackBar(
+          SnackBar(content: Text('Settings saved locally, but failed to sync: $e')),
+        );
+      }
     }
   }
 }

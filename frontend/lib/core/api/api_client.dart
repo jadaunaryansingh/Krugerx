@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter/foundation.dart';
 
 class ApiClient {
   final Dio _dio;
@@ -27,7 +28,9 @@ class ApiClient {
           // Force a sign out to clear the session and prompt the user to log in again.
           try {
             await Supabase.instance.client.auth.signOut();
-          } catch (_) {}
+          } catch (e) {
+            debugPrint('[ApiClient] signOut error on 401: $e');
+          }
           
           final prefs = await SharedPreferences.getInstance();
           await prefs.remove('access_token');

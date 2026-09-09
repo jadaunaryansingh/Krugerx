@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/foundation.dart';
 import '../models/download.dart';
 import 'auth_provider.dart';
 
@@ -18,6 +19,8 @@ class DownloadsNotifier extends Notifier<List<DownloadModel>> {
             .toList();
         state = list;
       }
-    } catch (_) {}
+    } catch (e) {
+      debugPrint('[DownloadsNotifier] fetch error: $e');
+    }
   }
 }

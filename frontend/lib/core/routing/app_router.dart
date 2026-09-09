@@ -9,6 +9,7 @@ import '../../features/history/history_screen.dart';
 import '../../features/settings/screens/tactical_settings_screen.dart';
 import '../../features/common/unimplemented_screen.dart';
 import '../../features/downloads/downloads_screen.dart';
+import '../../features/auth/screens/profile_screen.dart';
 import '../providers/navigation_provider.dart';
 
 CustomTransitionPage<void> _buildTransition(Widget child, GoRouterState state) {
@@ -161,6 +162,11 @@ final routerProvider = Provider<GoRouter>((ref) {
             path: '/settings',
             name: '/settings',
             pageBuilder: (context, state) => _buildTransition(const TacticalSettingsScreen(), state),
+          ),
+          GoRoute(
+            path: '/profile',
+            name: '/profile',
+            pageBuilder: (context, state) => _buildTransition(const ProfileScreen(), state),
           ),
           GoRoute(
             path: '/garage',

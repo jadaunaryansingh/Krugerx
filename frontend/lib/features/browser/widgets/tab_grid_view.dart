@@ -2,6 +2,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/foundation.dart';
 import '../providers/browser_provider.dart';
 import '../../../core/theme/design_system.dart';
 
@@ -254,7 +255,8 @@ class _TabGridCardState extends State<_TabGridCard> {
   String _extractDomain(String url) {
     try {
       return Uri.parse(url).host;
-    } catch (_) {
+    } catch (e) {
+      debugPrint('[TabGridView] Error parsing URL for domain: $e');
       return url;
     }
   }

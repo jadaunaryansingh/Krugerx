@@ -1,5 +1,6 @@
 import 'package:isar_community/isar.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter/foundation.dart';
 
 import '../features/auth/models/auth_models.dart';
 import '../features/bookmarks/models/bookmark_models.dart';
@@ -36,7 +37,7 @@ class Storage {
       // To prevent bricking the app, we clean up the directory and try again.
       final isarFiles = dir.listSync().where((f) => f.path.endsWith('.isar') || f.path.endsWith('.isar.lock'));
       for (var f in isarFiles) {
-        try { f.deleteSync(); } catch (_) {}
+        try { f.deleteSync(); } catch (e) { debugPrint('[Storage] deleteSync error: $e'); }
       }
       db = await Isar.open(
         [

@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'constants.dart';
 import 'storage.dart';
 import '../features/auth/models/auth_models.dart';
+import 'package:flutter/foundation.dart';
 
 class ApiClient {
   ApiClient._();
@@ -37,7 +38,8 @@ class ApiClient {
               final retryResponse = await _dio.fetch(options);
               return handler.resolve(retryResponse);
             }
-          } catch (_) {
+          } catch (e) {
+            debugPrint('[ApiClient] token refresh error: $e');
             // Token refresh failed, fall through to error
           }
         }

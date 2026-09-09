@@ -1,4 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/material.dart';
+import '../globals.dart';
 import '../models/bookmark.dart';
 import 'auth_provider.dart';
 
@@ -18,7 +20,9 @@ class BookmarksNotifier extends Notifier<List<FolderTreeModel>> {
             .toList();
         state = list;
       }
-    } catch (_) {}
+    } catch (e) {
+      debugPrint('[BookmarksNotifier] fetch error: $e');
+    }
   }
 
   Future<void> addBookmark(String title, String url, {String? folderId}) async {
@@ -30,6 +34,11 @@ class BookmarksNotifier extends Notifier<List<FolderTreeModel>> {
         if (folderId != null) 'folder_id': folderId,
       });
       await fetch();
-    } catch (_) {}
+    } catch (e) {
+      debugPrint('[BookmarksNotifier] addBookmark error: $e');
+      scaffoldMessengerKey.currentState?.showSnackBar(
+        SnackBar(content: Text('Failed to add bookmark: $e')),
+      );
+    }
   }
 }

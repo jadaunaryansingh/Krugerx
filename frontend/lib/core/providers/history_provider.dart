@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/foundation.dart';
 import '../models/history.dart';
 import 'auth_provider.dart';
 
@@ -18,7 +19,9 @@ class HistoryNotifier extends Notifier<List<HistoryModel>> {
             .toList();
         state = list;
       }
-    } catch (_) {}
+    } catch (e) {
+      debugPrint('[HistoryNotifier] fetch error: $e');
+    }
   }
 
   Future<void> addHistory(String url, String title) async {
@@ -29,6 +32,8 @@ class HistoryNotifier extends Notifier<List<HistoryModel>> {
         'title': title,
       });
       // Do not block or force re-fetch immediately for performance
-    } catch (_) {}
+    } catch (e) {
+      debugPrint('[HistoryNotifier] addHistory error: $e');
+    }
   }
 }

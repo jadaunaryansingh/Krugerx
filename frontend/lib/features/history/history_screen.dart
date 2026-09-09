@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/providers/history_provider.dart';
 import '../../core/theme/design_system.dart';
+import 'package:go_router/go_router.dart';
 
 class HistoryScreen extends ConsumerStatefulWidget {
   const HistoryScreen({super.key});
@@ -32,7 +33,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
               foregroundColor: DesignSystem.error.withValues(alpha: 0.8),
             ),
             onPressed: () {
-              // TODO: clear history
+              ref.read(historyProvider.notifier).clearAll();
             },
           ),
         ],
@@ -139,7 +140,11 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                       ),
                       hoverColor: DesignSystem.primary.withValues(alpha: 0.06),
                       onTap: () {
-                        // TODO: open url
+                        context.go('/browser', extra: {
+                          'url': item.url,
+                          'title': item.title,
+                          'consumed': false,
+                        });
                       },
                     ),
                   ),

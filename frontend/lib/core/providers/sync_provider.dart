@@ -1,4 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/material.dart';
+import '../globals.dart';
 import '../models/sync.dart';
 import 'auth_provider.dart';
 
@@ -20,6 +22,11 @@ class SyncNotifier extends Notifier<DeviceModel?> {
       if (res.data['success'] == true) {
         state = DeviceModel.fromJson(res.data['data']);
       }
-    } catch (_) {}
+    } catch (e) {
+      debugPrint('[SyncNotifier] registerDevice error: $e');
+      scaffoldMessengerKey.currentState?.showSnackBar(
+        SnackBar(content: Text('Failed to register device for sync: $e')),
+      );
+    }
   }
 }

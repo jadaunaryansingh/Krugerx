@@ -6,6 +6,7 @@ import 'core/theme/app_theme.dart';
 import 'core/storage.dart';
 import 'core/api_client.dart';
 import 'core/providers/navigation_provider.dart';
+import 'core/globals.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -58,6 +59,7 @@ class KrugerxApp extends ConsumerWidget {
         return KeyEventResult.ignored;
       },
       child: MaterialApp.router(
+        scaffoldMessengerKey: scaffoldMessengerKey,
         title: 'Krugerx Browser',
         debugShowCheckedModeBanner: false,
         theme: AppTheme.dark,

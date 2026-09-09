@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/providers/bookmarks_provider.dart';
 import '../../core/models/bookmark.dart';
 import '../../core/theme/design_system.dart';
+import 'package:go_router/go_router.dart';
 
 class BookmarksScreen extends ConsumerStatefulWidget {
   const BookmarksScreen({super.key});
@@ -33,7 +34,7 @@ class _BookmarksScreenState extends ConsumerState<BookmarksScreen> {
               foregroundColor: DesignSystem.primary,
             ),
             onPressed: () {
-              // TODO: add bookmark dialog
+              _showAddBookmarkDialog();
             },
           ),
         ],
@@ -129,12 +130,56 @@ class _BookmarksScreenState extends ConsumerState<BookmarksScreen> {
                 ),
                 hoverColor: DesignSystem.primary.withValues(alpha: 0.06),
                 onTap: () {
-                  // TODO: open in new tab
+                  context.go('/browser', extra: {
+                    'url': bm.url,
+                    'title': bm.title,
+                    'consumed': false,
+                  });
                 },
               ),
             ),
           ),
       ],
+    );
+  }
+
+  void _showAddBookmarkDialog() {
+    final titleController = TextEditingController();
+    final urlController = TextEditingController(text: 'https://');
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Add Bookmark'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: titleController,
+              decoration: const InputDecoration(labelText: 'Title'),
+            ),
+            TextField(
+              controller: urlController,
+              decoration: const InputDecoration(labelText: 'URL'),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              ref.read(bookmarksProvider.notifier).addBookmark(
+                titleController.text.trim(),
+                urlController.text.trim(),
+              );
+              Navigator.pop(context);
+            },
+            child: const Text('Add'),
+          ),
+        ],
+      ),
     );
   }
 }

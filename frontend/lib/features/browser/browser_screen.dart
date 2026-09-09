@@ -10,6 +10,7 @@ import 'new_tab_page.dart';
 import 'providers/browser_provider.dart';
 
 import 'providers/telemetry_provider.dart';
+import 'package:go_router/go_router.dart';
 
 class AiSidebarVisibleNotifier extends Notifier<bool> {
   @override
@@ -22,11 +23,34 @@ class AiSidebarVisibleNotifier extends Notifier<bool> {
 
 final aiSidebarVisibleProvider = NotifierProvider<AiSidebarVisibleNotifier, bool>(AiSidebarVisibleNotifier.new);
 
-class BrowserScreen extends ConsumerWidget {
+class BrowserScreen extends ConsumerStatefulWidget {
   const BrowserScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<BrowserScreen> createState() => _BrowserScreenState();
+}
+
+class _BrowserScreenState extends ConsumerState<BrowserScreen> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final state = GoRouterState.of(context);
+    if (state.extra is Map<String, dynamic>) {
+      final extra = state.extra as Map<String, dynamic>;
+      if (extra['url'] != null && extra['consumed'] == false) {
+        extra['consumed'] = true;
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          ref.read(tabsProvider.notifier).addTab(
+            url: extra['url'] as String,
+            title: extra['title'] as String? ?? extra['url'] as String,
+          );
+        });
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final tabsState = ref.watch(tabsProvider);
     final activeTab = tabsState.activeTab;
     final isAiVisible = ref.watch(aiSidebarVisibleProvider);

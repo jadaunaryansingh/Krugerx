@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/foundation.dart';
 import '../../history/providers/history_provider.dart';
 import '../../../core/theme/design_system.dart';
 
@@ -21,7 +22,9 @@ class StatsCard extends ConsumerWidget {
     for (final e in todayEntries) {
       try {
         uniqueDomains.add(Uri.parse(e.url).host);
-      } catch (_) {}
+      } catch (e) {
+        debugPrint('[StatsCard] Error parsing URL for domain: $e');
+      }
     }
 
     if (todayEntries.isEmpty) return const SizedBox.shrink();

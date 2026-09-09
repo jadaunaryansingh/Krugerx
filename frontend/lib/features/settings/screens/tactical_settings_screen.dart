@@ -241,48 +241,12 @@ class _TacticalSettingsScreenState extends ConsumerState<TacticalSettingsScreen>
           ),
           const SizedBox(height: 48),
           _buildNavItem('Security', Icons.security, isActive: _selectedTab == 'Security', onTap: () => setState(() => _selectedTab = 'Security')),
-          _buildNavItem('Telemetry', Icons.analytics_outlined, onTap: () => context.push('/history')),
-          _buildNavItem('AI Core', Icons.memory_outlined, onTap: () => context.go('/')),
+          _buildNavItem('History', Icons.history, onTap: () => context.push('/history')),
           _buildNavItem('Network', Icons.hub_outlined, isActive: _selectedTab == 'Network', onTap: () => setState(() => _selectedTab = 'Network')),
           const Spacer(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-            child: InkWell(
-              onTap: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Override Initiated')),
-                );
-              },
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                decoration: BoxDecoration(
-                  color: TacticalColors.surfaceContainerHighest,
-                  border: Border.all(color: TacticalColors.primary),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.bolt, color: TacticalColors.primary, size: 16),
-                    const SizedBox(width: 4),
-                    Text(
-                      'INITIATE_OVERRIDE',
-                      style: GoogleFonts.jetBrainsMono(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        color: TacticalColors.primary,
-                        letterSpacing: 1.2,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
           const Divider(color: TacticalColors.outlineVariant, height: 1),
           const SizedBox(height: 24),
-          _buildNavItem('Settings', Icons.settings_outlined, onTap: () => context.push('/settings')),
-          _buildNavItem('Logs', Icons.terminal_outlined, onTap: () => context.push('/history')),
+          _buildNavItem('Settings', Icons.settings_outlined, isActive: true, onTap: () {}),
         ],
       ),
     );
