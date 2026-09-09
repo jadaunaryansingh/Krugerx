@@ -36,4 +36,14 @@ class HistoryNotifier extends Notifier<List<HistoryModel>> {
       debugPrint('[HistoryNotifier] addHistory error: $e');
     }
   }
+
+  Future<void> clearAll() async {
+    final api = ref.read(apiClientProvider);
+    try {
+      await api.dio.delete('/history');
+      state = const [];
+    } catch (e) {
+      debugPrint('[HistoryNotifier] clearAll error: $e');
+    }
+  }
 }
