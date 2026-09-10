@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/theme/design_system.dart';
 import '../providers/settings_provider.dart';
 import '../../auth/providers/auth_provider.dart';
+import '../../history/providers/history_provider.dart';
 
 class TacticalSettingsScreen extends ConsumerStatefulWidget {
   const TacticalSettingsScreen({super.key});
@@ -325,27 +326,40 @@ class _PrivacySection extends ConsumerWidget {
         _SettingsTile(
           label: 'Tracking Protection',
           subtitle: 'Block known tracking scripts',
-          trailing: _redSwitch(settings.privacyTrackingProtection ?? false,
+          trailing: _redSwitch(settings.privacyTrackingProtection,
               (v) => ref.read(settingsProvider.notifier).updatePrivacy(v)),
         ),
         _SettingsTile(
           label: 'DNS over HTTPS',
           subtitle: 'Encrypt DNS queries',
-          trailing: _redSwitch(settings.dnsOverHttps ?? false,
+          trailing: _redSwitch(settings.dnsOverHttps,
               (v) => ref.read(settingsProvider.notifier).updateDnsOverHttps(v)),
         ),
         _sectionHeader('Encryption'),
         _SettingsTile(
           label: 'AES Encryption',
           subtitle: 'Encrypt local stored data',
-          trailing: _redSwitch(settings.aesEncryption ?? false,
+          trailing: _redSwitch(settings.aesEncryption,
               (v) => ref.read(settingsProvider.notifier).updateAesEncryption(v)),
         ),
         _SettingsTile(
           label: 'Biometric Uplink',
           subtitle: 'Require biometric for sensitive ops',
-          trailing: _redSwitch(settings.biometricUplink ?? false,
+          trailing: _redSwitch(settings.biometricUplink,
               (v) => ref.read(settingsProvider.notifier).updateBiometricUplink(v)),
+        ),
+        _sectionHeader('Advanced'),
+        _SettingsTile(
+          label: 'Hard Strike Mode',
+          subtitle: 'Zero-tolerance on suspicious traffic',
+          trailing: _redSwitch(settings.hardStrike,
+              (v) => ref.read(settingsProvider.notifier).updateHardStrike(v)),
+        ),
+        _SettingsTile(
+          label: 'VPN Tunnel',
+          subtitle: 'Route traffic through secure tunnel',
+          trailing: _redSwitch(settings.vpnTunnel,
+              (v) => ref.read(settingsProvider.notifier).updateVpnTunnel(v)),
         ),
         _sectionHeader('Data'),
         _SettingsTile(
@@ -383,9 +397,9 @@ class _PrivacySection extends ConsumerWidget {
       ),
     );
     if (ok == true && context.mounted) {
-      // History cleared via historyProvider from hamburgermenu; this just confirms.
+      ref.read(historyProvider.notifier).clearAll();
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Data cleared'), backgroundColor: Color(0xFF1A1A1A)),
+        const SnackBar(content: Text('Browsing data cleared'), backgroundColor: Color(0xFF1A1A1A)),
       );
     }
   }
@@ -405,7 +419,7 @@ class _SearchSection extends ConsumerWidget {
           label: 'Search Engine',
           subtitle: 'Used when typing in address bar',
           trailing: DropdownButton<String>(
-            value: settings.searchEngine ?? 'duckduckgo',
+            value: settings.searchEngine ?? 'google',
             dropdownColor: const Color(0xFF1A1A1A),
             style: const TextStyle(color: Color(0xFFE0E0E0), fontSize: 13),
             underline: const SizedBox.shrink(),
@@ -422,7 +436,8 @@ class _SearchSection extends ConsumerWidget {
         _SettingsTile(
           label: 'History Suggestions',
           subtitle: 'Show past URLs while typing',
-          trailing: _redSwitch(true, (_) {}), // always on, UX only
+          trailing: _redSwitch(settings.historySuggestions,
+              (v) => ref.read(settingsProvider.notifier).updateHistorySuggestions(v)),
         ),
       ],
     );
@@ -489,17 +504,22 @@ class _AboutSection extends ConsumerWidget {
         _SettingsTile(
           label: 'KrugerX Browser',
           subtitle: 'Version 1.0.0 — Windows x64',
-          trailing: const Icon(Icons.info_outline, color: Color(0xFF555555), size: 18),
+          trailing: const Icon(Icons.verified_outlined, color: Color(0xFF555555), size: 18),
+        ),
+        _SettingsTile(
+          label: 'Runtime',
+          subtitle: 'Flutter • WebView2 (Microsoft Edge)',
+          trailing: const Icon(Icons.web, color: Color(0xFF555555), size: 18),
         ),
         _SettingsTile(
           label: 'Backend',
-          subtitle: 'FastAPI — Python 3.11',
+          subtitle: 'FastAPI • Python 3.11 • Supabase',
           trailing: const Icon(Icons.dns_outlined, color: Color(0xFF555555), size: 18),
         ),
         _SettingsTile(
-          label: 'WebView',
-          subtitle: 'Microsoft Edge WebView2',
-          trailing: const Icon(Icons.web, color: Color(0xFF555555), size: 18),
+          label: 'Storage',
+          subtitle: 'Isar (local) • Supabase PostgreSQL (cloud)',
+          trailing: const Icon(Icons.storage_outlined, color: Color(0xFF555555), size: 18),
         ),
         _sectionHeader('Account'),
         _SettingsTile(

@@ -1,4 +1,5 @@
 import uuid
+import asyncio
 import datetime
 from typing import Any
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -72,12 +73,13 @@ async def signup(body: UserSignupRequest, db: AsyncSession = Depends(get_db)) ->
 
 
 @router.post("/login", response_model=APIResponse[TokenResponse])
-async def login(body: UserLoginRequest, db: AsyncSession = Depends(get_db)) -> APIResponse[TokenResponse]:
+async def login(body: UserLoginRequest) -> APIResponse[TokenResponse]:
     """
     Log in with email and password to retrieve Supabase JWT access and refresh tokens.
+    DB sync is fire-and-forget so login always returns fast even if DB is unreachable.
     """
     res = await auth_service.login(body.email, body.password)
-    
+
     access_token = res.get("access_token")
     refresh_token = res.get("refresh_token")
     expires_in = res.get("expires_in")
@@ -92,42 +94,47 @@ async def login(body: UserLoginRequest, db: AsyncSession = Depends(get_db)) -> A
 
     user_uuid = uuid.UUID(user_id_str)
 
-    # Sync locally if doesn't exist
-    stmt = select(User).where(User.id == user_uuid)
-    existing = await db.execute(stmt)
-    if not existing.scalars().first():
+    # Best-effort DB sync — fire-and-forget with its own session so the
+    # request-scoped session closing doesn't race with the background task.
+    from app.database.session import AsyncSessionLocal
+
+    async def _sync_user():
         try:
-            user = User(id=user_uuid, email=body.email, is_active=True)
-            db.add(user)
-            await db.flush()
-
-            profile = Profile(
-                user_id=user_uuid,
-                display_name=user_data.get("user_metadata", {}).get("display_name") or body.email.split("@")[0]
-            )
-            db.add(profile)
-
-            setting = Setting(user_id=user_uuid)
-            db.add(setting)
-
-            await db.commit()
+            async with AsyncSessionLocal() as session:
+                stmt = select(User).where(User.id == user_uuid)
+                existing = await session.execute(stmt)
+                if not existing.scalars().first():
+                    session.add(User(id=user_uuid, email=body.email, is_active=True))
+                    await session.flush()
+                    session.add(Profile(
+                        user_id=user_uuid,
+                        display_name=user_data.get("user_metadata", {}).get("display_name") or body.email.split("@")[0]
+                    ))
+                    session.add(Setting(user_id=user_uuid))
+                    await session.commit()
         except Exception as e:
-            await db.rollback()
-            logger.bind(category="errors").error(
-                f"Local DB sync failed on login for user {user_uuid}: {e}"
-            )
+            logger.bind(category="errors").error(f"DB sync skipped for {user_uuid}: {e}")
 
-    data = TokenResponse(
-        access_token=access_token,
-        refresh_token=refresh_token,
-        expires_in=expires_in,
-        user_id=user_uuid
-    )
+    async def _safe_sync():
+        try:
+            await asyncio.wait_for(_sync_user(), timeout=8)
+        except Exception:
+            pass  # TimeoutError or any other failure — never propagate to event loop
+
+    asyncio.ensure_future(_safe_sync())
+
     return APIResponse(
         success=True,
         message="Authentication successful.",
-        data=data
+        data=TokenResponse(
+            access_token=access_token,
+            refresh_token=refresh_token,
+            expires_in=expires_in,
+            user_id=user_uuid,
+        ),
     )
+
+
 
 
 

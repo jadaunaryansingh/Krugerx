@@ -44,35 +44,40 @@ const LocalSettingsSchema = CollectionSchema(
       name: r'hardStrike',
       type: IsarType.bool,
     ),
-    r'homepageUrl': PropertySchema(
+    r'historySuggestions': PropertySchema(
       id: 7,
+      name: r'historySuggestions',
+      type: IsarType.bool,
+    ),
+    r'homepageUrl': PropertySchema(
+      id: 8,
       name: r'homepageUrl',
       type: IsarType.string,
     ),
     r'language': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'language',
       type: IsarType.string,
     ),
     r'persistSession': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'persistSession',
       type: IsarType.bool,
     ),
     r'privacyTrackingProtection': PropertySchema(
-      id: 10,
+      id: 11,
       name: r'privacyTrackingProtection',
       type: IsarType.bool,
     ),
     r'searchEngine': PropertySchema(
-      id: 11,
+      id: 12,
       name: r'searchEngine',
       type: IsarType.string,
     ),
-    r'synced': PropertySchema(id: 12, name: r'synced', type: IsarType.bool),
-    r'theme': PropertySchema(id: 13, name: r'theme', type: IsarType.string),
+    r'synced': PropertySchema(id: 13, name: r'synced', type: IsarType.bool),
+    r'theme': PropertySchema(id: 14, name: r'theme', type: IsarType.string),
     r'vpnTunnel': PropertySchema(
-      id: 14,
+      id: 15,
       name: r'vpnTunnel',
       type: IsarType.bool,
     ),
@@ -121,14 +126,15 @@ void _localSettingsSerialize(
   writer.writeBool(offsets[4], object.dnsOverHttps);
   writer.writeLong(offsets[5], object.fontSize);
   writer.writeBool(offsets[6], object.hardStrike);
-  writer.writeString(offsets[7], object.homepageUrl);
-  writer.writeString(offsets[8], object.language);
-  writer.writeBool(offsets[9], object.persistSession);
-  writer.writeBool(offsets[10], object.privacyTrackingProtection);
-  writer.writeString(offsets[11], object.searchEngine);
-  writer.writeBool(offsets[12], object.synced);
-  writer.writeString(offsets[13], object.theme);
-  writer.writeBool(offsets[14], object.vpnTunnel);
+  writer.writeBool(offsets[7], object.historySuggestions);
+  writer.writeString(offsets[8], object.homepageUrl);
+  writer.writeString(offsets[9], object.language);
+  writer.writeBool(offsets[10], object.persistSession);
+  writer.writeBool(offsets[11], object.privacyTrackingProtection);
+  writer.writeString(offsets[12], object.searchEngine);
+  writer.writeBool(offsets[13], object.synced);
+  writer.writeString(offsets[14], object.theme);
+  writer.writeBool(offsets[15], object.vpnTunnel);
 }
 
 LocalSettings _localSettingsDeserialize(
@@ -145,15 +151,16 @@ LocalSettings _localSettingsDeserialize(
   object.dnsOverHttps = reader.readBool(offsets[4]);
   object.fontSize = reader.readLong(offsets[5]);
   object.hardStrike = reader.readBool(offsets[6]);
-  object.homepageUrl = reader.readString(offsets[7]);
+  object.historySuggestions = reader.readBool(offsets[7]);
+  object.homepageUrl = reader.readString(offsets[8]);
   object.id = id;
-  object.language = reader.readString(offsets[8]);
-  object.persistSession = reader.readBool(offsets[9]);
-  object.privacyTrackingProtection = reader.readBool(offsets[10]);
-  object.searchEngine = reader.readString(offsets[11]);
-  object.synced = reader.readBool(offsets[12]);
-  object.theme = reader.readString(offsets[13]);
-  object.vpnTunnel = reader.readBool(offsets[14]);
+  object.language = reader.readString(offsets[9]);
+  object.persistSession = reader.readBool(offsets[10]);
+  object.privacyTrackingProtection = reader.readBool(offsets[11]);
+  object.searchEngine = reader.readString(offsets[12]);
+  object.synced = reader.readBool(offsets[13]);
+  object.theme = reader.readString(offsets[14]);
+  object.vpnTunnel = reader.readBool(offsets[15]);
   return object;
 }
 
@@ -179,20 +186,22 @@ P _localSettingsDeserializeProp<P>(
     case 6:
       return (reader.readBool(offset)) as P;
     case 7:
-      return (reader.readString(offset)) as P;
+      return (reader.readBool(offset)) as P;
     case 8:
       return (reader.readString(offset)) as P;
     case 9:
-      return (reader.readBool(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 10:
       return (reader.readBool(offset)) as P;
     case 11:
-      return (reader.readString(offset)) as P;
-    case 12:
       return (reader.readBool(offset)) as P;
-    case 13:
+    case 12:
       return (reader.readString(offset)) as P;
+    case 13:
+      return (reader.readBool(offset)) as P;
     case 14:
+      return (reader.readString(offset)) as P;
+    case 15:
       return (reader.readBool(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -670,6 +679,15 @@ extension LocalSettingsQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(
         FilterCondition.equalTo(property: r'hardStrike', value: value),
+      );
+    });
+  }
+
+  QueryBuilder<LocalSettings, LocalSettings, QAfterFilterCondition>
+  historySuggestionsEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(
+        FilterCondition.equalTo(property: r'historySuggestions', value: value),
       );
     });
   }
@@ -1436,6 +1454,20 @@ extension LocalSettingsQuerySortBy
     });
   }
 
+  QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy>
+  sortByHistorySuggestions() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'historySuggestions', Sort.asc);
+    });
+  }
+
+  QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy>
+  sortByHistorySuggestionsDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'historySuggestions', Sort.desc);
+    });
+  }
+
   QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy> sortByHomepageUrl() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'homepageUrl', Sort.asc);
@@ -1637,6 +1669,20 @@ extension LocalSettingsQuerySortThenBy
     });
   }
 
+  QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy>
+  thenByHistorySuggestions() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'historySuggestions', Sort.asc);
+    });
+  }
+
+  QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy>
+  thenByHistorySuggestionsDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'historySuggestions', Sort.desc);
+    });
+  }
+
   QueryBuilder<LocalSettings, LocalSettings, QAfterSortBy> thenByHomepageUrl() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'homepageUrl', Sort.asc);
@@ -1806,6 +1852,13 @@ extension LocalSettingsQueryWhereDistinct
     });
   }
 
+  QueryBuilder<LocalSettings, LocalSettings, QDistinct>
+  distinctByHistorySuggestions() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'historySuggestions');
+    });
+  }
+
   QueryBuilder<LocalSettings, LocalSettings, QDistinct> distinctByHomepageUrl({
     bool caseSensitive = true,
   }) {
@@ -1913,6 +1966,13 @@ extension LocalSettingsQueryProperty
   QueryBuilder<LocalSettings, bool, QQueryOperations> hardStrikeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'hardStrike');
+    });
+  }
+
+  QueryBuilder<LocalSettings, bool, QQueryOperations>
+  historySuggestionsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'historySuggestions');
     });
   }
 

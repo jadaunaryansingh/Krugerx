@@ -37,7 +37,7 @@ class AuthNotifier extends Notifier<AuthState> {
 
   Future<void> _init() async {
     final session = await Storage.db.authSessions.where().findFirst();
-    if (session != null) {
+    if (session != null && _isTokenValid(session.accessToken)) {
       state = state.copyWith(
         isLoading: false,
         isAuthenticated: true,
@@ -47,6 +47,12 @@ class AuthNotifier extends Notifier<AuthState> {
         avatarUrl: session.avatarUrl,
       );
       _fetchMe();
+    } else if (session != null) {
+      // Stored session exists but token is expired — clear it
+      await Storage.db.writeTxn(() async {
+        await Storage.db.authSessions.clear();
+      });
+      state = state.copyWith(isLoading: false, isAuthenticated: false);
     } else {
       state = state.copyWith(isLoading: false, isAuthenticated: false);
     }
@@ -117,12 +123,17 @@ class AuthNotifier extends Notifier<AuthState> {
 
         // Hydrate Supabase SDK so it handles background token refresh
         try {
-          await Supabase.instance.client.auth.setSession(data['refresh_token']);
+          await Supabase.instance.client.auth.setSession(
+            data['access_token'],
+            refreshToken: data['refresh_token'],
+          );
         } catch (e) {
-          // If setting session fails, log it
+          // Non-fatal — local session still valid
         }
 
         final localSession = AuthSession()
+          ..accessToken = data['access_token']
+          ..refreshToken = data['refresh_token']
           ..expiresIn = data['expires_in'] ?? 3600
           ..userId = data['user_id']
           ..email = email
@@ -164,14 +175,14 @@ class AuthNotifier extends Notifier<AuthState> {
       });
 
       if (response.statusCode == 201 && response.data['success']) {
-        state = state.copyWith(isLoading: false);
+        // Don't set isLoading:false here — login() will manage it
         ref.read(systemLoggerProvider.notifier).addLog(LogLevel.info, 'AUTH: Registration successful for $email');
         // Try to auto-login. If email confirmation is required, login will fail.
         final loginSuccess = await login(email, password);
         if (!loginSuccess) {
           state = state.copyWith(
-            isLoading: false, 
-            error: 'REGISTRATION_SUCCESS // AWAITING_EMAIL_CONFIRMATION'
+            isLoading: false,
+            error: 'Registration successful — check your email to confirm your account.',
           );
           return false;
         }
@@ -213,13 +224,12 @@ class AuthNotifier extends Notifier<AuthState> {
   }
 
   Future<void> logout() async {
-    state = const AuthState();
-    
+    // Clear storage and remote session BEFORE resetting state so
+    // the router redirect doesn't fire mid-cleanup.
     await Storage.db.writeTxn(() async {
       await Storage.db.authSessions.clear();
     });
 
-    // Attempt Supabase signOut first for Google OAuth
     try {
       await Supabase.instance.client.auth.signOut();
     } catch (e) {
@@ -231,8 +241,10 @@ class AuthNotifier extends Notifier<AuthState> {
     } catch (e) {
       // Ignore network errors on logout
     }
-    
+
     ref.read(systemLoggerProvider.notifier).addLog(LogLevel.info, 'AUTH: User logged out');
+    // Reset state last — triggers GoRouter redirect cleanly
+    state = const AuthState(isLoading: false, isAuthenticated: false);
   }
 
   Future<void> _fetchMe() async {

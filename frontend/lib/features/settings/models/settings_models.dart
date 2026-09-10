@@ -23,4 +23,5 @@ class LocalSettings {
   // Network settings
   bool vpnTunnel = true;
   bool dnsOverHttps = true;
+  bool historySuggestions = true;
 }

@@ -87,6 +87,11 @@ class SettingsNotifier extends Notifier<LocalSettings> {
     await _save(updated);
   }
 
+  Future<void> updateHistorySuggestions(bool val) async {
+    final updated = _cloneState()..historySuggestions = val;
+    await _save(updated);
+  }
+
   LocalSettings _cloneState() {
     return LocalSettings()
       ..id = state.id
@@ -104,7 +109,8 @@ class SettingsNotifier extends Notifier<LocalSettings> {
       ..aesEncryption = state.aesEncryption
       ..hardStrike = state.hardStrike
       ..vpnTunnel = state.vpnTunnel
-      ..dnsOverHttps = state.dnsOverHttps;
+      ..dnsOverHttps = state.dnsOverHttps
+      ..historySuggestions = state.historySuggestions;
   }
 
   Future<void> _save(LocalSettings settings) async {

@@ -161,7 +161,7 @@ class ProfileScreen extends ConsumerWidget {
             icon: Icons.devices_rounded,
             label: 'Synced Devices',
             value: 'Manage devices',
-            onTap: () => _showDevices(context, ref),
+            onTap: () => _showDevices(context),
           ),
           _ProfileTile(
             icon: Icons.history_edu_rounded,
@@ -173,7 +173,7 @@ class ProfileScreen extends ConsumerWidget {
             icon: Icons.feedback_outlined,
             label: 'Send Feedback',
             value: 'Report issues or suggest features',
-            onTap: () => _showFeedback(context),
+            onTap: () => _showFeedback(context, ref),
           ),
 
           const SizedBox(height: 32),
@@ -235,18 +235,18 @@ class ProfileScreen extends ConsumerWidget {
     ),
   );
 
-  static void _showDevices(BuildContext context, WidgetRef ref) {
+  static void _showDevices(BuildContext context) {
     showModalBottomSheet(
       context: context,
       backgroundColor: const Color(0xFF181818),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
-      builder: (_) => _DevicesSheet(ref: ref),
+      builder: (_) => const _DevicesSheet(),
     );
   }
 
-  static void _showFeedback(BuildContext context) {
+  static void _showFeedback(BuildContext context, WidgetRef ref) {
     final ctrl = TextEditingController();
     showDialog(
       context: context,
@@ -267,11 +267,22 @@ class ProfileScreen extends ConsumerWidget {
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('CANCEL')),
           TextButton(
-            onPressed: () {
+            onPressed: () async {
+              final text = ctrl.text.trim();
               Navigator.pop(ctx);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Feedback sent — thank you!'), backgroundColor: Color(0xFF1A1A1A)),
-              );
+              if (text.isEmpty) return;
+              try {
+                await ApiClient.client.post('/feedback', data: {
+                  'rating': 3,
+                  'comment': text,
+                  'category': 'general',
+                });
+              } catch (_) { /* best-effort */ }
+              if (context.mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Feedback sent — thank you!'), backgroundColor: Color(0xFF1A1A1A)),
+                );
+              }
             },
             child: Text('SEND', style: TextStyle(color: DesignSystem.primary)),
           ),
@@ -437,11 +448,10 @@ class _DangerTileState extends State<_DangerTile> {
 
 // ──────────────────────── Devices bottom sheet ───────────────────
 class _DevicesSheet extends ConsumerWidget {
-  final WidgetRef ref;
-  const _DevicesSheet({required this.ref});
+  const _DevicesSheet();
 
   @override
-  Widget build(BuildContext context, WidgetRef _) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [

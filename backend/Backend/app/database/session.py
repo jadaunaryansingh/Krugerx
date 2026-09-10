@@ -7,7 +7,14 @@ engine = create_async_engine(
     settings.DATABASE_URL,
     echo=settings.DEBUG,
     future=True,
-    pool_pre_ping=True
+    pool_pre_ping=False,   # Don't ping on checkout — DB may be unreachable
+    pool_recycle=300,
+    connect_args={
+        "timeout": 8,                         # asyncpg connect timeout (seconds)
+        "server_settings": {
+            "statement_timeout": "8000",       # ms — queries abort fast if DB is slow
+        },
+    },
 )
 
 # Async session factory
@@ -28,5 +35,10 @@ async def get_db() -> AsyncGenerator[AsyncSession, None]:
             yield session
             await session.commit()
         except Exception:
-            await session.rollback()
+            try:
+                await session.rollback()
+            except Exception:
+                pass  # Session may already be in a bad state; ignore secondary error
             raise
+        finally:
+            await session.close()

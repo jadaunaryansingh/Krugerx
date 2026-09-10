@@ -73,7 +73,7 @@ class _BrowserEngineWidgetState extends ConsumerState<BrowserEngineWidget> {
           onPageStarted: (String url) {
             if (mounted) {
               setState(() => _isLoading = true);
-              _startLoadingWatchdog();
+              // Watchdog is started once on initState / URL change, not per-page-start
             }
           },
           onWebResourceError: (WebResourceError error) {
@@ -177,9 +177,9 @@ class _BrowserEngineWidgetState extends ConsumerState<BrowserEngineWidget> {
       _controller.loadRequest(Uri.parse(_formatUrl(widget.url)));
     }
     
-    // Check for reader mode changes
+    // Check for reader mode changes — only for active (non-zombie) tabs
     final tab = ref.read(tabsProvider).tabs.where((t) => t.id == widget.tabId).firstOrNull;
-    if (tab != null && tab.isReaderMode != _isCurrentlyReaderMode && !_isLoading) {
+    if (tab != null && tab.isReaderMode != _isCurrentlyReaderMode && !_isLoading && !widget.isMuted) {
       _applyReaderModeIfNeeded();
     }
 
