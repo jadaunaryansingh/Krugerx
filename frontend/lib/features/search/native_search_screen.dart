@@ -61,9 +61,9 @@ class _NativeSearchScreenState extends ConsumerState<NativeSearchScreen> {
   Widget build(BuildContext context) {
     final searchResult = ref.watch(nativeSearchProvider(widget.query));
 
-    return Scaffold(
-      backgroundColor: DesignSystem.background,
-      body: Column(
+    return ColoredBox(
+      color: DesignSystem.background,
+      child: Column(
         children: [
           _buildHeader(),
           _buildTabs(),

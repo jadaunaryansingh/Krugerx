@@ -320,7 +320,7 @@ class _AddressBarWidgetState extends ConsumerState<AddressBarWidget> {
                     child: HoverScaleWidget(
                       scaleFactor: 0.9,
                       onTap: () {
-                        context.push('/search');
+                        _focusNode.requestFocus();
                       },
                       child: Icon(Icons.search, size: 14, color: DesignSystem.onSurfaceVariant),
                     ),

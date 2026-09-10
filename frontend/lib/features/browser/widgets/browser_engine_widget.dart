@@ -30,6 +30,12 @@ class _BrowserEngineWidgetState extends ConsumerState<BrowserEngineWidget> {
   bool _isLoading = true;
   bool _isCurrentlyReaderMode = false;
   late final String _readerToken;
+  // Watchdog: clears black overlay if onPageFinished never fires (Windows WebView2 bug)
+  void _startLoadingWatchdog() {
+    Future.delayed(const Duration(seconds: 10), () {
+      if (mounted && _isLoading) setState(() => _isLoading = false);
+    });
+  }
 
   @override
   void initState() {
@@ -65,7 +71,14 @@ class _BrowserEngineWidgetState extends ConsumerState<BrowserEngineWidget> {
       ..setNavigationDelegate(
         NavigationDelegate(
           onPageStarted: (String url) {
-            if (mounted) setState(() => _isLoading = true);
+            if (mounted) {
+              setState(() => _isLoading = true);
+              _startLoadingWatchdog();
+            }
+          },
+          onWebResourceError: (WebResourceError error) {
+            // Clear the black overlay on any error (e.g. no network, blocked page)
+            if (mounted) setState(() => _isLoading = false);
           },
           onPageFinished: (String loadedUrl) async {
             if (mounted) {
@@ -100,6 +113,7 @@ class _BrowserEngineWidgetState extends ConsumerState<BrowserEngineWidget> {
         ),
       )
       ..loadRequest(Uri.parse(_formatUrl(widget.url)));
+    _startLoadingWatchdog(); // Watchdog for initial load
 
     webViewControllers[widget.tabId] = _controller;
   }

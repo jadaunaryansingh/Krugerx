@@ -7,6 +7,11 @@ from urllib.parse import urlparse, parse_qs, quote
 from loguru import logger
 import xml.etree.ElementTree as ET
 
+try:
+    from duckduckgo_search import DDGS as _DDGS
+except ImportError:
+    _DDGS = None  # will fall back gracefully if package not installed
+
 from app.core.config import settings
 from app.schemas.search import SearchResultItem, KnowledgePanel
 
@@ -257,48 +262,73 @@ class SearchService:
 
     async def _search_duckduckgo(self, query: str) -> List[SearchResultItem]:
         """
-        Fallback DuckDuckGo scraper that parses the public HTML search interface.
+        DuckDuckGo search. Uses duckduckgo-search library if installed;
+        falls back to POST-based scraper (harder to block than GET HTML scraper).
         """
-        url = f"https://html.duckduckgo.com/html/?q={quote(query)}"
-        async with httpx.AsyncClient() as client:
+        # --- path 1: use library if available ---
+        if _DDGS is not None:
             try:
-                res = await client.get(url, headers=self.headers, timeout=10.0)
+                loop = asyncio.get_event_loop()
+                raw = await loop.run_in_executor(
+                    None,
+                    lambda: list(_DDGS().text(query, max_results=10))
+                )
+                return [
+                    SearchResultItem(
+                        title=r.get("title", ""),
+                        url=r.get("href", ""),
+                        snippet=r.get("body", ""),
+                        favicon=f"https://icons.duckduckgo.com/ip3/{urlparse(r.get('href', '')).netloc}.ico"
+                    )
+                    for r in raw
+                ]
+            except Exception as e:
+                logger.warning(f"DDGS library failed ({e}), falling back to scraper")
+
+        # --- path 2: DDG Lite fallback (no extra deps, no bot protection) ---
+        async with httpx.AsyncClient(follow_redirects=True) as client:
+            try:
+                res = await client.post(
+                    "https://lite.duckduckgo.com/lite/",
+                    data={"q": query},
+                    headers={
+                        **self.headers,
+                        "Content-Type": "application/x-www-form-urlencoded",
+                        "Referer": "https://duckduckgo.com/",
+                    },
+                    timeout=10.0,
+                )
                 if res.status_code != 200:
-                    logger.warning(f"DuckDuckGo scraper returned status: {res.status_code}")
+                    logger.warning(f"DDG Lite scraper: HTTP {res.status_code}")
                     return []
-                
+
                 soup = BeautifulSoup(res.text, "html.parser")
                 results = []
-
-                # Find result card elements
-                for div in soup.find_all("div", class_="result"):
-                    a_title = div.find("a", class_="result__a")
-                    a_snippet = div.find("a", class_="result__snippet")
-                    
-                    if a_title:
-                        title = a_title.get_text(strip=True)
-                        raw_url = a_title.get("href", "")
-                        
-                        # Clean DuckDuckGo redirect wrappers if present
-                        actual_url = raw_url
-                        if "uddg=" in raw_url:
-                            parsed_url = urlparse(raw_url)
-                            query_params = parse_qs(parsed_url.query)
-                            if "uddg" in query_params:
-                                actual_url = query_params["uddg"][0]
-
-                        snippet = a_snippet.get_text(strip=True) if a_snippet else ""
-                        favicon = f"https://icons.duckduckgo.com/ip3/{urlparse(actual_url).netloc}.ico" if actual_url else None
-                        
-                        results.append(SearchResultItem(
-                            title=title,
-                            url=actual_url,
-                            snippet=snippet,
-                            favicon=favicon
-                        ))
+                for a in soup.find_all("a", class_="result-link"):
+                    href = a.get("href", "")
+                    if not href or href.startswith("//duckduckgo"):
+                        continue
+                    title = a.get_text(strip=True)
+                    # Snippet is the next <td class="result-snippet">
+                    snippet_td = a.find_parent("tr")
+                    snippet = ""
+                    if snippet_td:
+                        next_row = snippet_td.find_next_sibling("tr")
+                        if next_row:
+                            snip = next_row.find("td", class_="result-snippet")
+                            if snip:
+                                snippet = snip.get_text(strip=True)
+                    netloc = urlparse(href).netloc
+                    results.append(SearchResultItem(
+                        title=title,
+                        url=href,
+                        snippet=snippet,
+                        favicon=f"https://icons.duckduckgo.com/ip3/{netloc}.ico" if netloc else None,
+                    ))
+                logger.info(f"DDG Lite returned {len(results)} results for: {query}")
                 return results
             except Exception as e:
-                logger.bind(category="errors").error(f"DuckDuckGo search scraper failed: {str(e)}")
+                logger.bind(category="errors").error(f"DDG Lite scraper failed: {e}")
                 return []
 
     async def get_suggestions(self, query: str) -> List[str]:

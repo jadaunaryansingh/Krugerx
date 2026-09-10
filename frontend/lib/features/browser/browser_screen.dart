@@ -53,7 +53,6 @@ class _BrowserScreenState extends ConsumerState<BrowserScreen> {
     final tabsState = ref.watch(tabsProvider);
     final activeTab = tabsState.activeTab;
     final isAiVisible = ref.watch(aiSidebarVisibleProvider);
-    final telemetry = ref.watch(telemetryProvider);
 
     return Scaffold(
       backgroundColor: const Color(0xFF050505),
@@ -69,30 +68,6 @@ class _BrowserScreenState extends ConsumerState<BrowserScreen> {
           SafeArea(
             child: Column(
               children: [
-                // Top Telemetry
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('UPTIME: ${telemetry.uptime}', style: DesignSystem.dataMono.copyWith(fontSize: 8, color: DesignSystem.primary.withValues(alpha: 0.6))),
-                          Text('MEM: ${telemetry.memory}', style: DesignSystem.dataMono.copyWith(fontSize: 8, color: DesignSystem.onSurface)),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text('LAT: ${telemetry.latency.toStringAsFixed(0)}ms', style: DesignSystem.dataMono.copyWith(fontSize: 8, color: DesignSystem.primary.withValues(alpha: 0.6))),
-                          Text('PKG_LOSS: ${telemetry.packetLoss.toStringAsFixed(2)}%', style: DesignSystem.dataMono.copyWith(fontSize: 8, color: DesignSystem.onSurface)),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-
                 // Browser Chrome
                 Container(
                   decoration: const BoxDecoration(
@@ -133,11 +108,13 @@ class _BrowserScreenState extends ConsumerState<BrowserScreen> {
                                       // constrained to 1×1 — Offstage doesn't prevent WebView2 from
                                       // painting in the native layer on Windows.
                                       if (isActive) {
-                                        return BrowserEngineWidget(
-                                          key: ValueKey(tab.id),
-                                          url: tab.url,
-                                          tabId: tab.id,
-                                          isMuted: tab.isMuted,
+                                        return Positioned.fill(
+                                          child: BrowserEngineWidget(
+                                            key: ValueKey(tab.id),
+                                            url: tab.url,
+                                            tabId: tab.id,
+                                            isMuted: tab.isMuted,
+                                          ),
                                         );
                                       }
                                       return SizedBox(

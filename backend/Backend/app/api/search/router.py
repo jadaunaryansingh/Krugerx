@@ -36,6 +36,12 @@ async def search_query(
         setting = res.scalars().first()
         provider = (setting.search_engine or "duckduckgo") if setting else "duckduckgo"
 
+    # If still duckduckgo but SearXNG is configured, prefer it (DDG HTML scraper is unreliable)
+    from app.core.config import settings as _settings
+    if provider == "duckduckgo" and _settings.SEARXNG_URL:
+        provider = "searxng"
+
+
     # Execute search
     search_data = await search_service.search(provider=provider, query=q, user_id=str(current_user.id))
     results = search_data.get("results", [])
